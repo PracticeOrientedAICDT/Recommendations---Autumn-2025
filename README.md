@@ -1,2 +1,1 @@
-GitHub Page available at [[https://practiceorientedaicdt.github.io/Recommendations---Autumn-2025/]]
-
+[GitHub Page here!](https://practiceorientedaicdt.github.io/Recommendations---Autumn-2025/)
