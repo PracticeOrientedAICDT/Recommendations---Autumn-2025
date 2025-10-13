@@ -1,6 +1,12 @@
 name: Ruff Linter
 
-on: [push]
+on: 
+  pull_request:
+    branches:
+      - dev
+      - master
+      - test
+
 
 jobs:
   build:
@@ -13,5 +19,5 @@ jobs:
         python-version: '3.x'
     - name: Install the code linting and formatting tool Ruff
       run: pipx install ruff
-    - name: Lint and fix code with Ruff
+    - name: Lint code with Ruff
       run: ruff check --output-format=github
