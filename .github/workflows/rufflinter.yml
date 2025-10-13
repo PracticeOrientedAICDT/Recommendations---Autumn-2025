@@ -14,7 +14,4 @@ jobs:
     - name: Install the code linting and formatting tool Ruff
       run: pipx install ruff
     - name: Lint and fix code with Ruff
-      run: ruff check --fix .
-    - uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: 'style: style fixes by ruff'
+      run: ruff check --output-format=github
