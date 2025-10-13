@@ -1,0 +1,23 @@
+name: Ruff Linter
+
+on: 
+  pull_request:
+    branches:
+      - dev
+      - master
+      - test
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+    - name: Install the code linting and formatting tool Ruff
+      run: pipx install ruff
+    - name: Lint code with Ruff
+      run: ruff check --output-format=github
