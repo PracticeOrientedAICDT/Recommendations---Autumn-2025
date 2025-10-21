@@ -1,4 +1,5 @@
 # augment_imdb_data.py
+
 # Script to extract and store movie titles for imdb data
 import glob
 import os
@@ -9,7 +10,9 @@ import imdb
 from imdb import IMDbError, IMDbDataAccessError
 
 # Functions
-def numericalSort(value):
+def numerical_sort(value):
+    """Key for glob to sort files in numerically ascending order
+    """
     numbers = re.compile(r'(\d+)')
     parts = numbers.split(value)
     parts[1::2] = map(int, parts[1::2])
@@ -51,7 +54,7 @@ if not server_down:
 
     # Load and combine title datasets
     complete_movie_titles = []
-    for infile in sorted(glob.glob('Dataset/imdb-user-data/temp/movie_titles_*.npy'), key=numericalSort):
+    for infile in sorted(glob.glob('Dataset/imdb-user-data/temp/movie_titles_*.npy'), key=numerical_sort):
         print("Processing file: " + infile)
         complete_movie_titles.extend(np.load(infile))
     np.save(f"Dataset/imdb-user-data/movie_titles.npy", complete_movie_titles)
