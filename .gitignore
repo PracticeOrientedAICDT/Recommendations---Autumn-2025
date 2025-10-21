@@ -208,3 +208,7 @@ __marimo__/
 
 # Project specific folders
 *data/
+ml-*/
+
+# Mac temporary files
+*DS_Store
