@@ -16,7 +16,7 @@ This folder contains various Matrix Factorisation models, which are part of the 
 
 ### Augmenting data
 You can augment the IMDb dataset with movie titles using `augment_imdb_data.py`, to do so:
-    - Run the command `python Dataset/augment_imdb_data.py` from within your virtual environment
+* Run the command `python Dataset/augment_imdb_data.py` from within your virtual environment
 
 This is not required for running the MF_recommender_IMDB.ipynb notebook, but would be required in order to make this model more functional - currently the user must enter a IMDB ID to use the system.
 
