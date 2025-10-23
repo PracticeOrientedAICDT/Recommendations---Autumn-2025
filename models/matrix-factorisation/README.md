@@ -20,4 +20,8 @@ You can augment the IMDb dataset with movie titles using `augment_imdb_data.py`,
 
 This is not required for running the MF_recommender_IMDB.ipynb notebook, but would be required in order to make this model more functional - currently the user must enter a IMDB ID to use the system.
 
+## Matrix Factorisation on MovieLens 1M Dataset 
 
+Types implemented:
+1) Matrix Factorisation for similarity slates (because you watched [x] you might like ...)
+    * `MF_recommender_ml1m.ipynb`
