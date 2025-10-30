@@ -29,7 +29,10 @@ Types implemented in `MF_recommender_ml1m.ipynb`
 1) Matrix Factorisation for similarity slates (because you watched [x] you might like ...)
 2) Matrix Factorisation for Top-N for specific user
 
-Setup:
+### Prerequisites
+* A virtual environment using python > v3.13
+
+### Setup:
 1) Create and activate venv
-2) `pip install -r requirements_ml1m.txt`
+2) Install the required dependencies using `pip install -r requirements_ml1m.txt`
 3) Navigate to `MF_recommender_ml1m.ipynb`and run all cells.
