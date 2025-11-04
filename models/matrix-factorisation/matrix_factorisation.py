@@ -31,7 +31,8 @@ class MatrixFactorisation:
             data (DataFrame): pandas dataframe containing all user ratings
             min_ratings (int, optional): minimum number of ratings a movie must have to be included
                 in the pivot table, defaults to 100.
-            n_components (int, optional): Number of components to use in the matrix factorisation
+            n_components (int, optional): Number of components to use in the
+                matrix factorisation, defaults to 20.
         """
         self._create_pivot_table(data, min_ratings)
         self._NMF_model(n_components)
