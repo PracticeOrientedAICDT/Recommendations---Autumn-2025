@@ -100,6 +100,37 @@ class MatrixFactorisation:
         return user_ranking[:N]
 
 
+    def movie_similarity(self, movie_title, num_rec=10):
+        """Generates recommendations of movies to watch which are similar
+        to a specified movie, using NMF-based matrix factorization
+
+        Parameters:
+            movie_title (str): movie title to recommend based on
+            num_rec (int, optional): number of recommendations to generate
+        """
+        # Transpose H to get movie latent factors: shape (n_movies, n_components)
+        movie_factors = self.H.T
+        titles = self.pivot.columns.tolist()
+
+        # Compute cosine similarity between movies using the latent factors
+        similarity_matrix = cosine_similarity(movie_factors)
+        similarity_df = pd.DataFrame(
+            similarity_matrix, index=titles, columns=titles
+        )
+
+        if movie_title not in similarity_df.index:
+            raise ValueError(f"Movie '{movie_title}' not found in the dataset.")
+
+        # Get the similarity series for the given movie and sort descending
+        similar_movies = (
+            similarity_df[movie_title]
+            .drop(labels=[movie_title])
+            .sort_values(ascending=False)
+        )
+        recommendations = similar_movies.head(num_rec)
+        return recommendations
+
+
     def _generate_movies_dataframe(self):
         """Generate movies dataframe to make genres wordcloud
 
@@ -166,34 +197,3 @@ class MatrixFactorisation:
         plt.axis('off')
         plt.show()
         # NOTE: this wordcloud represents everything a user reviewed, regardless of whether or not it was well reviewed
-
-
-    def movie_similarity(self, movie_title, num_rec=10):
-        """Generates recommendations of movies to watch which are similar
-        to a specified movie, using NMF-based matrix factorization
-
-        Parameters:
-            movie_title (str): movie title to recommend based on
-            num_rec (int, optional): number of recommendations to generate
-        """
-        # Transpose H to get movie latent factors: shape (n_movies, n_components)
-        movie_factors = self.H.T
-        titles = self.pivot.columns.tolist()
-
-        # Compute cosine similarity between movies using the latent factors
-        similarity_matrix = cosine_similarity(movie_factors)
-        similarity_df = pd.DataFrame(
-            similarity_matrix, index=titles, columns=titles
-        )
-
-        if movie_title not in similarity_df.index:
-            raise ValueError(f"Movie '{movie_title}' not found in the dataset.")
-
-        # Get the similarity series for the given movie and sort descending
-        similar_movies = (
-            similarity_df[movie_title]
-            .drop(labels=[movie_title])
-            .sort_values(ascending=False)
-        )
-        recommendations = similar_movies.head(num_rec)
-        return recommendations
