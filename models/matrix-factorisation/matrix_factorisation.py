@@ -150,50 +150,65 @@ class MatrixFactorisation:
         return movies_df
 
 
-    def understand_user_profile(self, user_id):
+    def understand_user_profile(self, user_id,
+                                rating_dist=True, genres_dist=True, genres_avg=True, wc=True):
         """Produce a various plots of the movies and genres reviewed by a specific user to understand their vibe
 
         Parameters:
             user_id (int): user_id of user
+            rating_dist (bool, optional): whether to plot the proportion of each rating for user,
+                defaults to True.
+            genres_dist (bool, optional): whether to plot the proportion of each genre reviewed by user,
+                defaults to True.
+            genres_avg (bool, optional): whether to plot the average rating of each genre for user,
+                defaults to True.
+            wc (bool, optional): whether to plot a wordcloud of genres reviewed by the user,
+                defaults to True.
+        Returns:
+            None, plots the requested figures
         """
         # Extract movies rated by user (i.e. remove any with rating of 0)
         pivot_T = self.pivot.T
         user_ratings = {k:v for k, v in pivot_T[user_id].items() if v != 0}
 
-        # Distribution of ratings
-        sns.barplot(Counter(user_ratings.values())).set(xlabel="Rating", ylabel="Count",
-                                                        title=f"Proportion of each rating for user {user_id}")
+        if rating_dist:
+            # Distribution of ratings
+            sns.barplot(Counter(user_ratings.values())).set(xlabel="Rating", ylabel="Count",
+                                                            title=f"Proportion of each rating for user {user_id}")
 
-        # Load movies data + split genres
-        movies_df = self._generate_movies_dataframe()
+        if genres_dist:
+            # Load movies data + split genres
+            movies_df = self._generate_movies_dataframe()
 
-        # Get genres of movies rated
-        all_genres = []  # Store all genres reviewed for wordcloud (all added to list separately)
-        genres_by_movie = []  # Store genres for each movie
-        for movie in user_ratings.keys():
-            index = movies_df.title[movies_df.title == movie].index.to_list()[0]
-            [all_genres.append(genre) for genre in movies_df["genres"][index]]
-            genres_by_movie.append(movies_df["genres"][index])
+            # Get genres of movies rated
+            all_genres = []  # Store all genres reviewed for wordcloud (all added to list separately)
+            genres_by_movie = []  # Store genres for each movie
+            for movie in user_ratings.keys():
+                index = movies_df.title[movies_df.title == movie].index.to_list()[0]
+                [all_genres.append(genre) for genre in movies_df["genres"][index]]
+                genres_by_movie.append(movies_df["genres"][index])
 
-        # Proportion of each genre reviewed
-        user_df = pd.DataFrame({"title": user_ratings.keys(), "rating": user_ratings.values(),
-                                "genres": genres_by_movie}).explode("genres")
-        fig = px.histogram(user_df, x="genres", height=400, width=800,
-                     title=f"Proportion of each genre reviewed by user {user_id}").update_xaxes(categoryorder="total descending")  # noqa: E501
-        fig.show()
+            # Proportion of each genre reviewed
+            user_df = pd.DataFrame({"title": user_ratings.keys(), "rating": user_ratings.values(),
+                                    "genres": genres_by_movie}).explode("genres")
+            fig = px.histogram(user_df, x="genres", height=400, width=800,
+                        title=f"Proportion of each genre reviewed by user {user_id}").update_xaxes(categoryorder="total descending")  # noqa: E501
+            fig.show()
 
-        # Average score of each genre reviewed by user
-        rating_by_genre_df = user_df.groupby('genres').agg({'rating': ['mean', 'count']}).sort_values(('rating', 'mean')).reset_index()  # noqa: E501
-        rating_by_genre_df.columns = ['_'.join(col).strip() for col in rating_by_genre_df.columns.values]
-        fig = px.bar(rating_by_genre_df, x='genres_', y='rating_mean', height=400, width=800,
-                     title=f"Average rating of each genre for user {user_id}")
-        fig.show()
+        if genres_avg:
+            # Average score of each genre reviewed by user
+            rating_by_genre_df = user_df.groupby('genres').agg({'rating': ['mean', 'count']}).sort_values(('rating', 'mean')).reset_index()  # noqa: E501
+            rating_by_genre_df.columns = ['_'.join(col).strip() for col in rating_by_genre_df.columns.values]
+            fig = px.bar(rating_by_genre_df, x='genres_', y='rating_mean', height=400, width=800,
+                        title=f"Average rating of each genre for user {user_id}")
+            fig.show()
 
-        # Make wordcloud of genres
-        genres_string=(" ").join(all_genres)
-        wordcloud = WordCloud(width=800, height=400, background_color='white').generate(genres_string)
-        plt.figure(figsize=(10, 5))
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.axis('off')
-        plt.show()
-        # NOTE: this wordcloud represents everything a user reviewed, regardless of whether or not it was well reviewed
+        if wc:
+            # Make wordcloud of genres
+            genres_string=(" ").join(all_genres)
+            wordcloud = WordCloud(width=800, height=400, background_color='white').generate(genres_string)
+            plt.figure(figsize=(10, 5))
+            plt.imshow(wordcloud, interpolation='bilinear')
+            plt.axis('off')
+            plt.show()
+            # NOTE: this wordcloud represents everything a user reviewed, regardless of whether or not it was well reviewed
