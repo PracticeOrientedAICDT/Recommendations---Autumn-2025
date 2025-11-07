@@ -28,7 +28,7 @@ class MatrixFactorisation:
         """Initialise the NMF Matrix Factorisation object
 
         Parameters:
-            data (DataFrame): pandas dataframe containing all user ratings
+            data (DataFrame): pandas dataframe containing all user ratings, movie titles, genres, movie ids, user_ids
             min_ratings (int, optional): minimum number of ratings a movie must have to be included
                 in the pivot table, defaults to 100.
             n_components (int, optional): Number of components to use in the
@@ -36,6 +36,25 @@ class MatrixFactorisation:
         """
         self._create_pivot_table(data, min_ratings)
         self._NMF_model(n_components)
+
+
+    def _generate_movies_dataframe(self):
+        """Generate movies dataframe to make genres wordcloud
+
+        Returns:
+            movies_df (Dataframe): dataframe of movie_id, title and genres, where
+                genres have been split into a list.
+        """
+        path = "Dataset/ml-1m/movies.dat"
+        movies_df = pd.read_csv(
+            path,
+            sep="::",
+            engine="python",
+            names=["movie_id", "title", "genres"],
+            encoding="latin-1",
+        )
+        movies_df['genres'] = movies_df['genres'].apply(lambda x: x.split('|'))
+        return movies_df
 
 
     def _create_pivot_table(self, data, min_ratings=100):
@@ -131,23 +150,20 @@ class MatrixFactorisation:
         return recommendations
 
 
-    def _generate_movies_dataframe(self):
-        """Generate movies dataframe to make genres wordcloud
+    def get_recommend_dataframe(self, rec):
+        """Extract movie dataframe rows for recommended movies
+
+        Args:
+            rec (list): movie_titles in order of recommendation
 
         Returns:
-            movies_df (Dataframe): dataframe of movie_id, title and genres, where
-                genres have been split into a list.
+            rec_df (DataFrame): pandas dataframe containing only the movies recommended for the user
         """
-        path = "Dataset/ml-1m/movies.dat"
-        movies_df = pd.read_csv(
-            path,
-            sep="::",
-            engine="python",
-            names=["movie_id", "title", "genres"],
-            encoding="latin-1",
-        )
-        movies_df['genres'] = movies_df['genres'].apply(lambda x: x.split('|'))
-        return movies_df
+        movies_df = self._generate_movies_dataframe()
+        genres = [movies_df["genres"][movies_df.title[movies_df.title == movie].index.to_list()[0]] for movie in rec]
+        rec_df = pd.DataFrame({"title": rec,
+                            "genres": genres})
+        return rec_df
 
 
     def understand_user_profile(self, user_id,
