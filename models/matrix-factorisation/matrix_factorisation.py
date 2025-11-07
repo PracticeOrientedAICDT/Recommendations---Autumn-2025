@@ -227,4 +227,5 @@ class MatrixFactorisation:
             plt.imshow(wordcloud, interpolation='bilinear')
             plt.axis('off')
             plt.show()
-            # NOTE: this wordcloud represents everything a user reviewed, regardless of whether or not it was well reviewed
+            # NOTE: this wordcloud represents everything a user reviewed,
+            # regardless of whether or not it was well reviewed
