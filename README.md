@@ -112,8 +112,8 @@ Project Link: [https://github.com/PracticeOrientedAICDT/Recommendations---Autumn
 ### Team Members (alphabetical order):
 
 - Ed Daniels: ed.daniels@bristol.ac.uk
-- Guoda Laurinaviciute: abby.morris@bristol.ac.uk
-- Abby Morris: guoda.laurinaviciute@bristol.ac.uk
+- Guoda Laurinaviciute: guoda.laurinaviciute@bristol.ac.uk
+- Abby Morris: abby.morris@bristol.ac.uk
 - Ikechukwu Ofodile: ic.ofodile@bristol.ac.uk
 
 ### Top Contributors:
