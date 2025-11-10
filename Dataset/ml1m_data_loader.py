@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
-def load_ml1m_movies(path: str = "Dataset/ml-1m/movies.dat") -> pd.DataFrame:
+def load_ml1m_movies(path: str = "ml-1m/movies.dat") -> pd.DataFrame:
     return pd.read_csv(
         path,
         sep="::",
@@ -12,7 +12,7 @@ def load_ml1m_movies(path: str = "Dataset/ml-1m/movies.dat") -> pd.DataFrame:
     )
 
 
-def load_ml1m_ratings(path: str = "Dataset/ml-1m/ratings.dat") -> pd.DataFrame:
+def load_ml1m_ratings(path: str = "ml-1m/ratings.dat") -> pd.DataFrame:
     return pd.read_csv(
         path,
         sep="::",
