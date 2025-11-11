@@ -12,7 +12,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from wordcloud import WordCloud
 
 
-class MatrixFactorisation:
+class NMFMatrixFactorisation:
     """
     A class representing a Matrix Factorisation model for a dataset, using SKLearn's NMF model.
     Where V = W . H is the prediction of user ratings made by the model,
