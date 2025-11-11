@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
-def load_ml1m_movies(path: str = "ml-1m/movies.dat") -> pd.DataFrame:
+def load_ml1m_movies(path: str = "Dataset/ml-1m/movies.dat") -> pd.DataFrame:
     return pd.read_csv(
         path,
         sep="::",
@@ -12,7 +12,7 @@ def load_ml1m_movies(path: str = "ml-1m/movies.dat") -> pd.DataFrame:
     )
 
 
-def load_ml1m_ratings(path: str = "ml-1m/ratings.dat") -> pd.DataFrame:
+def load_ml1m_ratings(path: str = "Dataset/ml-1m/ratings.dat") -> pd.DataFrame:
     return pd.read_csv(
         path,
         sep="::",
@@ -22,7 +22,7 @@ def load_ml1m_ratings(path: str = "ml-1m/ratings.dat") -> pd.DataFrame:
     )
 
 
-def ml_test_train_split(df, test_proportion=0.2, random_seed=42):
+def ml_test_train_split(df: pd.DataFrame, test_proportion: float = 0.2, random_seed: int = 42) -> pd.DataFrame:
     """Test-train split of MovieLens datasets
     Because of how matrix factorisation works - ever user and movie MUST be present in the training set
     else the model won't be able to predict from this [1][2]. In the MovieLens dataset (1M), there are mutliple movies
@@ -59,13 +59,12 @@ def ml_test_train_split(df, test_proportion=0.2, random_seed=42):
     return df_train, df_test
 
 
-def preprocess_data():
+def load_and_merge_data() -> pd.DataFrame:
     """
     Merges movies and ratings on movieId.
 
     Returns:
-        train (DataFrame): DataFrame of training movies and user ratings
-        test (DataFrame): DataFrame of test movies and user ratings
+        merged (DataFrame): DataFrame of training movies and user ratings
     """
     movies = load_ml1m_movies()
     # Get ratings
@@ -73,6 +72,5 @@ def preprocess_data():
     merged = pd.merge(ratings, movies, on="movie_id")
     # Convert timestamps from unix
     merged["timestamp"] = pd.to_datetime(merged["timestamp"], unit='s')
-    # Split data
-    train, test = ml_test_train_split(merged)
-    return train, test
+
+    return merged
