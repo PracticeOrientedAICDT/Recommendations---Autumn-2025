@@ -1,0 +1,72 @@
+[
+  {
+    "userID":6013,
+    "itemID":608,
+    "title":"Fargo (1996)",
+    "genres":"Crime|Drama|Thriller",
+    "score":0.9446926117
+  },
+  {
+    "userID":6013,
+    "itemID":1617,
+    "title":"L.A. Confidential (1997)",
+    "genres":"Crime|Film-Noir|Mystery|Thriller",
+    "score":0.9390855432
+  },
+  {
+    "userID":6013,
+    "itemID":2396,
+    "title":"Shakespeare in Love (1998)",
+    "genres":"Comedy|Romance",
+    "score":0.9327838421
+  },
+  {
+    "userID":6013,
+    "itemID":1,
+    "title":"Toy Story (1995)",
+    "genres":"Animation|Children's|Comedy",
+    "score":0.9078128934
+  },
+  {
+    "userID":6013,
+    "itemID":1230,
+    "title":"Annie Hall (1977)",
+    "genres":"Comedy|Romance",
+    "score":0.8954139948
+  },
+  {
+    "userID":6013,
+    "itemID":296,
+    "title":"Pulp Fiction (1994)",
+    "genres":"Crime|Drama",
+    "score":0.8944934011
+  },
+  {
+    "userID":6013,
+    "itemID":2959,
+    "title":"Fight Club (1999)",
+    "genres":"Drama",
+    "score":0.8901795745
+  },
+  {
+    "userID":6013,
+    "itemID":919,
+    "title":"Wizard of Oz, The (1939)",
+    "genres":"Adventure|Children's|Drama|Musical",
+    "score":0.8854081631
+  },
+  {
+    "userID":6013,
+    "itemID":2028,
+    "title":"Saving Private Ryan (1998)",
+    "genres":"Action|Drama|War",
+    "score":0.8691731095
+  },
+  {
+    "userID":6013,
+    "itemID":3897,
+    "title":"Almost Famous (2000)",
+    "genres":"Comedy|Drama",
+    "score":0.8650015593
+  }
+]
