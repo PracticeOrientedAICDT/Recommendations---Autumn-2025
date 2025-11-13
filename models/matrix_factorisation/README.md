@@ -8,7 +8,7 @@ This folder contains various Matrix Factorisation models, which are part of the 
 * A virtual environment using python v3.11.0
 
 ### Setup
-1) Download the IMDb Users' Ratings Dataset from [here](https://ieee-dataport.org/open-access/imdb-users-ratings-dataset) and store this in a folder called `imdb-user-data` under the `Dataset` folder
+1) Download the IMDb Users' Ratings Dataset from [here](https://ieee-dataport.org/open-access/imdb-users-ratings-dataset) and store this in a folder called `imdb-user-data` under a `Dataset` folder *within* this folder i.e. path should be `models/matrix_factorisation/Dataset/imdb-user-data`.
 2) Install the required dependencies using `pip install -r requirements_imdb.txt`
 
 ### Usage
@@ -23,9 +23,9 @@ This is not required for running the MF_recommender_IMDB.ipynb notebook, but wou
 ## Matrix Factorisation on MovieLens 1M Dataset 
 
 ### Dataset
-Download the MovieLens 1M Dataset from [here](https://grouplens.org/datasets/movielens/1m/) and store this in a folder called `ml1m` under the `Dataset` folder
+Download the MovieLens 1M Dataset from [here](https://grouplens.org/datasets/movielens/1m/) and store this in a folder called `ml1m` under the main `Dataset` folder, i.e. path should be `Dataset/ml-1m`.
 
-Types implemented in `MF_recommender_ml1m.ipynb`
+Types of reccommendation system implemented in `MF_recommender_ml1m.ipynb` (see main folder)
 1) Matrix Factorisation for similarity slates (because you watched [x] you might like ...)
 2) Matrix Factorisation for Top-N for specific user
 
@@ -33,6 +33,6 @@ Types implemented in `MF_recommender_ml1m.ipynb`
 * A virtual environment using python > v3.13
 
 ### Setup:
-1) Create and activate venv
+1) Create and activate a venv
 2) Install the required dependencies using `pip install -r requirements_ml1m.txt`
-3) Navigate to `MF_recommender_ml1m.ipynb`and run all cells.
+3) Navigate to `MF_recommender_ml1m.ipynb`and run all cells using the venv as the kernel.
