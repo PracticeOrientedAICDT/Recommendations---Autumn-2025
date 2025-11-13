@@ -1,3 +1,14 @@
+"""Matrix factorisation algorithm applied to Top-N and Similarity (by movie) slates.
+
+i.e. answers the questions: "what are the top N movies for a specific user"
+and "because someone watched a movie, they should watch"
+
+Using:
+- SKLearn NMF (Non-Negative Matrix Factorisation)(https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.NMF.html)
+- Similarity code from https://github.com/dinesh-git17/movie_recommendation/tree/main
+- Top-N code from https://medium.com/@quindaly/step-by-step-nmf-example-in-python-9974e38dc9f9
+"""
+
 # Standard
 import pandas as pd
 from collections import Counter
@@ -10,29 +21,6 @@ import seaborn as sns
 from sklearn.decomposition import NMF
 from sklearn.metrics.pairwise import cosine_similarity
 from wordcloud import WordCloud
-
-
-def create_pivot_table(data, min_ratings=100):
-        """
-        Creates a pivot table (users x movies) with ratings.
-        Only movies with at least min_ratings are retained.
-        Fills missing ratings in the pivot table with 0.
-
-        Parameters:
-            data (dataframe): pandas dataframe containing all user ratings
-            min_ratings (int, optional): minimum number of ratings a movie must have to be included
-                in the pivot table, defaults to 100.
-        """
-        # Count number of ratings per movie
-        ratings_count = data.groupby("title")["rating"].count()
-        popular_movies = ratings_count[ratings_count >= min_ratings].index
-        filtered_data = data[data["title"].isin(popular_movies)]
-
-        # Create pivot table: rows = user_id, columns = title, values = rating
-        pivot = filtered_data.pivot_table(index="user_id", columns="title", values="rating")
-        # Fill missing values with 0
-        pivot_filled = pivot.fillna(0)
-        return pivot_filled
 
 
 class NMFMatrixFactorisation:
@@ -57,8 +45,31 @@ class NMFMatrixFactorisation:
             n_components (int, optional): Number of components to use in the
                 matrix factorisation, defaults to 20.
         """
-        self.pivot = create_pivot_table(data, min_ratings)
+        self.pivot = self._create_pivot_table(data, min_ratings)
         self._NMF_model(n_components)
+
+
+    def _create_pivot_table(self, data, min_ratings=100):
+        """
+        Creates a pivot table (users x movies) with ratings.
+        Only movies with at least min_ratings are retained.
+        Fills missing ratings in the pivot table with 0.
+
+        Parameters:
+            data (dataframe): pandas dataframe containing all user ratings
+            min_ratings (int, optional): minimum number of ratings a movie must have to be included
+                in the pivot table, defaults to 100.
+        """
+        # Count number of ratings per movie
+        ratings_count = data.groupby("title")["rating"].count()
+        popular_movies = ratings_count[ratings_count >= min_ratings].index
+        filtered_data = data[data["title"].isin(popular_movies)]
+
+        # Create pivot table: rows = user_id, columns = title, values = rating
+        pivot = filtered_data.pivot_table(index="user_id", columns="title", values="rating")
+        # Fill missing values with 0
+        pivot_filled = pivot.fillna(0)
+        return pivot_filled
 
 
     def _generate_movies_dataframe(self):
