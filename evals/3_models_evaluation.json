@@ -1,0 +1,44 @@
+[
+  {
+    "precision_at_k": 0.14,
+    "recall_at_k": 0.36829725829725835,
+    "f1_at_k": 0.18646697643601667,
+    "ndcg_at_k": 0.23224320731931422,
+    "hit_rate_at_k": 0.7666666666666667,
+    "mean_average_precision": 0.2008696123558469,
+    "mean_intra_list_similarity": 0.0,
+    "mean_gini_index": 0.013109510777142385,
+    "catalog_coverage": 1.0,
+    "num_users": 30,
+    "k": 10,
+    "model_name": "embdotbias_movielens"
+  },
+  {
+    "precision_at_k": 0.043333333333333335,
+    "recall_at_k": 0.0891137566137566,
+    "f1_at_k": 0.05547309702108463,
+    "ndcg_at_k": 0.05140504040222503,
+    "hit_rate_at_k": 0.3333333333333333,
+    "mean_average_precision": 0.08968520254385491,
+    "mean_intra_list_similarity": 0.0,
+    "mean_gini_index": 0.019190385123255178,
+    "catalog_coverage": 1.0,
+    "num_users": 30,
+    "k": 10,
+    "model_name": "als_movielens"
+  },
+  {
+    "precision_at_k": 0.09666666666666668,
+    "recall_at_k": 0.2008709808709809,
+    "f1_at_k": 0.12344113851180749,
+    "ndcg_at_k": 0.1613366601551594,
+    "hit_rate_at_k": 0.5666666666666667,
+    "mean_average_precision": 0.16912011559404289,
+    "mean_intra_list_similarity": 0.0,
+    "mean_gini_index": 0.0695141290454615,
+    "catalog_coverage": 1.0,
+    "num_users": 30,
+    "k": 10,
+    "model_name": "rlrmc_movielens"
+  }
+]
