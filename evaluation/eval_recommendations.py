@@ -30,7 +30,7 @@ class RecommendationEvaluator:
         """Initialize evaluator with movie embeddings"""
         self.movie_embeddings = None
         self.movie_id_to_embedding = {}
-        
+
         if os.path.exists(embeddings_path):
             with open(embeddings_path, 'rb') as f:
                 data = pickle.load(f)
@@ -41,14 +41,14 @@ class RecommendationEvaluator:
             print(f"Loaded embeddings for {len(self.movie_id_to_embedding)} movies")
         else:
             print("Warning: Movie embeddings not found. Similarity metrics will be skipped.")
-    
+
     def precision_at_k(self, y_true, y_score, k=10):
         """Calculate Precision@K"""
         if len(y_score) == 0:
             return 0.0
         top_k = np.argsort(y_score)[::-1][:k]
         return np.mean(np.take(y_true, top_k))
-    
+
     def recall_at_k(self, y_true, y_score, k=10):
         """Calculate Recall@K"""
         if len(y_score) == 0:
@@ -56,13 +56,13 @@ class RecommendationEvaluator:
         top_k = np.argsort(y_score)[::-1][:k]
         relevant = np.sum(y_true)
         return np.sum(np.take(y_true, top_k)) / relevant if relevant > 0 else 0
-    
+
     def f1_at_k(self, y_true, y_score, k=10):
         """Calculate F1@K"""
         p = self.precision_at_k(y_true, y_score, k)
         r = self.recall_at_k(y_true, y_score, k)
         return 2 * p * r / (p + r) if (p + r) > 0 else 0
-    
+
     def ndcg_at_k(self, y_true, y_score, k=10):
         """Calculate NDCG@K"""
         if len(y_score) == 0:
@@ -74,14 +74,14 @@ class RecommendationEvaluator:
         ideal = np.sort(y_true)[::-1][:k]
         idcg = np.sum(ideal / discounts)
         return dcg / idcg if idcg > 0 else 0
-    
+
     def hit_rate_at_k(self, y_true, y_score, k=10):
         """Calculate Hit Rate@K"""
         if len(y_score) == 0:
             return 0.0
         top_k = np.argsort(y_score)[::-1][:k]
         return 1.0 if np.sum(np.take(y_true, top_k)) > 0 else 0.0
-    
+
     def average_precision(self, y_true, y_score):
         """Calculate Average Precision"""
         if len(y_score) == 0:
@@ -90,32 +90,32 @@ class RecommendationEvaluator:
         y_true = np.take(y_true, order)
         precisions = [np.mean(y_true[:i + 1]) for i in range(len(y_true)) if y_true[i]]
         return np.mean(precisions) if precisions else 0
-    
+
     def intra_list_similarity(self, recommended_items, k=10):
         """Calculate Intra-List Similarity using movie embeddings"""
         if self.movie_embeddings is None or len(recommended_items) < 2:
             return 0.0
-        
+
         # Get embeddings for recommended items
         embeddings = []
         for item_id in recommended_items[:k]:
             if item_id in self.movie_id_to_embedding:
                 embeddings.append(self.movie_id_to_embedding[item_id])
-        
+
         if len(embeddings) < 2:
             return 0.0
-        
+
         embeddings = np.array(embeddings)
-        
+
         # Calculate pairwise similarities
         similarities = []
         for i in range(len(embeddings)):
             for j in range(i + 1, len(embeddings)):
                 sim = 1 - cosine(embeddings[i], embeddings[j])
                 similarities.append(sim)
-        
+
         return np.mean(similarities) if similarities else 0.0
-    
+
     def gini_index(self, scores):
         """Calculate Gini Index for diversity"""
         if len(scores) == 0:
@@ -124,7 +124,7 @@ class RecommendationEvaluator:
         n = len(scores)
         cumvals = np.cumsum(sorted_vals)
         return (n + 1 - 2 * np.sum(cumvals) / cumvals[-1]) / n if cumvals[-1] > 0 else 0
-    
+
     def coverage(self, all_recommendations, total_items):
         """Calculate catalog coverage"""
         unique_items = set()
@@ -132,21 +132,21 @@ class RecommendationEvaluator:
             for item_id in recs:
                 unique_items.add(item_id)
         return len(unique_items) / total_items
-    
+
     def evaluate_recommendations(self, df_recommendations, k=10):
         """Evaluate recommendations from CSV file"""
         print(f"Evaluating recommendations for {df_recommendations['user_id'].nunique()} users...")
-        
+
         results = []
         all_recommendations = []
-        
+
         for user_id, group in tqdm(df_recommendations.groupby('user_id'), desc="Evaluating users"):
             y_true = group['relevance'].values
             y_score = group['predicted_score'].values
             recommended_items = group['item_id'].values
-            
+
             all_recommendations.append(recommended_items)
-            
+
             # Calculate metrics
             metrics = {
                 'user_id': user_id,
@@ -161,9 +161,9 @@ class RecommendationEvaluator:
                 'num_recommendations': len(recommended_items),
                 'num_relevant': int(y_true.sum())
             }
-            
+
             results.append(metrics)
-        
+
         # Calculate overall metrics
         df_results = pd.DataFrame(results)
         overall_metrics = {
@@ -179,39 +179,39 @@ class RecommendationEvaluator:
             'num_users': len(results),
             'k': k
         }
-        
+
         return df_results, overall_metrics
 
 
 def main():
     """Main evaluation function"""
     import argparse
-    
+
     parser = argparse.ArgumentParser(description='Evaluate recommendations from CSV file')
     parser.add_argument('--input', default='recommendations.csv', help='Input CSV file with recommendations')
     parser.add_argument('--embeddings_path', default='movie_embeddings.pkl', help='Path to movie embeddings')
     parser.add_argument('--k', type=int, default=10, help='Top-K for evaluation')
     parser.add_argument('--output_dir', default='evaluation_results', help='Output directory for results')
-    
+
     args = parser.parse_args()
-    
+
     # Create output directory
     os.makedirs(args.output_dir, exist_ok=True)
-    
+
     # Load recommendations
     print(f"Loading recommendations from {args.input}...")
     df_recommendations = pd.read_csv(args.input)
     print(f"Loaded {len(df_recommendations)} recommendations for {df_recommendations['user_id'].nunique()} users")
-    
+
     # Initialize evaluator
     evaluator = RecommendationEvaluator(args.embeddings_path)
-    
+
     # Evaluate recommendations
     df_results, overall_metrics = evaluator.evaluate_recommendations(df_recommendations, k=args.k)
-    
+
     # Save results
     df_results.to_csv(f'{args.output_dir}/user_metrics.csv', index=False)
-    
+
     # Convert numpy types to Python types for JSON serialization
     def convert_numpy_types(obj):
         if isinstance(obj, np.integer):
@@ -221,12 +221,12 @@ def main():
         elif isinstance(obj, np.ndarray):
             return obj.tolist()
         return obj
-    
+
     overall_metrics_serializable = {k: convert_numpy_types(v) for k, v in overall_metrics.items()}
-    
+
     with open(f'{args.output_dir}/overall_metrics.json', 'w') as f:
         json.dump(overall_metrics_serializable, f, indent=2)
-    
+
     # Print results
     print("\n" + "="*60)
     print("EVALUATION RESULTS")
@@ -245,7 +245,7 @@ def main():
     print(f"  Gini Index:            {overall_metrics['mean_gini_index']:.4f}")
     print(f"  Catalog Coverage:      {overall_metrics['catalog_coverage']:.4f}")
     print("="*60)
-    
+
     print(f"\nResults saved to {args.output_dir}/")
     print("- user_metrics.csv: Per-user metrics")
     print("- overall_metrics.json: Overall aggregated metrics")
