@@ -1,0 +1,13 @@
+{
+  "precision_at_k": 0.011800000000000001,
+  "recall_at_k": 0.118,
+  "f1_at_k": 0.021454545454545455,
+  "ndcg_at_k": 0.06650924034169005,
+  "hit_rate_at_k": 0.118,
+  "mean_average_precision": 0.050862698412698415,
+  "mean_intra_list_similarity": 0.4095723628997803,
+  "mean_gini_index": 0.2578668896890808,
+  "catalog_coverage": 1.0,
+  "num_users": 1000,
+  "k": 10
+}
