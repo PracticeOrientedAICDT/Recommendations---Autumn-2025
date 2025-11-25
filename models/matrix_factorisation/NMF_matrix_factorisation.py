@@ -1,3 +1,14 @@
+"""Matrix factorisation algorithm applied to Top-N and Similarity (by movie) slates.
+
+i.e. answers the questions: "what are the top N movies for a specific user"
+and "because someone watched a movie, they should watch"
+
+Using:
+- SKLearn NMF (Non-Negative Matrix Factorisation)(https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.NMF.html)
+- Similarity code from https://github.com/dinesh-git17/movie_recommendation/tree/main
+- Top-N code from https://medium.com/@quindaly/step-by-step-nmf-example-in-python-9974e38dc9f9
+"""
+
 # Standard
 import pandas as pd
 from collections import Counter
@@ -12,7 +23,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from wordcloud import WordCloud
 
 
-class MatrixFactorisation:
+class NMFMatrixFactorisation:
     """
     A class representing a Matrix Factorisation model for a dataset, using SKLearn's NMF model.
     Where V = W . H is the prediction of user ratings made by the model,
@@ -34,27 +45,8 @@ class MatrixFactorisation:
             n_components (int, optional): Number of components to use in the
                 matrix factorisation, defaults to 20.
         """
-        self._create_pivot_table(data, min_ratings)
+        self.pivot = self._create_pivot_table(data, min_ratings)
         self._NMF_model(n_components)
-
-
-    def _generate_movies_dataframe(self):
-        """Generate movies dataframe to make genres wordcloud
-
-        Returns:
-            movies_df (Dataframe): dataframe of movie_id, title and genres, where
-                genres have been split into a list.
-        """
-        path = "Dataset/ml-1m/movies.dat"
-        movies_df = pd.read_csv(
-            path,
-            sep="::",
-            engine="python",
-            names=["movie_id", "title", "genres"],
-            encoding="latin-1",
-        )
-        movies_df['genres'] = movies_df['genres'].apply(lambda x: x.split('|'))
-        return movies_df
 
 
     def _create_pivot_table(self, data, min_ratings=100):
@@ -77,7 +69,26 @@ class MatrixFactorisation:
         pivot = filtered_data.pivot_table(index="user_id", columns="title", values="rating")
         # Fill missing values with 0
         pivot_filled = pivot.fillna(0)
-        self.pivot = pivot_filled
+        return pivot_filled
+
+
+    def _generate_movies_dataframe(self):
+        """Generate movies dataframe to make genres wordcloud
+
+        Returns:
+            movies_df (Dataframe): dataframe of movie_id, title and genres, where
+                genres have been split into a list.
+        """
+        path = "Dataset/ml-1m/movies.dat"
+        movies_df = pd.read_csv(
+            path,
+            sep="::",
+            engine="python",
+            names=["movie_id", "title", "genres"],
+            encoding="latin-1",
+        )
+        movies_df['genres'] = movies_df['genres'].apply(lambda x: x.split('|'))
+        return movies_df
 
 
     def _NMF_model(self, n_components=20):
