@@ -171,9 +171,12 @@ class NMFMatrixFactorisation:
             rec_df (DataFrame): pandas dataframe containing only the movies recommended for the user
         """
         movies_df = self._generate_movies_dataframe()
+        # rec_df = movies_df[movies_df['title'].isin(rec)] # Doesn't preserve order of recommendations
         genres = [movies_df["genres"][movies_df.title[movies_df.title == movie].index.to_list()[0]] for movie in rec]
-        rec_df = pd.DataFrame({"title": rec,
-                            "genres": genres})
+        ids = [movies_df["movie_id"][movies_df.title[movies_df.title == movie].index.to_list()[0]] for movie in rec]
+        rec_df = pd.DataFrame({"movie_id": ids,
+                               "title": rec,
+                               "genres": genres})
         return rec_df
 
 
