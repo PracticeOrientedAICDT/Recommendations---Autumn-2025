@@ -213,6 +213,7 @@ class OfflineSlateEvaluator:
             pred_ratings (list): predicted ratings of the user for each movie in the slate
             k (int): how many items in a slate to evaluate at. Defaults to 10.
         """
+        # TODO - Average precision metric
 
         # Calculate metrics
         metrics = {
