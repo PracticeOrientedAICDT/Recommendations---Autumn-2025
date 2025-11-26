@@ -191,18 +191,28 @@ class OfflineSlateEvaluator:
 
         return np.mean(similarities) if similarities else 0.0
 
+    def gini_index(self, scores):
+        """Calculate Gini Index for diversity
+        Measures fairness or exposure diversity.
+        Low Gini = more equal exposure across items or categories.
+        Ensures that popular items don’t dominate recommendation slates.
 
-    def calculate_metrics(self, k=10):
-        """ TBC
         Args:
+            scores (list): predicted ratings of the user for each movie in the slate
+        """
+        if len(scores) == 0:
+            return 0.0
+        sorted_vals = np.sort(scores)
+        n = len(scores)
+        cumvals = np.cumsum(sorted_vals)
+        return (n + 1 - 2 * np.sum(cumvals) / cumvals[-1]) / n if cumvals[-1] > 0 else 0
+
+    def calculate_metrics(self, pred_ratings, k=10):
+        """ Calculate offline metrics for one user's slate of length K
+        Args:
+            pred_ratings (list): predicted ratings of the user for each movie in the slate
             k (int): how many items in a slate to evaluate at. Defaults to 10.
         """
-        # TODO - Decide how to generate slates passed into this, should they be just generated from a test set?
-        # - Will relevance work if the user didn't rate the item recommended???
-        # MF model should generate slates of movies that haven't been seen by the user ONLY
-        # So unless they are contained in the test set, then they won't be "relevant"??
-        # MAYBE - model is meant to recommend the movies that are in the test set with good ratings as these are the
-        # ground truth "relevant" movies for a user
 
         # Calculate metrics
         metrics = {
@@ -211,6 +221,7 @@ class OfflineSlateEvaluator:
             'f1@k': self.f1_at_k(k),
             'ndcg_at_k': self.ndcg_at_k(k),
             'hit_rate_at_k': self.hit_rate_at_k(k),
-            'intra_list_similarity': self.intra_list_similarity(k)
+            'intra_list_similarity': self.intra_list_similarity(k),
+            'gini_index': self.gini_index(pred_ratings)
         }
         return metrics
