@@ -155,7 +155,7 @@ class OfflineSlateEvaluator:
             return 0.0
         return dcg / idcg
 
-    def hit_rate_at_k(self, y_true, y_score, k=10):
+    def hit_rate_at_k(self, k=10):
         """Calculate Hit Rate@K
         Checks if at least one of the user’s relevant items appears in the top-K list.
         Args:
