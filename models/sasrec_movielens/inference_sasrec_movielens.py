@@ -27,7 +27,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Inference SASRec on MovieLens")
     parser.add_argument("--user-id", type=int, default=1, help="User ID to recommend for")
     parser.add_argument("--top-k", type=int, default=10, help="Number of recommendations")
-    parser.add_argument("--model-dir", type=str, default="models/sasrec_movielens", help="Directory where model is saved")
+    parser.add_argument("--model-dir", type=str, default="models/sasrec_movielens",
+                        help="Directory where model is saved")
     return parser.parse_args()
 
 
@@ -113,7 +114,7 @@ def predict(user_id, model, config, mappings, user_history, item_metadata, top_k
     # Candidate generation: all items
     # SASRec predicts scores for given candidates.
     # We can pass all items as candidates.
-    # Note: This might be slow for very large item sets. 
+    # Note: This might be slow for very large item sets.
     # For MovieLens 1M (3706 items), it's fine.
 
     all_items = np.arange(1, item_num + 1)
@@ -172,7 +173,8 @@ def main():
 
     if recs:
         df = pd.DataFrame(recs)
-        LOGGER.info(f"Top {args.top_k} recommendations for User {args.user_id}:\n{df[['itemID', 'title', 'genres', 'score']].to_string(index=False)}")
+        LOGGER.info(f"Top {args.top_k} recommendations for User \
+                    {args.user_id}:\n{df[['itemID', 'title', 'genres', 'score']].to_string(index=False)}")
 
         # Output JSON
         print(json.dumps(recs, indent=2))

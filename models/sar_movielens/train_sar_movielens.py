@@ -178,10 +178,14 @@ def main() -> None:
     top_k = evaluate_model(model, test, args.top_k)
 
     # Evaluate metrics
-    eval_map = map_at_k(test, top_k, col_user="userID", col_item="itemID", col_rating="rating", col_prediction="prediction", k=args.top_k)
-    eval_ndcg = ndcg_at_k(test, top_k, col_user="userID", col_item="itemID", col_rating="rating", col_prediction="prediction", k=args.top_k)
-    eval_precision = precision_at_k(test, top_k, col_user="userID", col_item="itemID", col_rating="rating", col_prediction="prediction", k=args.top_k)
-    eval_recall = recall_at_k(test, top_k, col_user="userID", col_item="itemID", col_rating="rating", col_prediction="prediction", k=args.top_k)
+    eval_map = map_at_k(test, top_k, col_user="userID", col_item="itemID",
+                        col_rating="rating", col_prediction="prediction", k=args.top_k)
+    eval_ndcg = ndcg_at_k(test, top_k, col_user="userID", col_item="itemID",
+                          col_rating="rating", col_prediction="prediction", k=args.top_k)
+    eval_precision = precision_at_k(test, top_k, col_user="userID", col_item="itemID",
+                                    col_rating="rating", col_prediction="prediction", k=args.top_k)
+    eval_recall = recall_at_k(test, top_k, col_user="userID", col_item="itemID",
+                              col_rating="rating", col_prediction="prediction", k=args.top_k)
 
     LOGGER.info(
         "Test Metrics - MAP: %.4f, NDCG: %.4f, Precision@10: %.4f, Recall@10: %.4f",
