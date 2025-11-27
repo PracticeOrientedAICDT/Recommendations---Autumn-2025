@@ -14,9 +14,6 @@ import numpy as np
 import pandas as pd
 import torch
 
-# Suppress FutureWarning about DataFrame.swapaxes deprecation
-warnings.filterwarnings("ignore", category=FutureWarning, message=".*swapaxes.*")
-
 from recommenders.datasets import movielens
 from recommenders.datasets.python_splitters import python_stratified_split
 from recommenders.evaluation.python_evaluation import (
@@ -35,6 +32,9 @@ from recommenders.utils.constants import (
     DEFAULT_RATING_COL as RATING,
     DEFAULT_PREDICTION_COL as PREDICTION,
 )
+
+# Suppress FutureWarning about DataFrame.swapaxes deprecation
+warnings.filterwarnings("ignore", category=FutureWarning, message=".*swapaxes.*")
 
 LOGGER = logging.getLogger(__name__)
 
@@ -235,7 +235,7 @@ def main() -> None:
     for epoch in range(args.epochs):
         train_loss = trainer.train_epoch(data.train)
         valid_loss = trainer.validate(data.valid)
-        
+
         LOGGER.info(
             "Epoch %s/%s - Train Loss: %.4f, Valid Loss: %.4f",
             epoch + 1,
@@ -243,7 +243,7 @@ def main() -> None:
             train_loss,
             valid_loss if valid_loss is not None else 0.0,
         )
-        
+
         if not args.no_wandb and WANDB_AVAILABLE:
             log_dict = {"train/loss": train_loss, "epoch": epoch + 1}
             if valid_loss is not None:
@@ -274,7 +274,7 @@ def main() -> None:
     # Build candidate pairs
     users_items = cartesian_product(np.array(test_users), np.array(total_items))
     users_items_df = pd.DataFrame(users_items, columns=[USER, ITEM])
-    
+
     # Remove seen items
     users_items_candidates = pd.merge(
         users_items_df, train_valid_df.astype(str), on=[USER, ITEM], how="left"
@@ -390,5 +390,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-

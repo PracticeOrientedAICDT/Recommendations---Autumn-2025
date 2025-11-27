@@ -15,9 +15,6 @@ import pandas as pd
 import cornac
 import torch
 
-# Suppress FutureWarning about DataFrame.swapaxes deprecation
-warnings.filterwarnings("ignore", category=FutureWarning, message=".*swapaxes.*")
-
 from recommenders.datasets import movielens
 from recommenders.datasets.python_splitters import python_random_split
 from recommenders.evaluation.python_evaluation import (
@@ -34,6 +31,9 @@ from recommenders.utils.constants import (
     DEFAULT_RATING_COL as RATING,
     DEFAULT_PREDICTION_COL as PREDICTION,
 )
+
+# Suppress FutureWarning about DataFrame.swapaxes deprecation
+warnings.filterwarnings("ignore", category=FutureWarning, message=".*swapaxes.*")
 
 LOGGER = logging.getLogger(__name__)
 
@@ -269,10 +269,14 @@ def main() -> None:
     LOGGER.info("Prediction took %.4f seconds", t.interval)
 
     # Calculate metrics
-    eval_map = map_at_k(test, all_predictions, col_user=USER, col_item=ITEM, col_rating=RATING, col_prediction=PREDICTION, k=args.top_k)
-    eval_ndcg = ndcg_at_k(test, all_predictions, col_user=USER, col_item=ITEM, col_rating=RATING, col_prediction=PREDICTION, k=args.top_k)
-    eval_precision = precision_at_k(test, all_predictions, col_user=USER, col_item=ITEM, col_rating=RATING, col_prediction=PREDICTION, k=args.top_k)
-    eval_recall = recall_at_k(test, all_predictions, col_user=USER, col_item=ITEM, col_rating=RATING, col_prediction=PREDICTION, k=args.top_k)
+    eval_map = map_at_k(test, all_predictions, col_user=USER, col_item=ITEM,
+                        col_rating=RATING, col_prediction=PREDICTION, k=args.top_k)
+    eval_ndcg = ndcg_at_k(test, all_predictions, col_user=USER, col_item=ITEM, col_rating=RATING,
+                          col_prediction=PREDICTION, k=args.top_k)
+    eval_precision = precision_at_k(test, all_predictions, col_user=USER, col_item=ITEM, col_rating=RATING,
+                                    col_prediction=PREDICTION, k=args.top_k)
+    eval_recall = recall_at_k(test, all_predictions, col_user=USER, col_item=ITEM, col_rating=RATING,
+                              col_prediction=PREDICTION, k=args.top_k)
 
     LOGGER.info(
         "Test Metrics - MAP: %.4f, NDCG: %.4f, Precision@%d: %.4f, Recall@%d: %.4f",

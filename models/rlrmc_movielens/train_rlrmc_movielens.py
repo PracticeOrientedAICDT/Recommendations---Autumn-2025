@@ -14,9 +14,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-# Suppress FutureWarning about DataFrame.swapaxes deprecation
-warnings.filterwarnings("ignore", category=FutureWarning, message=".*swapaxes.*")
-
 from recommenders.datasets import movielens
 from recommenders.datasets.python_splitters import python_random_split
 from recommenders.evaluation.python_evaluation import (
@@ -29,6 +26,9 @@ from recommenders.evaluation.python_evaluation import (
 )
 from recommenders.models.rlrmc.RLRMCdataset import RLRMCdataset
 from recommenders.models.rlrmc.RLRMCalgorithm import RLRMCalgorithm
+
+# Suppress FutureWarning about DataFrame.swapaxes deprecation
+warnings.filterwarnings("ignore", category=FutureWarning, message=".*swapaxes.*")
 
 LOGGER = logging.getLogger(__name__)
 
@@ -222,7 +222,7 @@ def main() -> None:
     # Get all user-item pairs for ranking
     all_users = test["userID"].unique()
     all_items = test["itemID"].unique()
-    
+
     # Create candidate pairs (excluding training pairs)
     train_pairs = set(zip(train["userID"].astype(str), train["itemID"].astype(str)))
     candidates = []
@@ -230,7 +230,7 @@ def main() -> None:
         for item in all_items:
             if (str(user), str(item)) not in train_pairs:
                 candidates.append({"userID": user, "itemID": item})
-    
+
     if candidates:
         candidates_df = pd.DataFrame(candidates)
         candidate_predictions = model.predict(
@@ -346,5 +346,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-

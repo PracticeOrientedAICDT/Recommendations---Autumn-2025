@@ -114,7 +114,7 @@ def main() -> None:
         )
 
     recommendations = recommendation_df.head(args.top_k)
-    
+
     # Select columns in order: userID, itemID, title, genres, score
     output_cols = ["userID", "itemID", "score"]
     if "title" in recommendations.columns:
@@ -122,7 +122,7 @@ def main() -> None:
     if "genres" in recommendations.columns:
         output_cols.insert(3, "genres")
     recommendations = recommendations[output_cols]
-    
+
     output_path = args.model_dir / f"recommendations_user_{args.user_id}.json"
     recommendations.to_json(output_path, orient="records", indent=2)
     LOGGER.info("Saved recommendations to %s", output_path)
@@ -131,4 +131,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

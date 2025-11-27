@@ -85,7 +85,7 @@ def main() -> None:
         mappings = json.load(f)
     uid_map = mappings["uid_map"]
     iid_map = mappings["iid_map"]
-    
+
     # Invert iid_map to map index -> Item ID
     # JSON keys are strings, but values are integers (indices)
     # iid_map: {"1": 0, "2": 1, ...}
@@ -107,25 +107,25 @@ def main() -> None:
         return
 
     user_idx = uid_map[user_id]
-    
+
     LOGGER.info("Scoring items for user %s (index %s)", user_id, user_idx)
     # Score all items for this user
     # model.score(user_idx) returns a numpy array of scores
     scores = model.score(user_idx)
-    
+
     # Get top K indices
     # argsort returns indices that sort the array
     # [::-1] reverses it to descending order
     top_k_indices = np.argsort(scores)[::-1][:args.top_k]
-    
+
     top_k_items = []
     for idx in top_k_indices:
         item_id = id_map[idx]
         score = float(scores[idx])
         top_k_items.append({ITEM: item_id, PREDICTION: score})
-        
+
     top_k_df = pd.DataFrame(top_k_items)
-    
+
     # Load item metadata
     LOGGER.info("Loading item metadata for size %s", args.data_size)
     item_df = movielens.load_item_df(
@@ -137,7 +137,7 @@ def main() -> None:
     top_k_df = top_k_df.merge(
         item_df[[ITEM, "title", "genres"]], on=ITEM, how="left"
     )
-    
+
     # Reorder columns
     top_k_df = top_k_df[[ITEM, "title", "genres", PREDICTION]]
 
@@ -159,7 +159,7 @@ def main() -> None:
         "top_k": args.top_k,
         "recommendations": top_k_df.to_dict(orient="records"),
     }
-    
+
     if args.output:
         args.output.write_text(json.dumps(output_data, indent=2))
         LOGGER.info("Recommendations saved to %s", args.output)
@@ -169,4 +169,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

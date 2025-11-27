@@ -76,7 +76,7 @@ def load_model(model_dir: Path) -> tuple[EmbeddingDotBias, dict]:
     classes_path = model_dir / "classes.json"
     if not classes_path.exists():
         raise FileNotFoundError(f"Classes file not found: {classes_path}")
-    
+
     classes_dict = json.loads(classes_path.read_text())
     classes = {USER: classes_dict[USER], ITEM: classes_dict[ITEM]}
 
@@ -84,7 +84,7 @@ def load_model(model_dir: Path) -> tuple[EmbeddingDotBias, dict]:
     metadata_path = model_dir / "metadata.json"
     if not metadata_path.exists():
         raise FileNotFoundError(f"Metadata file not found: {metadata_path}")
-    
+
     metadata = json.loads(metadata_path.read_text())
     n_factors = metadata["n_factors"]
     y_range = metadata["y_range"]
@@ -102,7 +102,7 @@ def load_model(model_dir: Path) -> tuple[EmbeddingDotBias, dict]:
     model_path = model_dir / "model.pth"
     if not model_path.exists():
         raise FileNotFoundError(f"Model file not found: {model_path}")
-    
+
     model.load_state_dict(torch.load(model_path, map_location="cpu"))
     model.eval()
 
@@ -197,5 +197,3 @@ def main() -> None:
 if __name__ == "__main__":
     import numpy as np
     main()
-
-

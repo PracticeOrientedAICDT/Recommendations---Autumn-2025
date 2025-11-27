@@ -15,12 +15,6 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 
-# Suppress FutureWarning about DataFrame.swapaxes deprecation
-warnings.filterwarnings("ignore", category=FutureWarning, message=".*swapaxes.*")
-# Suppress TensorFlow warnings
-tf.get_logger().setLevel("ERROR")
-tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
-
 from recommenders.datasets import movielens
 from recommenders.datasets.python_splitters import python_chrono_split
 from recommenders.evaluation.python_evaluation import (
@@ -31,6 +25,12 @@ from recommenders.evaluation.python_evaluation import (
 )
 from recommenders.models.ncf.dataset import Dataset as NCFDataset
 from recommenders.models.ncf.ncf_singlenode import NCF
+
+# Suppress FutureWarning about DataFrame.swapaxes deprecation
+warnings.filterwarnings("ignore", category=FutureWarning, message=".*swapaxes.*")
+# Suppress TensorFlow warnings
+tf.get_logger().setLevel("ERROR")
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
 LOGGER = logging.getLogger(__name__)
 
@@ -205,14 +205,14 @@ def main() -> None:
         )
 
         LOGGER.info("Training NCF model")
-        
+
         # Track training metrics if wandb is enabled
         if not args.no_wandb and WANDB_AVAILABLE:
             # NCF doesn't expose per-epoch metrics easily, so we'll log after training
             model.fit(dataset)
         else:
             model.fit(dataset)
-        
+
         checkpoint_dir = args.model_dir / "checkpoint"
         model.save(str(checkpoint_dir))
 
@@ -294,4 +294,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

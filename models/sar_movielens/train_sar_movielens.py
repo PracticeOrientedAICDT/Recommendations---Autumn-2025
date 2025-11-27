@@ -15,9 +15,6 @@ import joblib
 import numpy as np
 import pandas as pd
 
-# Suppress FutureWarning about DataFrame.swapaxes deprecation
-warnings.filterwarnings("ignore", category=FutureWarning, message=".*swapaxes.*")
-
 from recommenders.datasets import movielens
 from recommenders.datasets.python_splitters import python_stratified_split
 from recommenders.evaluation.python_evaluation import (
@@ -27,6 +24,9 @@ from recommenders.evaluation.python_evaluation import (
     recall_at_k,
 )
 from recommenders.models.sar import SAR
+
+# Suppress FutureWarning about DataFrame.swapaxes deprecation
+warnings.filterwarnings("ignore", category=FutureWarning, message=".*swapaxes.*")
 
 LOGGER = logging.getLogger(__name__)
 
@@ -176,13 +176,13 @@ def main() -> None:
     model.fit(train)
 
     top_k = evaluate_model(model, test, args.top_k)
-    
+
     # Evaluate metrics
     eval_map = map_at_k(test, top_k, col_user="userID", col_item="itemID", col_rating="rating", col_prediction="prediction", k=args.top_k)
     eval_ndcg = ndcg_at_k(test, top_k, col_user="userID", col_item="itemID", col_rating="rating", col_prediction="prediction", k=args.top_k)
     eval_precision = precision_at_k(test, top_k, col_user="userID", col_item="itemID", col_rating="rating", col_prediction="prediction", k=args.top_k)
     eval_recall = recall_at_k(test, top_k, col_user="userID", col_item="itemID", col_rating="rating", col_prediction="prediction", k=args.top_k)
-    
+
     LOGGER.info(
         "Test Metrics - MAP: %.4f, NDCG: %.4f, Precision@10: %.4f, Recall@10: %.4f",
         eval_map,
@@ -190,7 +190,7 @@ def main() -> None:
         eval_precision,
         eval_recall,
     )
-    
+
     if not args.no_wandb and WANDB_AVAILABLE:
         wandb.log(
             {
@@ -200,7 +200,7 @@ def main() -> None:
                 "test/recall@10": eval_recall,
             }
         )
-    
+
     metadata = {
         "data_size": args.data_size,
         "train_rows": len(train),
@@ -221,11 +221,10 @@ def main() -> None:
         sample_user,
         top_k[top_k["userID"] == sample_user].head(args.top_k),
     )
-    
+
     if not args.no_wandb and WANDB_AVAILABLE:
         wandb.finish()
 
 
 if __name__ == "__main__":
     main()
-

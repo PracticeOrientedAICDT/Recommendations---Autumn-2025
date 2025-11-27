@@ -10,9 +10,6 @@ import logging
 import warnings
 from pathlib import Path
 
-# Suppress FutureWarning about DataFrame.swapaxes deprecation
-warnings.filterwarnings("ignore", category=FutureWarning, message=".*swapaxes.*")
-
 from pyspark.ml.recommendation import ALSModel, ALS
 from pyspark.sql import SparkSession
 from pyspark.sql.types import (
@@ -27,6 +24,10 @@ from recommenders.datasets import movielens
 from recommenders.datasets.spark_splitters import spark_random_split
 from recommenders.evaluation.spark_evaluation import SparkRankingEvaluation
 from recommenders.utils.spark_utils import start_or_get_spark
+
+
+# Suppress FutureWarning about DataFrame.swapaxes deprecation
+warnings.filterwarnings("ignore", category=FutureWarning, message=".*swapaxes.*")
 
 LOGGER = logging.getLogger(__name__)
 
@@ -229,7 +230,7 @@ def main() -> None:
         items = train_df.select("MovieId").distinct()
         user_item = users.crossJoin(items)
         dfs_pred = model.transform(user_item)
-        
+
         dfs_pred_exclude_train = dfs_pred.alias("pred").join(
             train_df.alias("train"),
             (dfs_pred["UserId"] == train_df["UserId"]) & (dfs_pred["MovieId"] == train_df["MovieId"]),
@@ -238,17 +239,17 @@ def main() -> None:
         top_all = dfs_pred_exclude_train.filter(dfs_pred_exclude_train[f"train.Rating"].isNull()) \
             .select('pred.UserId', 'pred.MovieId', 'pred.prediction')
         top_all.cache().count()
-        
+
         rank_eval = SparkRankingEvaluation(
             test_df, top_all, k=10, col_user="UserId", col_item="MovieId",
             col_rating="Rating", col_prediction="prediction", relevancy_method="top_k"
         )
-        
+
         eval_map = rank_eval.map_at_k()
         eval_ndcg = rank_eval.ndcg_at_k()
         eval_precision = rank_eval.precision_at_k()
         eval_recall = rank_eval.recall_at_k()
-        
+
         LOGGER.info(
             "Test Metrics - MAP: %.4f, NDCG: %.4f, Precision@10: %.4f, Recall@10: %.4f",
             eval_map,
@@ -256,7 +257,7 @@ def main() -> None:
             eval_precision,
             eval_recall,
         )
-        
+
         if not args.no_wandb and WANDB_AVAILABLE:
             wandb.log(
                 {
@@ -297,4 +298,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
