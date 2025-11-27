@@ -37,7 +37,15 @@ class OfflineModelEvaluator:
         pass
 
     def calculate_metrics(self, y_true, y_pred, k=10):
-        # Calculate metrics
+        """ Calculate offline metrics for model
+
+        Args:
+            y_true (list): true user ratings for each movie from a test set
+            y_pred (list): predicted user ratings for the same movies
+
+        Returns:
+            metrics (dict): RMSE, MAE, R-Squared and Explained Variance
+        """
         metrics = {
             "RMSE": float(np.sqrt(mean_squared_error(y_true, y_pred))),
             "MAE": mean_absolute_error(y_true, y_pred),
