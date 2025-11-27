@@ -50,19 +50,20 @@ def load_test_data(data_size: str, train_ratio: float = 0.75, seed: int = 42):
     # Remove cold users from test set (users must be in training set)
     test_df = test_df[test_df["userID"].isin(train_df["userID"])]
 
-    LOGGER.info("Train set: %d users, %d items, %d interactions", 
-                train_df["userID"].nunique(), 
+    LOGGER.info("Train set: %d users, %d items, %d interactions",
+                train_df["userID"].nunique(),
                 train_df["itemID"].nunique(),
                 len(train_df))
-    LOGGER.info("Test set: %d users, %d items, %d interactions", 
-                test_df["userID"].nunique(), 
+    LOGGER.info("Test set: %d users, %d items, %d interactions",
+                test_df["userID"].nunique(),
                 test_df["itemID"].nunique(),
                 len(test_df))
 
     return train_df, test_df
 
 
-def generate_recommendations_sar(model_dir: Path, test_users: List[str], train_users: set, top_k: int = 100) -> pd.DataFrame:
+def generate_recommendations_sar(model_dir: Path, test_users: List[str],
+                                 train_users: set, top_k: int = 100) -> pd.DataFrame:
     """Generate recommendations using SAR model"""
     import joblib
 
@@ -109,7 +110,7 @@ def generate_recommendations_als(model_dir: Path, test_users: List[str], top_k: 
     if not metadata_path.exists():
         return pd.DataFrame()
 
-    spark = SparkSession.builder.appName("ALS Inference").config("spark.sql.warehouse.dir", "/tmp/spark-warehouse").getOrCreate()
+    spark = SparkSession.builder.appName("ALS Inference").config("spark.sql.warehouse.dir", "/tmp/spark-warehouse").getOrCreate()  # noqa: E501
     try:
         model_path = model_dir / "spark_model"
         if not model_path.exists():
@@ -568,7 +569,8 @@ def main():
 
     parser = argparse.ArgumentParser(description="Evaluate all models")
     parser.add_argument("--models-dir", type=Path, default=Path("models"), help="Directory containing model folders")
-    parser.add_argument("--output-dir", type=Path, default=Path("results/evaluation_all_models"), help="Output directory")
+    parser.add_argument("--output-dir", type=Path, default=Path("results/evaluation_all_models"),
+                        help="Output directory")
     parser.add_argument("--top-k", type=int, default=100, help="Top-K for recommendations")
     parser.add_argument("--eval-k", type=int, default=10, help="Top-K for evaluation")
     parser.add_argument("--sample-users", type=int, default=None, help="Sample N users for faster evaluation")
@@ -595,7 +597,7 @@ def main():
     for model_dir in model_dirs:
         model_name = model_dir.name
         try:
-            metrics = evaluate_model(model_name, model_dir, test_df, train_df, args.output_dir, 
+            metrics = evaluate_model(model_name, model_dir, test_df, train_df, args.output_dir,
                                     top_k=args.top_k, eval_k=args.eval_k)
             if metrics:
                 all_metrics.append(metrics)
@@ -621,7 +623,7 @@ def main():
         print("\n" + "="*80)
         print("EVALUATION SUMMARY")
         print("="*80)
-        print(results_df[["model_name", "precision_at_k", "recall_at_k", "ndcg_at_k", "mean_average_precision"]].to_string(index=False))
+        print(results_df[["model_name", "precision_at_k", "recall_at_k", "ndcg_at_k", "mean_average_precision"]].to_string(index=False))  # noqa: E501
         print("="*80)
     else:
         LOGGER.warning("No metrics collected from any model")
