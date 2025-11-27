@@ -63,6 +63,7 @@ class OfflineSlateEvaluator:
                 If embeddings missing, ILS will be 0.0
 
         Parameters:
+            user_id (int): see Args
             recommended_items (list): rec_ids (see Args)
             min_rating_relevant (float): rel_score (see above)
             user_test_set (DataFrame): subset of df_test containing only data relevant to user
@@ -74,8 +75,9 @@ class OfflineSlateEvaluator:
             movie_embeddings (list): embeddings of dataset
             movie_id_to_embedding (?): embeddings for movie ID
         """
-        # Store recommended ids
+        # Store recommended ids and user_id
         self.recommended_items = rec_ids
+        self.user_id = user_id
         # Store minimum rating value to use for relevance
         self.min_rating_relevant = rel_score
 
@@ -107,7 +109,7 @@ class OfflineSlateEvaluator:
             movie_ids = data['movie_ids']
             for mid, emb in zip(movie_ids, self.movie_embeddings):
                 self.movie_id_to_embedding[int(mid)] = np.array(emb)
-            print(f"Loaded embeddings for {len(self.movie_id_to_embedding)} movies")
+            # print(f"Loaded embeddings for {len(self.movie_id_to_embedding)} movies")
         else:
             print("Warning: Movie embeddings not found. Similarity metrics will be skipped.")
 
@@ -135,7 +137,7 @@ class OfflineSlateEvaluator:
         """
         rel_at_k = np.sum(np.array(self.relevance)[:k])
         num_poss_relevant = sum(score > self.min_rating_relevant for score in self.user_test_set["rating"])
-        return float(rel_at_k/num_poss_relevant)
+        return float(rel_at_k/num_poss_relevant) if num_poss_relevant != 0 else 0
 
     def f1_at_k(self, k=10):
         """Calculate F1@K
@@ -274,9 +276,10 @@ class OfflineSlateEvaluator:
 
         # Calculate metrics
         metrics = {
+            'user_id': self.user_id,
             'precision_at_k': self.precision_at_k(k),
             'recall_at_k': self.recall_at_k(k),
-            'f1@k': self.f1_at_k(k),
+            'f1_at_k': self.f1_at_k(k),
             'ndcg_at_k': self.ndcg_at_k(k),
             'hit_rate_at_k': self.hit_rate_at_k(k),
             'average_precision': self.average_precision(),
@@ -284,3 +287,22 @@ class OfflineSlateEvaluator:
             'gini_index': self.gini_index(pred_ratings)
         }
         return metrics
+
+
+def coverage(all_recommendations, total_items):
+        """Calculate catalogue coverage
+
+        Args:
+            all_recommendations (list): 2D array of all recommendations made by model for all users being tested
+            total_items (int): total number of unique items that could be recommended
+                NOTE: this differs from Ed's implementation where total_items was
+                the number of different items recommended.
+
+        Returns:
+            (float): coverage equal to number of unique items recommended divided by total catalogue size
+        """
+        unique_items = set()
+        for recs in all_recommendations:
+            for item_id in recs:
+                unique_items.add(item_id)
+        return len(unique_items) / total_items
