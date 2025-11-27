@@ -251,7 +251,7 @@ class OfflineSlateEvaluator:
                 sim = 1 - cosine(embeddings[i], embeddings[j])
                 similarities.append(sim)
 
-        return np.mean(similarities) if similarities else 0.0
+        return float(np.mean(similarities)) if similarities else 0.0
 
     def gini_index(self, scores):
         """Calculate Gini Index for diversity
