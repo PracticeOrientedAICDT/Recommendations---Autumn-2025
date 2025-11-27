@@ -1,0 +1,72 @@
+[
+  {
+    "UserId":6013,
+    "MovieId":2192,
+    "title":"See the Sea (Regarde la mer) (1997)",
+    "genres":"Drama",
+    "score":7.4507350922
+  },
+  {
+    "UserId":6013,
+    "MovieId":687,
+    "title":"Country Life (1994)",
+    "genres":"Drama|Romance",
+    "score":6.5120248795
+  },
+  {
+    "UserId":6013,
+    "MovieId":2305,
+    "title":"Slam (1998)",
+    "genres":"Drama",
+    "score":6.4052019119
+  },
+  {
+    "UserId":6013,
+    "MovieId":3645,
+    "title":"Cleo From 5 to 7 (Cl\u00e9o de 5 \u00e0 7) (1962)",
+    "genres":"Drama",
+    "score":6.3191623688
+  },
+  {
+    "UserId":6013,
+    "MovieId":320,
+    "title":"Suture (1993)",
+    "genres":"Film-Noir|Thriller",
+    "score":6.2836685181
+  },
+  {
+    "UserId":6013,
+    "MovieId":3092,
+    "title":"Chushingura (1962)",
+    "genres":"Drama",
+    "score":6.1522569656
+  },
+  {
+    "UserId":6013,
+    "MovieId":2933,
+    "title":"Fire Within, The (Le Feu Follet) (1963)",
+    "genres":"Drama",
+    "score":6.0792531967
+  },
+  {
+    "UserId":6013,
+    "MovieId":84,
+    "title":"Last Summer in the Hamptons (1995)",
+    "genres":"Comedy|Drama",
+    "score":6.0605587959
+  },
+  {
+    "UserId":6013,
+    "MovieId":718,
+    "title":"Visitors, The (Les Visiteurs) (1993)",
+    "genres":"Comedy|Sci-Fi",
+    "score":6.0573892593
+  },
+  {
+    "UserId":6013,
+    "MovieId":3309,
+    "title":"Dog's Life, A (1920)",
+    "genres":"Comedy",
+    "score":5.9669275284
+  }
+]

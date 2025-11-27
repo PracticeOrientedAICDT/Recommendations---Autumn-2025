@@ -1,0 +1,9 @@
+{
+  "data_size": "1m",
+  "train_rows": 750062,
+  "test_rows": 250147,
+  "rank": 10,
+  "max_iter": 15,
+  "reg_param": 0.05,
+  "train_ratio": 0.75
+}

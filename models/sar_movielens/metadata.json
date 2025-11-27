@@ -1,0 +1,12 @@
+{
+  "data_size": "1m",
+  "train_rows": 750121,
+  "test_rows": 250088,
+  "top_k": 10,
+  "unique_users": 6040,
+  "unique_items": 3669,
+  "map": 0.1850985029206066,
+  "ndcg": 0.3098623059425086,
+  "precision": 0.27922185430463575,
+  "recall": 0.10956207597084854
+}

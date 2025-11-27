@@ -1,0 +1,18 @@
+{
+  "data_size": "1m",
+  "train_rows": 750156,
+  "test_rows": 250053,
+  "n_users": 6040,
+  "n_items": 3666,
+  "epochs": 500,
+  "batch_size": 128,
+  "latent_dim": 50,
+  "encoder_dims": [
+    100
+  ],
+  "act_fn": "tanh",
+  "likelihood": "pois",
+  "learning_rate": 0.001,
+  "top_k": 10,
+  "train_ratio": 0.75
+}

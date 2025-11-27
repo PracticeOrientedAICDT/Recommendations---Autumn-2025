@@ -1,0 +1,23 @@
+{
+  "data_size": "1m",
+  "train_rows": 750261,
+  "test_rows": 249948,
+  "n_users": 6040,
+  "n_items": 3706,
+  "epochs": 15,
+  "n_factors": 40,
+  "batch_size": 64,
+  "learning_rate": 0.001,
+  "weight_decay": 0.01,
+  "y_range": [
+    0.0,
+    5.5
+  ],
+  "top_k": 10,
+  "train_ratio": 0.75,
+  "valid_pct": 0.1,
+  "map": 0.060885871261716955,
+  "ndcg": 0.12490404832867225,
+  "precision": 0.11145885080311312,
+  "recall": 0.033674793784997985
+}
