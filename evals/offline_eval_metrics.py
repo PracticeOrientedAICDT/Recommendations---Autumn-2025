@@ -1,17 +1,26 @@
 """
+Offline evaluation classes
+============================================================
 
+Contains:
+- OfflineModelEvaluator: evaluates model predictions of ratings for the unseen test set using
+    RMSE, MAE, R-Squared and Explained Variance
+
+- OfflineSlate Evaluator: evaluates a slate generated for a specified user using
+    - Precision@K, Recall@K, F1@K, NDCG@K, HitRate@K, MAP
+    - Intra-List Similarity (ILS) using movie embeddings
+    - Gini Index for diversity
+    - Coverage metrics
+    - Novelty metrics
 
 Refs:
-Precision@K, Recall@K and F1@K
-- https://ils.unc.edu/courses/2013_spring/inls509_001/lectures/10-EvaluationMetrics.pdf
-- https://medium.com/@m_n_malaeb/recall-and-precision-at-k-for-recommender-systems-618483226c54
-- https://www.evidentlyai.com/ranking-metrics/precision-recall-at-k
-NCDG@K:
-- https://www.evidentlyai.com/ranking-metrics/ndcg-metric
-
+    Precision@K, Recall@K and F1@K
+    - https://ils.unc.edu/courses/2013_spring/inls509_001/lectures/10-EvaluationMetrics.pdf
+    - https://medium.com/@m_n_malaeb/recall-and-precision-at-k-for-recommender-systems-618483226c54
+    - https://www.evidentlyai.com/ranking-metrics/precision-recall-at-k
+    NCDG@K & Average Precision:
+    - https://www.evidentlyai.com/ranking-metrics/ndcg-metric
 """
-
-
 
 # Standard
 import os
@@ -39,14 +48,31 @@ class OfflineModelEvaluator:
 
 
 class OfflineSlateEvaluator:
-    def __init__(self, rec_ids, df_test, user_id, rel_score, embeddings_path='movie_embeddings.pkl'):
+    def __init__(self, rec_ids, df_test, user_id, rel_score=3.5, embeddings_path='movie_embeddings.pkl'):
         """Initialize evaluator with movie embeddings and subsets of df_test
 
-        Parameters:
+        Args:
+            rec_ids (list): list of movie_id's recommended to user in a slate
+            df_test (DataFrame): dataframe of test dataset, must contain columns:
+                user_id, movie_id, rating, timestamp, title, genres
+            user_id (int): ID of user that the slate was made for
+            rel_score (float, Optional): minimum true user rating required to be considering a relevant recommendation
+                Defaults to 3.5.
+            embeddings_path (str, Optional): path to the file containing precomputed embeddings.
+                Embeddings file is optional (only needed for diversity metrics)
+                If embeddings missing, ILS will be 0.0
 
+        Parameters:
+            recommended_items (list): rec_ids (see Args)
+            min_rating_relevant (float): rel_score (see above)
+            user_test_set (DataFrame): subset of df_test containing only data relevant to user
+                with ID user_id
+            recs_in_test_for_user (DataFrame): subset of df_test which are in the recommendations for user
             relevance (list): list of binary relevance for each recommended movie in a slate.
                 Movie is determined to be relevant if it is in the test set for the user
                 (i.e. reviewed by the user) with a rating > rel_score.
+            movie_embeddings (list): embeddings of dataset
+            movie_id_to_embedding (?): embeddings for movie ID
         """
         # Store recommended ids
         self.recommended_items = rec_ids
@@ -130,6 +156,9 @@ class OfflineSlateEvaluator:
         Args:
             relevance_list: list of 0/1 relevance for each recommended item.
             k (int): how many items in a slate to evaluate at. Defaults to 10.
+
+        Returns:
+            (float): DCG@K
         """
         relevance_list = np.array(relevance_list)[:k]
         if relevance_list.size == 0:
@@ -143,6 +172,9 @@ class OfflineSlateEvaluator:
 
         Args:
             k (int): how many items in a slate to evaluate at. Defaults to 10.
+
+        Returns:
+            (float): NDCG@K
         """
 
         dcg = self._dcg_at_k(self.relevance, k)
@@ -158,13 +190,33 @@ class OfflineSlateEvaluator:
     def hit_rate_at_k(self, k=10):
         """Calculate Hit Rate@K
         Checks if at least one of the user’s relevant items appears in the top-K list.
+
         Args:
             k (int): how many items in a slate to evaluate at. Defaults to 10.
         Returns:
-            (1 or 0): 1 if hit, 0 if miss — averaged over all users.
+            (float): 1.0 if hit, 0.0 if miss — averaged over all users.
         """
         rel_at_k = np.sum(np.array(self.relevance)[:k])
         return 1.0 if rel_at_k > 0 else 0.0
+
+    def average_precision(self):
+        """Calculate Average Precision
+        Measures ranking performance by averaging precision values at each relevant position.
+
+        Steps:
+        1. Go down the ranking one-rank-at-a-time
+        2. If the document at rank K is relevant, measure P@K
+            ‣ proportion of top-K documents that are relevant
+        3. Finally, take the average of all P@K values
+            ‣ the number of P@K values will equal the number of
+            relevant documents
+
+        Returns:
+            (float): average precision
+        """
+        y_true = self.relevance
+        precisions = [np.mean(y_true[:i + 1]) for i in range(len(y_true)) if y_true[i]]
+        return np.mean(precisions) if precisions else 0
 
     def intra_list_similarity(self, k=10):
         """Calculate Intra-List Similarity using movie embeddings"""
@@ -199,6 +251,9 @@ class OfflineSlateEvaluator:
 
         Args:
             scores (list): predicted ratings of the user for each movie in the slate
+
+        Returns:
+            (float): Gini Index
         """
         if len(scores) == 0:
             return 0.0
@@ -212,8 +267,10 @@ class OfflineSlateEvaluator:
         Args:
             pred_ratings (list): predicted ratings of the user for each movie in the slate
             k (int): how many items in a slate to evaluate at. Defaults to 10.
+
+        Returns:
+            metrics (dict): dictionary of calculated offline metrics for the slate
         """
-        # TODO - Average precision metric
 
         # Calculate metrics
         metrics = {
@@ -222,6 +279,7 @@ class OfflineSlateEvaluator:
             'f1@k': self.f1_at_k(k),
             'ndcg_at_k': self.ndcg_at_k(k),
             'hit_rate_at_k': self.hit_rate_at_k(k),
+            'average_precision': self.average_precision(),
             'intra_list_similarity': self.intra_list_similarity(k),
             'gini_index': self.gini_index(pred_ratings)
         }
