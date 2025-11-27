@@ -1,0 +1,2 @@
+model_checkpoint_path: "sasrec_model_weights"
+all_model_checkpoint_paths: "sasrec_model_weights"

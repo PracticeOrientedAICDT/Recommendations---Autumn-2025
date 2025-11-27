@@ -1,0 +1,1 @@
+{"item_num": 3706, "seq_max_len": 200, "num_blocks": 2, "embedding_dim": 100, "attention_dim": 100, "attention_num_heads": 1, "dropout_rate": 0.1, "l2_reg": 0.0, "num_neg_test": 100}

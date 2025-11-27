@@ -1,0 +1,1472 @@
+{
+  "timestamp": "20251111_223351",
+  "top_k": 10,
+  "data_size": "1m",
+  "users": {
+    "6013": {
+      "user_id": "6013",
+      "models": {
+        "ALS": [
+          {
+            "itemID": "2192",
+            "title": "See the Sea (Regarde la mer) (1997)",
+            "genres": "Drama",
+            "score": 7.450735092163086,
+            "model": "ALS"
+          },
+          {
+            "itemID": "687",
+            "title": "Country Life (1994)",
+            "genres": "Drama|Romance",
+            "score": 6.512024879455566,
+            "model": "ALS"
+          },
+          {
+            "itemID": "2305",
+            "title": "Slam (1998)",
+            "genres": "Drama",
+            "score": 6.4052019119262695,
+            "model": "ALS"
+          },
+          {
+            "itemID": "3645",
+            "title": "Cleo From 5 to 7 (Cl\u00e9o de 5 \u00e0 7) (1962)",
+            "genres": "Drama",
+            "score": 6.319162368774414,
+            "model": "ALS"
+          },
+          {
+            "itemID": "320",
+            "title": "Suture (1993)",
+            "genres": "Film-Noir|Thriller",
+            "score": 6.283668518066406,
+            "model": "ALS"
+          },
+          {
+            "itemID": "3092",
+            "title": "Chushingura (1962)",
+            "genres": "Drama",
+            "score": 6.152256965637207,
+            "model": "ALS"
+          },
+          {
+            "itemID": "2933",
+            "title": "Fire Within, The (Le Feu Follet) (1963)",
+            "genres": "Drama",
+            "score": 6.079253196716309,
+            "model": "ALS"
+          },
+          {
+            "itemID": "84",
+            "title": "Last Summer in the Hamptons (1995)",
+            "genres": "Comedy|Drama",
+            "score": 6.060558795928955,
+            "model": "ALS"
+          },
+          {
+            "itemID": "718",
+            "title": "Visitors, The (Les Visiteurs) (1993)",
+            "genres": "Comedy|Sci-Fi",
+            "score": 6.057389259338379,
+            "model": "ALS"
+          },
+          {
+            "itemID": "3309",
+            "title": "Dog's Life, A (1920)",
+            "genres": "Comedy",
+            "score": 5.966927528381348,
+            "model": "ALS"
+          }
+        ],
+        "SAR": [
+          {
+            "itemID": "1028",
+            "title": "Mary Poppins (1964)",
+            "genres": "Children's|Comedy|Musical",
+            "score": 3.6686602188263104,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2918",
+            "title": "Ferris Bueller's Day Off (1986)",
+            "genres": "Comedy",
+            "score": 3.5841379268364575,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2797",
+            "title": "Big (1988)",
+            "genres": "Comedy|Fantasy",
+            "score": 3.583732205626379,
+            "model": "SAR"
+          },
+          {
+            "itemID": "1136",
+            "title": "Monty Python and the Holy Grail (1974)",
+            "genres": "Comedy",
+            "score": 3.5827647690159328,
+            "model": "SAR"
+          },
+          {
+            "itemID": "1282",
+            "title": "Fantasia (1940)",
+            "genres": "Animation|Children's|Musical",
+            "score": 3.577161239177291,
+            "model": "SAR"
+          },
+          {
+            "itemID": "1307",
+            "title": "When Harry Met Sally... (1989)",
+            "genres": "Comedy|Romance",
+            "score": 3.5763971719454672,
+            "model": "SAR"
+          },
+          {
+            "itemID": "1265",
+            "title": "Groundhog Day (1993)",
+            "genres": "Comedy|Romance",
+            "score": 3.569871748604591,
+            "model": "SAR"
+          },
+          {
+            "itemID": "296",
+            "title": "Pulp Fiction (1994)",
+            "genres": "Crime|Drama",
+            "score": 3.5599891590706045,
+            "model": "SAR"
+          },
+          {
+            "itemID": "588",
+            "title": "Aladdin (1992)",
+            "genres": "Animation|Children's|Comedy|Musical",
+            "score": 3.552872527685373,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2081",
+            "title": "Little Mermaid, The (1989)",
+            "genres": "Animation|Children's|Comedy|Musical|Romance",
+            "score": 3.543790951191723,
+            "model": "SAR"
+          }
+        ],
+        "RLRMC": [
+          {
+            "itemID": "3822",
+            "title": "Girl on the Bridge, The (La Fille sur le Pont) (1999)",
+            "genres": "Drama|Romance",
+            "score": 2.449932564940606,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "3816",
+            "title": "Official Story, The (La Historia Oficial) (1985)",
+            "genres": "Drama",
+            "score": 2.3347369068303006,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "1296",
+            "title": "Room with a View, A (1986)",
+            "genres": "Drama|Romance",
+            "score": 2.2954313677367555,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "1188",
+            "title": "Strictly Ballroom (1992)",
+            "genres": "Comedy|Romance",
+            "score": 2.2347266910201076,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "907",
+            "title": "Gay Divorcee, The (1934)",
+            "genres": "Comedy|Musical|Romance",
+            "score": 2.2323288468508755,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "1131",
+            "title": "Jean de Florette (1986)",
+            "genres": "Drama",
+            "score": 2.1411627288916195,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "3125",
+            "title": "End of the Affair, The (1999)",
+            "genres": "Drama",
+            "score": 2.1327537977018522,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "1046",
+            "title": "Beautiful Thing (1996)",
+            "genres": "Drama|Romance",
+            "score": 2.1047485474424454,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "2068",
+            "title": "Fanny and Alexander (1982)",
+            "genres": "Drama",
+            "score": 2.0949501718403107,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "759",
+            "title": "Maya Lin: A Strong Clear Vision (1994)",
+            "genres": "Documentary",
+            "score": 2.0623624888942205,
+            "model": "RLRMC"
+          }
+        ],
+        "EmbeddingDotBias": [
+          {
+            "itemID": "1300",
+            "title": "My Life as a Dog (Mitt liv som hund) (1985)",
+            "genres": "Drama",
+            "score": 5.31969690322876,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1035",
+            "title": "Sound of Music, The (1965)",
+            "genres": "Musical",
+            "score": 5.215022087097168,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "326",
+            "title": "To Live (Huozhe) (1994)",
+            "genres": "Drama",
+            "score": 5.190554141998291,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1296",
+            "title": "Room with a View, A (1986)",
+            "genres": "Drama|Romance",
+            "score": 5.185922622680664,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "3030",
+            "title": "Yojimbo (1961)",
+            "genres": "Comedy|Drama|Western",
+            "score": 5.162713527679443,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "2908",
+            "title": "Boys Don't Cry (1999)",
+            "genres": "Drama",
+            "score": 5.160966873168945,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "2066",
+            "title": "Out of the Past (1947)",
+            "genres": "Film-Noir",
+            "score": 5.160769939422607,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "2019",
+            "title": "Seven Samurai (The Magnificent Seven) (Shichinin no samurai) (1954)",
+            "genres": "Action|Drama",
+            "score": 5.148188591003418,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "2739",
+            "title": "Color Purple, The (1985)",
+            "genres": "Drama",
+            "score": 5.145316123962402,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1299",
+            "title": "Killing Fields, The (1984)",
+            "genres": "Drama|War",
+            "score": 5.1258063316345215,
+            "model": "EmbeddingDotBias"
+          }
+        ]
+      }
+    },
+    "2195": {
+      "user_id": "2195",
+      "models": {
+        "ALS": [
+          {
+            "itemID": "811",
+            "title": "Bewegte Mann, Der (1994)",
+            "genres": "Comedy",
+            "score": 6.867166042327881,
+            "model": "ALS"
+          },
+          {
+            "itemID": "37",
+            "title": "Across the Sea of Time (1995)",
+            "genres": "Documentary",
+            "score": 6.347652435302734,
+            "model": "ALS"
+          },
+          {
+            "itemID": "649",
+            "title": "Cold Fever (\u00c1 k\u00f6ldum klaka) (1994)",
+            "genres": "Comedy|Drama",
+            "score": 6.244373321533203,
+            "model": "ALS"
+          },
+          {
+            "itemID": "304",
+            "title": "Roommates (1995)",
+            "genres": "Comedy|Drama",
+            "score": 5.799439907073975,
+            "model": "ALS"
+          },
+          {
+            "itemID": "1313",
+            "title": "Mad Dog Time (1996)",
+            "genres": "Crime",
+            "score": 5.685535430908203,
+            "model": "ALS"
+          },
+          {
+            "itemID": "3874",
+            "title": "Couch in New York, A (1996)",
+            "genres": "Comedy|Romance",
+            "score": 5.666618347167969,
+            "model": "ALS"
+          },
+          {
+            "itemID": "219",
+            "title": "Cure, The (1995)",
+            "genres": "Drama",
+            "score": 5.6496686935424805,
+            "model": "ALS"
+          },
+          {
+            "itemID": "751",
+            "title": "Careful (1992)",
+            "genres": "Comedy",
+            "score": 5.6211256980896,
+            "model": "ALS"
+          },
+          {
+            "itemID": "2931",
+            "title": "Time of the Gypsies (Dom za vesanje) (1989)",
+            "genres": "Drama",
+            "score": 5.523623466491699,
+            "model": "ALS"
+          },
+          {
+            "itemID": "3331",
+            "title": "My Tutor (1983)",
+            "genres": "Drama",
+            "score": 5.515459060668945,
+            "model": "ALS"
+          }
+        ],
+        "SAR": [
+          {
+            "itemID": "2003",
+            "title": "Gremlins (1984)",
+            "genres": "Comedy|Horror",
+            "score": 2.114371670688156,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2134",
+            "title": "Weird Science (1985)",
+            "genres": "Comedy",
+            "score": 1.9250016909625134,
+            "model": "SAR"
+          },
+          {
+            "itemID": "3087",
+            "title": "Scrooged (1988)",
+            "genres": "Comedy",
+            "score": 1.8939742495149399,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2717",
+            "title": "Ghostbusters II (1989)",
+            "genres": "Comedy|Horror",
+            "score": 1.8878023644348187,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2144",
+            "title": "Sixteen Candles (1984)",
+            "genres": "Comedy",
+            "score": 1.8376538232667983,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2746",
+            "title": "Little Shop of Horrors (1986)",
+            "genres": "Comedy|Horror|Musical",
+            "score": 1.7948059102790008,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2371",
+            "title": "Fletch (1985)",
+            "genres": "Comedy",
+            "score": 1.7568400063155425,
+            "model": "SAR"
+          },
+          {
+            "itemID": "1663",
+            "title": "Stripes (1981)",
+            "genres": "Comedy",
+            "score": 1.7458383380403626,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2378",
+            "title": "Police Academy (1984)",
+            "genres": "Comedy",
+            "score": 1.7448057700398842,
+            "model": "SAR"
+          },
+          {
+            "itemID": "3039",
+            "title": "Trading Places (1983)",
+            "genres": "Comedy",
+            "score": 1.7400625341107265,
+            "model": "SAR"
+          }
+        ],
+        "RLRMC": [
+          {
+            "itemID": "3896",
+            "title": "Way of the Gun, The (2000)",
+            "genres": "Crime|Thriller",
+            "score": 3.048659093154949,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "118",
+            "title": "If Lucy Fell (1996)",
+            "genres": "Comedy|Romance",
+            "score": 2.8788453033519827,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "2790",
+            "title": "Final Conflict, The (a.k.a. Omen III: The Final Conflict) (1981)",
+            "genres": "Horror",
+            "score": 2.516557885839993,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "156",
+            "title": "Blue in the Face (1995)",
+            "genres": "Comedy",
+            "score": 2.5018128707772473,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "407",
+            "title": "In the Mouth of Madness (1995)",
+            "genres": "Horror|Thriller",
+            "score": 2.4908638137126364,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "1799",
+            "title": "Suicide Kings (1997)",
+            "genres": "Crime|Drama",
+            "score": 2.485484683840176,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "3275",
+            "title": "Boondock Saints, The (1999)",
+            "genres": "Action|Comedy",
+            "score": 2.4312501161148448,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "2893",
+            "title": "Plunkett & MaCleane (1999)",
+            "genres": "Action|Drama",
+            "score": 2.38205694046366,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "996",
+            "title": "Last Man Standing (1996)",
+            "genres": "Action|Drama|Western",
+            "score": 2.374410063094316,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "449",
+            "title": "Fear of a Black Hat (1993)",
+            "genres": "Comedy",
+            "score": 2.348096136707741,
+            "model": "RLRMC"
+          }
+        ],
+        "EmbeddingDotBias": [
+          {
+            "itemID": "3740",
+            "title": "Big Trouble in Little China (1986)",
+            "genres": "Action|Comedy",
+            "score": 5.262457847595215,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "2571",
+            "title": "Matrix, The (1999)",
+            "genres": "Action|Sci-Fi|Thriller",
+            "score": 5.200958728790283,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "110",
+            "title": "Braveheart (1995)",
+            "genres": "Action|Drama|War",
+            "score": 5.176094055175781,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "2948",
+            "title": "From Russia with Love (1963)",
+            "genres": "Action",
+            "score": 5.140846252441406,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "2023",
+            "title": "Godfather: Part III, The (1990)",
+            "genres": "Action|Crime|Drama",
+            "score": 5.1242899894714355,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1036",
+            "title": "Die Hard (1988)",
+            "genres": "Action|Thriller",
+            "score": 5.107738971710205,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1625",
+            "title": "Game, The (1997)",
+            "genres": "Mystery|Thriller",
+            "score": 5.107013702392578,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "3798",
+            "title": "What Lies Beneath (2000)",
+            "genres": "Thriller",
+            "score": 5.085344314575195,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "3861",
+            "title": "Replacements, The (2000)",
+            "genres": "Comedy",
+            "score": 5.053340435028076,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "3316",
+            "title": "Reindeer Games (2000)",
+            "genres": "Action|Thriller",
+            "score": 5.0349321365356445,
+            "model": "EmbeddingDotBias"
+          }
+        ]
+      }
+    },
+    "1198": {
+      "user_id": "1198",
+      "models": {
+        "ALS": [
+          {
+            "itemID": "811",
+            "title": "Bewegte Mann, Der (1994)",
+            "genres": "Comedy",
+            "score": 6.585178375244141,
+            "model": "ALS"
+          },
+          {
+            "itemID": "37",
+            "title": "Across the Sea of Time (1995)",
+            "genres": "Documentary",
+            "score": 6.121162414550781,
+            "model": "ALS"
+          },
+          {
+            "itemID": "649",
+            "title": "Cold Fever (\u00c1 k\u00f6ldum klaka) (1994)",
+            "genres": "Comedy|Drama",
+            "score": 5.977837085723877,
+            "model": "ALS"
+          },
+          {
+            "itemID": "3331",
+            "title": "My Tutor (1983)",
+            "genres": "Drama",
+            "score": 5.775269508361816,
+            "model": "ALS"
+          },
+          {
+            "itemID": "3117",
+            "title": "Ride with the Devil (1999)",
+            "genres": "Drama|Romance|War",
+            "score": 5.688608169555664,
+            "model": "ALS"
+          },
+          {
+            "itemID": "1313",
+            "title": "Mad Dog Time (1996)",
+            "genres": "Crime",
+            "score": 5.4994611740112305,
+            "model": "ALS"
+          },
+          {
+            "itemID": "751",
+            "title": "Careful (1992)",
+            "genres": "Comedy",
+            "score": 5.4992756843566895,
+            "model": "ALS"
+          },
+          {
+            "itemID": "219",
+            "title": "Cure, The (1995)",
+            "genres": "Drama",
+            "score": 5.498800754547119,
+            "model": "ALS"
+          },
+          {
+            "itemID": "2931",
+            "title": "Time of the Gypsies (Dom za vesanje) (1989)",
+            "genres": "Drama",
+            "score": 5.416960716247559,
+            "model": "ALS"
+          },
+          {
+            "itemID": "561",
+            "title": "Killer (Bulletproof Heart) (1994)",
+            "genres": "Thriller",
+            "score": 5.382565498352051,
+            "model": "ALS"
+          }
+        ],
+        "SAR": [
+          {
+            "itemID": "2571",
+            "title": "Matrix, The (1999)",
+            "genres": "Action|Sci-Fi|Thriller",
+            "score": 3.82315469162345,
+            "model": "SAR"
+          },
+          {
+            "itemID": "1580",
+            "title": "Men in Black (1997)",
+            "genres": "Action|Adventure|Comedy|Sci-Fi",
+            "score": 3.771582891242841,
+            "model": "SAR"
+          },
+          {
+            "itemID": "377",
+            "title": "Speed (1994)",
+            "genres": "Action|Romance|Thriller",
+            "score": 3.7449750138174567,
+            "model": "SAR"
+          },
+          {
+            "itemID": "457",
+            "title": "Fugitive, The (1993)",
+            "genres": "Action|Thriller",
+            "score": 3.743348870176638,
+            "model": "SAR"
+          },
+          {
+            "itemID": "380",
+            "title": "True Lies (1994)",
+            "genres": "Action|Adventure|Comedy|Romance",
+            "score": 3.7283219867014585,
+            "model": "SAR"
+          },
+          {
+            "itemID": "592",
+            "title": "Batman (1989)",
+            "genres": "Action|Adventure|Crime|Drama",
+            "score": 3.727968860737995,
+            "model": "SAR"
+          },
+          {
+            "itemID": "648",
+            "title": "Mission: Impossible (1996)",
+            "genres": "Action|Adventure|Mystery",
+            "score": 3.6924852564665924,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2916",
+            "title": "Total Recall (1990)",
+            "genres": "Action|Adventure|Sci-Fi|Thriller",
+            "score": 3.691877034233087,
+            "model": "SAR"
+          },
+          {
+            "itemID": "1527",
+            "title": "Fifth Element, The (1997)",
+            "genres": "Action|Sci-Fi",
+            "score": 3.6902172023767488,
+            "model": "SAR"
+          },
+          {
+            "itemID": "1036",
+            "title": "Die Hard (1988)",
+            "genres": "Action|Thriller",
+            "score": 3.682472070254954,
+            "model": "SAR"
+          }
+        ],
+        "RLRMC": [
+          {
+            "itemID": "3896",
+            "title": "Way of the Gun, The (2000)",
+            "genres": "Crime|Thriller",
+            "score": 2.574096030347402,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "118",
+            "title": "If Lucy Fell (1996)",
+            "genres": "Comedy|Romance",
+            "score": 2.3793449256085957,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "104",
+            "title": "Happy Gilmore (1996)",
+            "genres": "Comedy",
+            "score": 2.329550174298658,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "156",
+            "title": "Blue in the Face (1995)",
+            "genres": "Comedy",
+            "score": 2.32853640646597,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "2790",
+            "title": "Final Conflict, The (a.k.a. Omen III: The Final Conflict) (1981)",
+            "genres": "Horror",
+            "score": 2.26366829379697,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "202",
+            "title": "Total Eclipse (1995)",
+            "genres": "Drama|Romance",
+            "score": 2.1997704619560916,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "1999",
+            "title": "Exorcist III, The (1990)",
+            "genres": "Horror",
+            "score": 2.1915572641364935,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "3275",
+            "title": "Boondock Saints, The (1999)",
+            "genres": "Action|Comedy",
+            "score": 2.131308792504248,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "1753",
+            "title": "Half Baked (1998)",
+            "genres": "Comedy",
+            "score": 2.090984205024428,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "353",
+            "title": "Crow, The (1994)",
+            "genres": "Action|Romance|Thriller",
+            "score": 2.0883591729366167,
+            "model": "RLRMC"
+          }
+        ],
+        "EmbeddingDotBias": [
+          {
+            "itemID": "165",
+            "title": "Die Hard: With a Vengeance (1995)",
+            "genres": "Action|Thriller",
+            "score": 5.320184707641602,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "110",
+            "title": "Braveheart (1995)",
+            "genres": "Action|Drama|War",
+            "score": 5.3075852394104,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "2115",
+            "title": "Indiana Jones and the Temple of Doom (1984)",
+            "genres": "Action|Adventure",
+            "score": 5.2922186851501465,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "3578",
+            "title": "Gladiator (2000)",
+            "genres": "Action|Drama",
+            "score": 5.184271335601807,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1036",
+            "title": "Die Hard (1988)",
+            "genres": "Action|Thriller",
+            "score": 5.1806511878967285,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1370",
+            "title": "Die Hard 2 (1990)",
+            "genres": "Action|Thriller",
+            "score": 5.178950786590576,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1215",
+            "title": "Army of Darkness (1993)",
+            "genres": "Action|Adventure|Comedy|Horror|Sci-Fi",
+            "score": 5.178545951843262,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "2001",
+            "title": "Lethal Weapon 2 (1989)",
+            "genres": "Action|Comedy|Crime|Drama",
+            "score": 5.166778564453125,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "3740",
+            "title": "Big Trouble in Little China (1986)",
+            "genres": "Action|Comedy",
+            "score": 5.132505893707275,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "50",
+            "title": "Usual Suspects, The (1995)",
+            "genres": "Crime|Thriller",
+            "score": 5.1311726570129395,
+            "model": "EmbeddingDotBias"
+          }
+        ]
+      }
+    },
+    "3662": {
+      "user_id": "3662",
+      "models": {
+        "ALS": [
+          {
+            "itemID": "1349",
+            "title": "Nosferatu a Venezia (1986)",
+            "genres": "Horror",
+            "score": 6.4275007247924805,
+            "model": "ALS"
+          },
+          {
+            "itemID": "1232",
+            "title": "Stalker (1979)",
+            "genres": "Mystery|Sci-Fi",
+            "score": 5.946608543395996,
+            "model": "ALS"
+          },
+          {
+            "itemID": "2964",
+            "title": "Julien Donkey-Boy (1999)",
+            "genres": "Drama",
+            "score": 5.658296585083008,
+            "model": "ALS"
+          },
+          {
+            "itemID": "2647",
+            "title": "House of Frankenstein (1944)",
+            "genres": "Horror",
+            "score": 5.372036457061768,
+            "model": "ALS"
+          },
+          {
+            "itemID": "1114",
+            "title": "Funeral, The (1996)",
+            "genres": "Drama",
+            "score": 5.318792343139648,
+            "model": "ALS"
+          },
+          {
+            "itemID": "3947",
+            "title": "Get Carter (1971)",
+            "genres": "Thriller",
+            "score": 5.300557613372803,
+            "model": "ALS"
+          },
+          {
+            "itemID": "2773",
+            "title": "Alice and Martin (Alice et Martin) (1998)",
+            "genres": "Drama",
+            "score": 5.2736897468566895,
+            "model": "ALS"
+          },
+          {
+            "itemID": "2847",
+            "title": "Only Angels Have Wings (1939)",
+            "genres": "Drama",
+            "score": 5.262341022491455,
+            "model": "ALS"
+          },
+          {
+            "itemID": "2667",
+            "title": "Mole People, The (1956)",
+            "genres": "Sci-Fi",
+            "score": 5.212466239929199,
+            "model": "ALS"
+          },
+          {
+            "itemID": "2649",
+            "title": "Son of Frankenstein (1939)",
+            "genres": "Horror",
+            "score": 5.132942199707031,
+            "model": "ALS"
+          }
+        ],
+        "SAR": [
+          {
+            "itemID": "2553",
+            "title": "Village of the Damned (1960)",
+            "genres": "Horror|Sci-Fi|Thriller",
+            "score": 2.8941574050044228,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2664",
+            "title": "Invasion of the Body Snatchers (1956)",
+            "genres": "Horror|Sci-Fi",
+            "score": 2.8220129636349456,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2009",
+            "title": "Soylent Green (1973)",
+            "genres": "Sci-Fi|Thriller",
+            "score": 2.5866833667072116,
+            "model": "SAR"
+          },
+          {
+            "itemID": "1924",
+            "title": "Plan 9 from Outer Space (1958)",
+            "genres": "Horror|Sci-Fi",
+            "score": 2.572928552634193,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2527",
+            "title": "Westworld (1973)",
+            "genres": "Action|Sci-Fi|Thriller|Western",
+            "score": 2.5369221943812637,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2528",
+            "title": "Logan's Run (1976)",
+            "genres": "Action|Adventure|Sci-Fi",
+            "score": 2.504045745622245,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2648",
+            "title": "Frankenstein (1931)",
+            "genres": "Horror",
+            "score": 2.472104684241423,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2644",
+            "title": "Dracula (1931)",
+            "genres": "Horror",
+            "score": 2.4107514946885864,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2367",
+            "title": "King Kong (1976)",
+            "genres": "Action|Adventure|Horror",
+            "score": 2.40726210316396,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2021",
+            "title": "Dune (1984)",
+            "genres": "Fantasy|Sci-Fi",
+            "score": 2.366462075799107,
+            "model": "SAR"
+          }
+        ],
+        "RLRMC": [
+          {
+            "itemID": "3939",
+            "title": "Slumber Party Massacre II, The (1987)",
+            "genres": "Horror",
+            "score": 2.4653745899477566,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "1984",
+            "title": "Halloween III: Season of the Witch (1983)",
+            "genres": "Horror",
+            "score": 2.427416340532738,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "1334",
+            "title": "Blob, The (1958)",
+            "genres": "Horror|Sci-Fi",
+            "score": 2.379491998526312,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "1982",
+            "title": "Halloween (1978)",
+            "genres": "Horror",
+            "score": 2.137507220303278,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "1351",
+            "title": "Blood & Wine (1997)",
+            "genres": "Drama",
+            "score": 2.0307119110226477,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "3430",
+            "title": "Death Wish (1974)",
+            "genres": "Action|Drama",
+            "score": 2.0265638662665717,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "3840",
+            "title": "Pumpkinhead (1988)",
+            "genres": "Horror",
+            "score": 2.000059257202798,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "2159",
+            "title": "Henry: Portrait of a Serial Killer (1990)",
+            "genres": "Crime|Horror",
+            "score": 1.9552313173894915,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "1329",
+            "title": "Blood For Dracula (Andy Warhol's Dracula) (1974)",
+            "genres": "Horror",
+            "score": 1.9243561793799024,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "3942",
+            "title": "Sorority House Massacre II (1990)",
+            "genres": "Horror",
+            "score": 1.9161636851167994,
+            "model": "RLRMC"
+          }
+        ],
+        "EmbeddingDotBias": [
+          {
+            "itemID": "1982",
+            "title": "Halloween (1978)",
+            "genres": "Horror",
+            "score": 5.373359680175781,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "2288",
+            "title": "Thing, The (1982)",
+            "genres": "Action|Horror|Sci-Fi|Thriller",
+            "score": 5.299739360809326,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "968",
+            "title": "Night of the Living Dead (1968)",
+            "genres": "Horror|Sci-Fi",
+            "score": 5.096574783325195,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1387",
+            "title": "Jaws (1975)",
+            "genres": "Action|Horror",
+            "score": 5.0941243171691895,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1219",
+            "title": "Psycho (1960)",
+            "genres": "Horror|Thriller",
+            "score": 5.026995658874512,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "858",
+            "title": "Godfather, The (1972)",
+            "genres": "Action|Crime|Drama",
+            "score": 5.017237186431885,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "2529",
+            "title": "Planet of the Apes (1968)",
+            "genres": "Action|Sci-Fi",
+            "score": 5.000412940979004,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "3627",
+            "title": "Carnival of Souls (1962)",
+            "genres": "Horror|Thriller",
+            "score": 4.98190450668335,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1997",
+            "title": "Exorcist, The (1973)",
+            "genres": "Horror",
+            "score": 4.948145389556885,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "2532",
+            "title": "Conquest of the Planet of the Apes (1972)",
+            "genres": "Action|Sci-Fi",
+            "score": 4.922615051269531,
+            "model": "EmbeddingDotBias"
+          }
+        ]
+      }
+    },
+    "4713": {
+      "user_id": "4713",
+      "models": {
+        "ALS": [
+          {
+            "itemID": "1574",
+            "title": "Fall (1997)",
+            "genres": "Romance",
+            "score": 7.556040287017822,
+            "model": "ALS"
+          },
+          {
+            "itemID": "3670",
+            "title": "Story of G.I. Joe, The (1945)",
+            "genres": "War",
+            "score": 6.935181140899658,
+            "model": "ALS"
+          },
+          {
+            "itemID": "811",
+            "title": "Bewegte Mann, Der (1994)",
+            "genres": "Comedy",
+            "score": 6.660241603851318,
+            "model": "ALS"
+          },
+          {
+            "itemID": "751",
+            "title": "Careful (1992)",
+            "genres": "Comedy",
+            "score": 6.652612686157227,
+            "model": "ALS"
+          },
+          {
+            "itemID": "2998",
+            "title": "Dreaming of Joseph Lees (1998)",
+            "genres": "Romance",
+            "score": 6.566123008728027,
+            "model": "ALS"
+          },
+          {
+            "itemID": "1900",
+            "title": "Children of Heaven, The (Bacheha-Ye Aseman) (1997)",
+            "genres": "Drama",
+            "score": 6.362868785858154,
+            "model": "ALS"
+          },
+          {
+            "itemID": "3951",
+            "title": "Two Family House (2000)",
+            "genres": "Drama",
+            "score": 6.31008768081665,
+            "model": "ALS"
+          },
+          {
+            "itemID": "1117",
+            "title": "Eighth Day, The (Le Huiti\u00e8me jour ) (1996)",
+            "genres": "Drama",
+            "score": 6.304611682891846,
+            "model": "ALS"
+          },
+          {
+            "itemID": "128",
+            "title": "Jupiter's Wife (1994)",
+            "genres": "Documentary",
+            "score": 6.2102742195129395,
+            "model": "ALS"
+          },
+          {
+            "itemID": "618",
+            "title": "Two Much (1996)",
+            "genres": "Comedy|Romance",
+            "score": 6.13661003112793,
+            "model": "ALS"
+          }
+        ],
+        "SAR": [
+          {
+            "itemID": "380",
+            "title": "True Lies (1994)",
+            "genres": "Action|Adventure|Comedy|Romance",
+            "score": 2.9166032018699535,
+            "model": "SAR"
+          },
+          {
+            "itemID": "587",
+            "title": "Ghost (1990)",
+            "genres": "Comedy|Romance|Thriller",
+            "score": 2.8043066792959563,
+            "model": "SAR"
+          },
+          {
+            "itemID": "733",
+            "title": "Rock, The (1996)",
+            "genres": "Action|Adventure|Thriller",
+            "score": 2.7918737168707457,
+            "model": "SAR"
+          },
+          {
+            "itemID": "736",
+            "title": "Twister (1996)",
+            "genres": "Action|Adventure|Romance|Thriller",
+            "score": 2.7700146791008273,
+            "model": "SAR"
+          },
+          {
+            "itemID": "648",
+            "title": "Mission: Impossible (1996)",
+            "genres": "Action|Adventure|Mystery",
+            "score": 2.768847512923866,
+            "model": "SAR"
+          },
+          {
+            "itemID": "2571",
+            "title": "Matrix, The (1999)",
+            "genres": "Action|Sci-Fi|Thriller",
+            "score": 2.7603850057575627,
+            "model": "SAR"
+          },
+          {
+            "itemID": "1370",
+            "title": "Die Hard 2 (1990)",
+            "genres": "Action|Thriller",
+            "score": 2.7574159366654505,
+            "model": "SAR"
+          },
+          {
+            "itemID": "457",
+            "title": "Fugitive, The (1993)",
+            "genres": "Action|Thriller",
+            "score": 2.7536790918034963,
+            "model": "SAR"
+          },
+          {
+            "itemID": "1573",
+            "title": "Face/Off (1997)",
+            "genres": "Action|Sci-Fi|Thriller",
+            "score": 2.750650522637926,
+            "model": "SAR"
+          },
+          {
+            "itemID": "1265",
+            "title": "Groundhog Day (1993)",
+            "genres": "Comedy|Romance",
+            "score": 2.744283085269665,
+            "model": "SAR"
+          }
+        ],
+        "RLRMC": [
+          {
+            "itemID": "1809",
+            "title": "Hana-bi (1997)",
+            "genres": "Comedy|Crime|Drama",
+            "score": 2.8585858363374816,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "1670",
+            "title": "Welcome To Sarajevo (1997)",
+            "genres": "Drama|War",
+            "score": 2.5909130592888965,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "26",
+            "title": "Othello (1995)",
+            "genres": "Drama",
+            "score": 2.543008061580943,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "3920",
+            "title": "Faraway, So Close (In Weiter Ferne, So Nah!) (1993)",
+            "genres": "Drama|Fantasy",
+            "score": 2.5178242691380066,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "1788",
+            "title": "Men With Guns (1997)",
+            "genres": "Action|Drama",
+            "score": 2.462570820796359,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "1545",
+            "title": "Ponette (1996)",
+            "genres": "Drama",
+            "score": 2.3983911567916554,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "3598",
+            "title": "Hamlet (2000)",
+            "genres": "Drama",
+            "score": 2.378896821407556,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "2609",
+            "title": "King of Masks, The (Bian Lian) (1996)",
+            "genres": "Drama",
+            "score": 2.3664713933172,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "58",
+            "title": "Postino, Il (The Postman) (1994)",
+            "genres": "Drama|Romance",
+            "score": 2.365936920683123,
+            "model": "RLRMC"
+          },
+          {
+            "itemID": "469",
+            "title": "House of the Spirits, The (1993)",
+            "genres": "Drama|Romance",
+            "score": 2.356238480263023,
+            "model": "RLRMC"
+          }
+        ],
+        "EmbeddingDotBias": [
+          {
+            "itemID": "260",
+            "title": "Star Wars: Episode IV - A New Hope (1977)",
+            "genres": "Action|Adventure|Fantasy|Sci-Fi",
+            "score": 5.17458438873291,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "745",
+            "title": "Close Shave, A (1995)",
+            "genres": "Animation|Comedy|Thriller",
+            "score": 5.166295051574707,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "2762",
+            "title": "Sixth Sense, The (1999)",
+            "genres": "Thriller",
+            "score": 5.1466169357299805,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "318",
+            "title": "Shawshank Redemption, The (1994)",
+            "genres": "Drama",
+            "score": 5.130461692810059,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1197",
+            "title": "Princess Bride, The (1987)",
+            "genres": "Action|Adventure|Comedy|Romance",
+            "score": 5.119597911834717,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1704",
+            "title": "Good Will Hunting (1997)",
+            "genres": "Drama",
+            "score": 5.106260299682617,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "2571",
+            "title": "Matrix, The (1999)",
+            "genres": "Action|Sci-Fi|Thriller",
+            "score": 5.087072849273682,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1196",
+            "title": "Star Wars: Episode V - The Empire Strikes Back (1980)",
+            "genres": "Action|Adventure|Drama|Sci-Fi|War",
+            "score": 5.037486553192139,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1231",
+            "title": "Right Stuff, The (1983)",
+            "genres": "Drama",
+            "score": 5.035338878631592,
+            "model": "EmbeddingDotBias"
+          },
+          {
+            "itemID": "1246",
+            "title": "Dead Poets Society (1989)",
+            "genres": "Drama",
+            "score": 5.030148506164551,
+            "model": "EmbeddingDotBias"
+          }
+        ]
+      }
+    }
+  }
+}
