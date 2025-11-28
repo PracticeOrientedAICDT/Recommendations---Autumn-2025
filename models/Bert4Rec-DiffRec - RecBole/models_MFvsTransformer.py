@@ -1,33 +1,8 @@
-print("Done.")
-import os
 import math
-import random
-import time
-from zipfile import ZipFile
-from urllib.request import urlretrieve
-from collections import Counter, defaultdict
-
-import numpy as np
-import pandas as pd
-import yaml
 
 import torch
 from torch import nn
-from torch.utils.data import Dataset, DataLoader
-from torch.nn.utils.rnn import pad_sequence
 
-from torchtext.vocab import vocab
-from sklearn.metrics import mean_squared_error, mean_absolute_error
-from sklearn.metrics import ndcg_score
-from sklearn.preprocessing import label_binarize
-from sklearn.metrics import average_precision_score
-
-import matplotlib.pyplot as plt
-
-from recbole.model.abstract_recommender import SequentialRecommender
-from recbole.model.layers import TransformerEncoder
-
-print("Done.")
 
 # ---------------------------
 # Models
@@ -114,7 +89,7 @@ class TransformerRecSys(nn.Module):
         emb = emb.permute(1, 0, 2)  # (seq_len, batch, d)
         emb = self.pos_encoder(emb)
         # transformer output (seq_len, batch, d)
-        out = self.transformer(emb)  
+        out = self.transformer(emb)
         # choose pooling strategy: use last non-padding position representation per sample
         # For simplicity use last time-step (seq_len-1)
         last = out[-1, :, :]  # (batch, d)
@@ -128,5 +103,3 @@ class TransformerRecSys(nn.Module):
         item_embs = nn.functional.normalize(self.movie_emb.weight, p=2, dim=-1)  # (n_items, d)
         scores = torch.matmul(query, item_embs.t())  # (batch, n_items)
         return rating_pred, scores
-
-print("Done.")

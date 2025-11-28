@@ -227,7 +227,7 @@ class MovieSeqDataset(Dataset):
         target_movie_idx = self.movie_stoi.get(target_movie, 0)
         # lookup rating for (user, target_movie); if not found, fallback to 3.0
         rating_val = float(self.rating_lookup.get((user, target_movie), 3.0))
-        return torch.tensor(movie_indices, dtype=torch.long), torch.tensor(user_idx, dtype=torch.long), torch.tensor(rating_val, dtype=torch.float), torch.tensor(target_movie_idx, dtype=torch.long)
+        return torch.tensor(movie_indices, dtype=torch.long), torch.tensor(user_idx, dtype=torch.long), torch.tensor(rating_val, dtype=torch.float), torch.tensor(target_movie_idx, dtype=torch.long)  # noqa: E501
 
 def collate_batch(batch):
     # batch: list of tuples (seq_tensor, user_idx, rating, target_movie_idx)
@@ -331,7 +331,7 @@ class TransformerRecSys(nn.Module):
         emb = emb.permute(1, 0, 2)  # (seq_len, batch, d)
         emb = self.pos_encoder(emb)
         # transformer output (seq_len, batch, d)
-        out = self.transformer(emb)  
+        out = self.transformer(emb)
         # choose pooling strategy: use last non-padding position representation per sample
         # For simplicity use last time-step (seq_len-1)
         last = out[-1, :, :]  # (batch, d)
@@ -472,12 +472,16 @@ def compute_ndcg_for_batch(pred_indices, true_indices, k):
     We'll convert predictions to a relevance matrix (binary) where relevant=1 only for ground truth item.
     """
     n = pred_indices.shape[0]
-    # build y_true (n_samples, n_items) sparse binary, but ndcg_score can accept y_score & y_true as dense arrays per sample
+    # build y_true (n_samples, n_items) sparse binary, but ndcg_score can accept y_score
+    # & y_true as dense arrays per sample
     # Instead, we'll construct binary relevance vectors over the set of predicted candidates for each sample.
     ndcgs = []
-    # Quick approach: compute ideal DCG is 1.0 because single relevant item at rank 1; we'll call ndcg_score on each sample
-    # but sklearn's ndcg_score expects same item universe for y_true and y_score; we'll create full-length arrays per sample
-    raise NotImplementedError("This wrapper is not used; we will instead call sklearn.ndcg_score on all items using full scores.")
+    # Quick approach: compute ideal DCG is 1.0 because single relevant item at rank 1;
+    # we'll call ndcg_score on each sample
+    # but sklearn's ndcg_score expects same item universe for y_true and y_score;
+    # we'll create full-length arrays per sample
+    raise NotImplementedError("This wrapper is not used; we will instead call \
+                              sklearn.ndcg_score on all items using full scores.")
 
 # ---------------------------
 # Compute Diversity & Novelty
@@ -591,12 +595,13 @@ for epoch in range(1, EPOCHS+1):
     t0 = time.time()
     tr_loss = train_mf(mf_model, train_loader, mf_optimizer, mf_loss_fn, DEVICE)
     val_rmse, val_mae, mf_preds, mf_trues = eval_mf(mf_model, val_loader, DEVICE)
-    print(f"MF Epoch {epoch}/{EPOCHS} train_loss={tr_loss:.4f} val_rmse={val_rmse:.4f} val_mae={val_mae:.4f} time={time.time()-t0:.1f}s")
+    print(f"MF Epoch {epoch}/{EPOCHS} train_loss={tr_loss:.4f} val_rmse={val_rmse:.4f}\
+            val_mae={val_mae:.4f} time={time.time()-t0:.1f}s")
     torch.save(mf_model.state_dict(), "models/mf_model_epoch2.pt")
     print("✅ MF model saved successfully.")
 
 # 2) TransformerRecSys
-trans_model = TransformerRecSys(ntokens, nusers, d_model=EMBED_DIM, nhead=TRANS_HEADS, nhid=TRANS_HID, nlayers=TRANS_LAYERS).to(DEVICE)
+trans_model = TransformerRecSys(ntokens, nusers, d_model=EMBED_DIM, nhead=TRANS_HEADS, nhid=TRANS_HID, nlayers=TRANS_LAYERS).to(DEVICE)  # noqa: E501
 trans_optimizer = torch.optim.Adam(trans_model.parameters(), lr=3e-4)
 trans_loss_fn = nn.MSELoss()
 
@@ -604,8 +609,8 @@ print("Training TransformerRecSys model...")
 for epoch in range(1, EPOCHS+1):
     t0 = time.time()
     tr_loss = train_transformer(trans_model, train_loader, trans_optimizer, trans_loss_fn, DEVICE)
-    val_rmse, val_mae, trans_preds, trans_trues, all_scores_val, all_users_val = eval_transformer(trans_model, val_loader, DEVICE)
-    print(f"TRANS Epoch {epoch}/{EPOCHS} train_loss={tr_loss:.4f} val_rmse={val_rmse:.4f} val_mae={val_mae:.4f} time={time.time()-t0:.1f}s")
+    val_rmse, val_mae, trans_preds, trans_trues, all_scores_val, all_users_val = eval_transformer(trans_model, val_loader, DEVICE)  # noqa: E501
+    print(f"TRANS Epoch {epoch}/{EPOCHS} train_loss={tr_loss:.4f} val_rmse={val_rmse:.4f} val_mae={val_mae:.4f} time={time.time()-t0:.1f}s")  # noqa: E501
     torch.save(trans_model.state_dict(), "models/transformer_model_epoch2.pt")
     print("✅ Transformer model saved successfully.")
 # ---------------------------
@@ -631,7 +636,7 @@ def mf_scores_for_users(model, users_idx_array):
 
 # We already have for transformer: all_scores_val (N, n_items), all_users_val (N,)
 # For MF produce scores on same validation users:
-val_users_list = all_users_val  # numeric user idx for each sample in val_loader (returned by eval_transformer) 
+val_users_list = all_users_val  # numeric user idx for each sample in val_loader (returned by eval_transformer)
 mf_scores = mf_scores_for_users(mf_model, val_users_list)
 
 # ground_truth targets in val_loader order: we can collect them by iterating val_loader (or from val_dataset)
@@ -644,7 +649,7 @@ gt_targets = np.concatenate(gt_targets, axis=0)
 
 # Evaluate ranking metrics
 print("Evaluating ranking metrics for Transformer...")
-trans_rank_results = evaluate_ranking(all_scores_val, all_users_val, gt_targets, TOP_K_LIST) 
+trans_rank_results = evaluate_ranking(all_scores_val, all_users_val, gt_targets, TOP_K_LIST)
 print("Evaluating ranking metrics for MF...")
 mf_rank_results = evaluate_ranking(mf_scores, all_users_val, gt_targets, TOP_K_LIST)
 
@@ -690,9 +695,9 @@ print(f"TRANS - RMSE: {trans_rmse:.4f}  MAE: {trans_mae:.4f}")
 # Print ranking & novelty/diversity
 for k in TOP_K_LIST:
     print(f"\nTop-{k} metrics:")
-    print(f"TRANS Precision@{k}: {metrics_summary[k]['trans_precision']:.4f}, Recall@{k}: {metrics_summary[k]['trans_recall']:.4f}, mAP: {metrics_summary[k]['trans_map']:.4f}, NDCG: {metrics_summary[k]['trans_ndcg']:.4f}")
-    print(f"MF    Precision@{k}: {metrics_summary[k]['mf_precision']:.4f}, Recall@{k}: {metrics_summary[k]['mf_recall']:.4f}, mAP: {metrics_summary[k]['mf_map']:.4f}, NDCG: {metrics_summary[k]['mf_ndcg']:.4f}")
-    print(f"TRANS Diversity: {metrics_summary[k]['trans_diversity']:.4f}, Novelty: {metrics_summary[k]['trans_novelty']:.4f}")
+    print(f"TRANS Precision@{k}: {metrics_summary[k]['trans_precision']:.4f}, Recall@{k}: {metrics_summary[k]['trans_recall']:.4f}, mAP: {metrics_summary[k]['trans_map']:.4f}, NDCG: {metrics_summary[k]['trans_ndcg']:.4f}")  # noqa: E501
+    print(f"MF    Precision@{k}: {metrics_summary[k]['mf_precision']:.4f}, Recall@{k}: {metrics_summary[k]['mf_recall']:.4f}, mAP: {metrics_summary[k]['mf_map']:.4f}, NDCG: {metrics_summary[k]['mf_ndcg']:.4f}")  # noqa: E501
+    print(f"TRANS Diversity: {metrics_summary[k]['trans_diversity']:.4f}, Novelty: {metrics_summary[k]['trans_novelty']:.4f}")  # noqa: E501
     print(f"MF    Diversity: {metrics_summary[k]['mf_diversity']:.4f}, Novelty: {metrics_summary[k]['mf_novelty']:.4f}")
 
 # Plot comparison charts
