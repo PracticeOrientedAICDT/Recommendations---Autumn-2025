@@ -6,7 +6,6 @@ from recbole.quick_start import load_data_and_model
 from recbole.utils.case_study import full_sort_topk
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-
 # === Load trained DiffRec model ===
 CHECKPOINT_PATH = './models/DiffRec-Oct-29-2025_19-33-34.pth'
 CHECKPOINT_PATH_Bert = './models/BERT4Rec-Oct-27-2025_19-02-35.pth'
@@ -25,20 +24,18 @@ movies = pd.read_csv(
 
 config, model, dataset, train_data, valid_data, test_data = load_data_and_model(CHECKPOINT_PATH)
 model.eval()
-	
+
 # === Choose user ===
 user_id = 2195
 uid_series = dataset.token2id(dataset.uid_field, [str(user_id)])
 uid = torch.tensor(uid_series, device=config['device'])
 
 def recommend_movies_diffrec(movies, top_k=10):
-	
-	
-	# === Generate Top-K recommendations ===
+# === Generate Top-K recommendations ===
 	scores, top_k_iid_list = full_sort_topk(uid, model, test_data, k=top_k, device=config['device'])
 	iid2token = dataset.id2token(dataset.iid_field, top_k_iid_list[0].tolist())
 	scores = scores[0].detach().cpu().numpy()
-	
+
 	# === Build metadata dataframe ===
 	movie_ids, titles, genres = [], [], []
 	for iid in iid2token:
@@ -58,7 +55,7 @@ def recommend_movies_diffrec(movies, top_k=10):
 		'predicted_rating': scores,
 		'title': titles,
 		'genres': genres
-})
+	})
 	return scores, movie_ids, recs
 
 def recommend_movies_bert4rec(CHECKPOINT_PATH_Bert, movies, user_id, top_k=10):
@@ -103,7 +100,7 @@ def recommend_movies_bert4rec(CHECKPOINT_PATH_Bert, movies, user_id, top_k=10):
         item_embs = model.item_embedding.weight.detach().cpu().numpy()
         item_indices = [dataset.token2id(dataset.iid_field, [str(mid)])[0] for mid in movie_ids]
         emb_subset = item_embs[item_indices]
-		
+
     except Exception as e:
         print(f"⚠️ Using genre-based TF-IDF embeddings for MMR: {e}")
         vectorizer = TfidfVectorizer(token_pattern='[A-Za-z]+')

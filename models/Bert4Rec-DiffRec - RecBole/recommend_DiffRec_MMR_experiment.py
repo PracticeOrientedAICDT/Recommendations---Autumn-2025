@@ -7,7 +7,6 @@ from recbole.utils.case_study import full_sort_topk
 from sklearn.feature_extraction.text import TfidfVectorizer
 import matplotlib.pyplot  as plt
 
-
 # === Load trained DiffRec model ===
 CHECKPOINT_PATH = './models/DiffRec-Oct-29-2025_19-33-34.pth'
 CHECKPOINT_PATH_Bert = './models/BERT4Rec-Oct-27-2025_19-02-35.pth'
@@ -399,8 +398,6 @@ if __name__ == "__main__":
     session_history = []
     #session_history.append(movie_ids_mmr)   # Store the actual re-ranked items
 
-    
-
     vectorizer = TfidfVectorizer(token_pattern='[A-Za-z]+')
     global_genre_embs = vectorizer.fit_transform(movies['genres']).toarray()
 
@@ -467,8 +464,6 @@ if __name__ == "__main__":
 
     print("\n Between-Session MMR Re-Ranked Movies:")
     print(movie_ids_mmr)
-
-    
     '''ndcg_after_between = ndcg_at_k(movie_ids_mmr, user_true_items, k=50)
     print(f"\n NDCG@50 AFTER Between-Session MMR: {ndcg_after_between:.4f}")
 

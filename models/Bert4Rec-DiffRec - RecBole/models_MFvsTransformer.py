@@ -128,7 +128,5 @@ class TransformerRecSys(nn.Module):
         item_embs = nn.functional.normalize(self.movie_emb.weight, p=2, dim=-1)  # (n_items, d)
         scores = torch.matmul(query, item_embs.t())  # (batch, n_items)
         return rating_pred, scores
-    
 
-    
 print("Done.")

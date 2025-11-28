@@ -32,7 +32,7 @@ users = pd.read_csv(
     "data/ml-1m/users.dat",
     sep="::", engine='python',
     names=["user_id", "sex", "age_group", "occupation", "zip_code"],
-) 
+)
 
 ratings = pd.read_csv(
     "data/ml-1m/ratings.dat",
@@ -68,8 +68,6 @@ user_vocab = vocab(user_counter, specials=['<unk>'])
 #user_stoi = user_vocab.get_stoi()
 user_itos = user_vocab.get_itos()
 
-
-
 #movies = load_movies()       # DataFrame with movie_id, title, etc.
 #ratings = load_ratings()     # DataFrame with user_id, movie_id, rating
 #user_vocab, movie_vocab = load_vocabularies()
@@ -86,7 +84,6 @@ print(f"Num movies (vocab): {ntokens}, Num users: {nusers}")
 print("movies", movies.head())
 print("ratings", ratings.head())
 # ---------------------------
-
 
 # =========================================================
 # RECOMMEND MOVIES FUNCTIONS (MF, TRANSFORMER, BERT4REC)
@@ -116,7 +113,7 @@ def recommend_movies_mf(model, user_id, movies, ratings, movie_vocab_stoi, user_
 
     topk_scores, topk_pos = torch.topk(preds, top_k)
     top_movies = [movie_ids[i] for i in topk_pos.cpu().numpy()]  # preserve top-K order
-    
+
     ''' recs = candidate_movies[candidate_movies['movie_id'].isin(top_movies)][['movie_id', 'title']]
     recs['predicted_rating'] = preds[topk_indices].cpu().numpy()
     return recs'''
@@ -193,7 +190,6 @@ def recommend_movies_tr(model, user_id, movies, ratings, movie_vocab_stoi, user_
     """
     uid_field = dataset.uid_field
     iid_field = dataset.iid_field
-    
     #valid_users = list(dataset.token2id_map[uid_field].keys())
 
     valid_users = list(dataset.field2token_id[uid_field].keys())
@@ -224,7 +220,7 @@ def recommend_movies_tr(model, user_id, movies, ratings, movie_vocab_stoi, user_
 
     movie_ids = [dataset.id2token(dataset.iid_field, i) for i in top_items]
     titles = [movies.loc[movies['movie_id'] == mid, 'title'].values[0] for mid in movie_ids if mid in movies['movie_id'].values]  
-    
+
     # Exclude items already interacted with
     interacted_items = dataset.history_item_matrix(uid).nonzero().flatten().tolist()
     scores[interacted_items] = -float('inf')  # mask seen items
@@ -269,13 +265,13 @@ def recommend_movies_bert4rec(model, dataset, user_id, top_k=10):
     user_rows = inter_feat[uid_field] == uid
     if user_rows.sum() == 0:
         raise ValueError(f"No sequence rows interaction history found for user {user_id}.")
-    
+
     seq_col = model.ITEM_SEQ
     if seq_col not in inter_feat:
         raise ValueError(f"Sequence column '{seq_col}' not found in interaction features.")
-    
+
     seq_tensor_all = inter_feat[seq_col][user_rows]
-    
+
     raw_seq = seq_tensor_all[0]
 
         # ---- Normalize sequence ----
@@ -306,11 +302,11 @@ def recommend_movies_bert4rec(model, dataset, user_id, top_k=10):
     if seq_data is None or len(seq_data) == 0:
         raise ValueError(f"No sequence data found for user {user_id}.")
         return pd.DataFrame(columns=['movie_id', 'predicted_rating', 'title'])
-    
+
     seq_ids = seq_data.squeeze().tolist()
     if not isinstance(seq_ids, list):
         seq_ids = [seq_ids]
-    
+
     # Convert to internal item IDs
     item_id_map = dataset.field2token_id[iid_field]
 '''
@@ -383,7 +379,7 @@ def recommend_movies_bert4rec(model, dataset, user_id, top_k=10):
 
 
 # =========================================================
-# 🧠 LOAD TRAINED MODELS
+#  LOAD TRAINED MODELS
 # =========================================================
 def load_models():
     print("Loading saved models...")
@@ -410,9 +406,9 @@ def load_models():
     transformer_model.load_state_dict(torch.load(TRANSFORMER_MODEL_PATH, map_location=device))
 
 # =========================================================
-# 🧠 LOAD BERT4Rec MODEL (Trained via RecBole)
+#  LOAD BERT4Rec MODEL (Trained via RecBole)
 # =========================================================
-   
+
     '''def load_bert4rec_model(model_path):
     # Automatically loads config and dataset that were used during training
         parameter_dict = {
@@ -426,7 +422,7 @@ def load_models():
         config, model, dataset, train_data, valid_data, test_data = load_data_and_model(model_path, **parameter_dict)
         model.eval()
         return model, dataset, config'''
-    
+
     def load_bert4rec_model(model_path):
     # ✅ Define RecBole configuration correctly
         parameter_dict = {
@@ -447,18 +443,18 @@ def load_models():
             'load_col': {'inter': ['user_id', 'item_id', 'timestamp']},
         }
 
-        # ✅ Create RecBole configuration
+        #  Create RecBole configuration
         config = Config(model=BERT4Rec, dataset=parameter_dict['dataset'], config_dict=parameter_dict)
 
-        # ✅ Prepare dataset and model
+        #  Prepare dataset and model
         dataset = create_dataset(config)
         train_data, valid_data, test_data = data_preparation(config, dataset)
 
         model = BERT4Rec(config, train_data.dataset).to(config['device'])
 
-        # ✅ Load pretrained weights if available
+        #  Load pretrained weights if available
         #model.load_state_dict(torch.load(model_path, map_location=config['device']))
-      
+
 
         # Load checkpoint wrapper
         ckpt = torch.load(model_path, map_location='cpu')  # <- CPU only
@@ -481,13 +477,12 @@ def load_models():
 
  # --- Load BERT4Rec model ---
     bert4rec_model, bert4rec_dataset, bert4rec_config = load_bert4rec_model(BERT4REC_MODEL_PATH)
-    
 
     print("✅ All models loaded successfully!")
     return mf_model, transformer_model,  bert4rec_model, bert4rec_dataset
 
 # =========================================================
-# 🚀 MAIN EXECUTION
+#  MAIN EXECUTION
 # =========================================================
 if __name__ == "__main__":
     mf_model, transformer_model, bert4rec_model, bert4rec_dataset  = load_models()
@@ -502,7 +497,7 @@ if __name__ == "__main__":
     tr_recs = recommend_movies_tr(transformer_model, USER_ID, movies, ratings, movie_vocab_stoi, user_vocab_stoi, TOP_K, device)
     print(tr_recs)
 
-    # ✅ Compatibility patch for RecBole newer versions
+    #  Compatibility patch for RecBole newer versions
     if not hasattr(bert4rec_dataset, "token2id_map") and hasattr(bert4rec_dataset, "field2token_id"):
         bert4rec_dataset.token2id_map = bert4rec_dataset.field2token_id
 

@@ -102,8 +102,7 @@ users = pd.read_csv(
     "data/ml-1m/users.dat",
     sep="::", engine='python',
     names=["user_id", "sex", "age_group", "occupation", "zip_code"],
-) 
-
+)
 ratings = pd.read_csv(
     "data/ml-1m/ratings.dat",
     sep="::", engine='python',
@@ -655,7 +654,7 @@ def collect_rec_indices_list(topk_indices):
     return [list(row) for row in topk_indices]
 
 metrics_summary = {}
-for k in TOP_K_LIST:                                                                         
+for k in TOP_K_LIST:
     trans_topk = trans_rank_results[k]['topk_indices']
     mf_topk = mf_rank_results[k]['topk_indices']
     # compute diversity & novelty
