@@ -16,6 +16,7 @@ from recbole.utils import init_seed, init_logger
 from recbole.data import create_dataset, data_preparation
 from recbole.model.sequential_recommender import BERT4Rec
 from recbole.trainer import Trainer
+from recbole.quick_start import load_data_and_model
 
 MF_MODEL_PATH = Path("models/mf_model.pt")
 TRANSFORMER_MODEL_PATH = Path("models/transformer_model.pt")
@@ -23,9 +24,6 @@ BERT4REC_MODEL_PATH = Path("models/BERT4Rec-Oct-27-2025_19-02-35.pth")
 
 TOP_K = 50
 USER_ID = "user_50"
-
-
-from recbole.quick_start import load_data_and_model
 
 
 users = pd.read_csv(
@@ -183,65 +181,6 @@ def recommend_movies_tr(model, user_id, movies, ratings, movie_vocab_stoi, user_
 
     return recs.sort_values(by='predicted_rating', ascending=False)
 
-
-'''def recommend_movies_bert4rec(model, dataset, user_id, top_k=10):
-    """
-    Recommend top-K movies for a given user using RecBole's BERT4Rec model.
-    """
-    uid_field = dataset.uid_field
-    iid_field = dataset.iid_field
-    #valid_users = list(dataset.token2id_map[uid_field].keys())
-
-    valid_users = list(dataset.field2token_id[uid_field].keys())
-
-
-    if user_id not in valid_users:
-        print(f"[Warning] User {user_id} not found. Using {valid_users[0]} instead.")
-        user_id = valid_users[0]
-
-    uid = dataset.token2id(uid_field, user_id)
-
-    #model.eval()
-    # Generate full-item scores for the user
-        # Retrieve the last interaction sequence for this user
-    # dataset.interaction is a DataFrame/tensor containing sequences
-    user_seq_mask = dataset.interaction[uid_field] == uid
-    seq = dataset.interaction[model.ITEM_SEQ][user_seq_mask].unsqueeze(0)  # add batch dim
-
-    # full_sort_predict expects a dict with ITEM_SEQ key
-    interaction = {model.ITEM_SEQ: seq}
-    scores = model.full_sort_predict(interaction)
-
-    #scores = model.full_sort_predict(uid)
-    scores = scores.view(-1)
-
-    top_items = torch.topk(scores, top_k).indices.cpu().numpy()
-
-
-    movie_ids = [dataset.id2token(dataset.iid_field, i) for i in top_items]
-    titles = [movies.loc[movies['movie_id'] == mid, 'title'].values[0] for mid in movie_ids if mid in movies['movie_id'].values]  
-
-    # Exclude items already interacted with
-    interacted_items = dataset.history_item_matrix(uid).nonzero().flatten().tolist()
-    scores[interacted_items] = -float('inf')  # mask seen items
-
-    topk_scores, topk_indices = torch.topk(scores, top_k)
-
-    # Convert item indices back to movie IDs
-    iid2token = dataset.id2token(dataset.iid_field)
-    top_movie_ids = [iid2token[i.item()] for i in topk_indices]
-
-    # Build DataFrame for display
-    #recs = pd.DataFrame({
-    #    'movie_id': top_movie_ids,
-    #    'predicted_score': topk_scores.cpu().numpy()
-    #})
-    recs = pd.DataFrame({
-        'movie_id': movie_ids,
-        'predicted_rating': scores[top_items].detach().cpu().numpy(),
-        'title': titles
-    })
-    return recs'''
 
 def recommend_movies_bert4rec(model, dataset, user_id, top_k=10):
     """
@@ -469,8 +408,10 @@ def load_models():
 
         # Print diagnostic info
         print("Loaded BERT4Rec checkpoint (CPU mode)")
-        print(f"missing keys ({len(res.missing_keys)}): {res.missing_keys[:10]}{'...' if len(res.missing_keys)>10 else ''}")
-        print(f"unexpected keys ({len(res.unexpected_keys)}): {res.unexpected_keys[:10]}{'...' if len(res.unexpected_keys)>10 else ''}")
+        print(f"missing keys ({len(res.missing_keys)}): \
+              {res.missing_keys[:10]}{'...' if len(res.missing_keys)>10 else ''}")
+        print(f"unexpected keys\
+             ({len(res.unexpected_keys)}): {res.unexpected_keys[:10]}{'...' if len(res.unexpected_keys)>10 else ''}")
 
 
         return model, dataset, config
@@ -494,7 +435,8 @@ if __name__ == "__main__":
 
     # --- Transformer Recommendations ---
     print("\n Top-50 Recommendations (TransformerRecSys):")
-    tr_recs = recommend_movies_tr(transformer_model, USER_ID, movies, ratings, movie_vocab_stoi, user_vocab_stoi, TOP_K, device)
+    tr_recs = recommend_movies_tr(transformer_model, USER_ID, movies, ratings,
+                                  movie_vocab_stoi, user_vocab_stoi, TOP_K, device)
     print(tr_recs)
 
     #  Compatibility patch for RecBole newer versions
