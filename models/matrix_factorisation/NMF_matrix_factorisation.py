@@ -48,7 +48,6 @@ class NMFMatrixFactorisation:
         self.pivot = self._create_pivot_table(data, min_ratings)
         self._NMF_model(n_components)
 
-
     def _create_pivot_table(self, data, min_ratings=100):
         """
         Creates a pivot table (users x movies) with ratings.
@@ -71,7 +70,6 @@ class NMFMatrixFactorisation:
         pivot_filled = pivot.fillna(0)
         return pivot_filled
 
-
     def _generate_movies_dataframe(self):
         """Generate movies dataframe to make genres wordcloud
 
@@ -89,7 +87,6 @@ class NMFMatrixFactorisation:
         )
         movies_df['genres'] = movies_df['genres'].apply(lambda x: x.split('|'))
         return movies_df
-
 
     def _NMF_model(self, n_components=20):
         """
@@ -110,7 +107,6 @@ class NMFMatrixFactorisation:
         V.index = self.pivot.index
         self.V = V
 
-
     def user_top_N(self, user_id, N=10):
         """Generates top N recommendations for a specific user,
         using NMF-based matrix factorization
@@ -125,10 +121,15 @@ class NMFMatrixFactorisation:
         # Top N movies user hasn't reviewed
         V_T = self.V.T
         pivot_T = self.pivot.T
-        user_ratings = V_T[user_id].sort_values(ascending=False)
-        user_ranking = [movie for movie in user_ratings.index if pivot_T[user_id].loc[movie] == 0]
-        return user_ranking[:N]
-
+        pred_ratings = V_T[user_id].sort_values(ascending=False)
+        # Remove seen movies
+        pred_ratings_for_ranking, movie_ranking = [], []
+        for movie, rating in pred_ratings.items():
+            if pivot_T[user_id].loc[movie] == 0:  # If not watched by user before
+                pred_ratings_for_ranking.append(rating)
+                movie_ranking.append(movie)
+        self.pred_ratings_for_rec = pred_ratings_for_ranking[:N]
+        return movie_ranking[:N]
 
     def movie_similarity(self, movie_title, num_rec=10):
         """Generates recommendations of movies to watch which are similar
@@ -160,7 +161,6 @@ class NMFMatrixFactorisation:
         recommendations = similar_movies.head(num_rec)
         return recommendations
 
-
     def get_recommend_dataframe(self, rec):
         """Extract movie dataframe rows for recommended movies
 
@@ -171,9 +171,13 @@ class NMFMatrixFactorisation:
             rec_df (DataFrame): pandas dataframe containing only the movies recommended for the user
         """
         movies_df = self._generate_movies_dataframe()
+        # rec_df = movies_df[movies_df['title'].isin(rec)] # Doesn't preserve order of recommendations
         genres = [movies_df["genres"][movies_df.title[movies_df.title == movie].index.to_list()[0]] for movie in rec]
-        rec_df = pd.DataFrame({"title": rec,
-                            "genres": genres})
+        ids = [movies_df["movie_id"][movies_df.title[movies_df.title == movie].index.to_list()[0]] for movie in rec]
+        rec_df = pd.DataFrame({"movie_id": ids,
+                               "title": rec,
+                               "genres": genres,
+                               "pred_ratings": self.pred_ratings_for_rec})
         return rec_df
 
 
