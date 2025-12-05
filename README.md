@@ -98,13 +98,19 @@ Please see the README files in each model repository (linked above) for specific
    ```sh
    git clone https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025.git
    ```
-2. See individual model repos for additional configuration
+2. Download the MovieLens 1M Dataset from [here](https://grouplens.org/datasets/movielens/1m/) and store this in a folder called `ml1m` under the main `Dataset` folder, i.e. path should be `Dataset/ml-1m`
+3. See individual model READMEs for additional configuration
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+### Exploratory Data Analysis (EDA)
+EDA on the MovieLens 1M dataset can be found in the following locations:
+- Overall data analysis: [`ML1M_EDA.ipynb`](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/blob/feature/readme/ML1M_EDA.ipynb)
+- User profile analysis[`script name`](TBC)
+
 ### Top-N models
 Specific usage varies between each model, and has been outlined in the README in each model's subdirectory. 
 
