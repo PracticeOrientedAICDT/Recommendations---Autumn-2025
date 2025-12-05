@@ -211,6 +211,7 @@ __marimo__/
 *data/
 ml-*/
 evals/eval_results/
+!evals/eval_results/f1_recall_precision_benchmark.png
 
 # Mac temporary files
 *DS_Store
