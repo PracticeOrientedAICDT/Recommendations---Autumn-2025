@@ -12,12 +12,14 @@
 [![project_license][license-shield]][license-url]
 
 
-<h3 align="center">Recommender Systems for Online Streaming</h3>
+<h3 align="center">Multi-Objective Recommendation Systems</h3>
 
   <p align="center">
-    Description tbc
+    This project looked at implementing various multi-objective slate recommendation algorithms to investigate how to balance relevance and diversity within slates.
     <br />
-    <a href="https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025"><strong>Explore the code »</strong></a>
+    <br />
+    <a href="https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/wiki"><strong>Explore the wiki »</strong></a>
     <br />
     <br />
   </p>
@@ -31,9 +33,6 @@
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -56,7 +55,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-TBC
+This project was part of the Practice Projects module in TB1 2025, for the Practice-Oriented AI CDT at the University of Bristol. 
+
+There are two disparate strands in this project which investigated Top-N models and prompt-based models. Top-N models work by recommending the N most relevant movies for a specific user, based on their predicted ratings. Whereas, prompt-based models generate a slate of movies that fit a text-based prompt.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -64,14 +65,32 @@ TBC
 <!-- GETTING STARTED -->
 ## Getting Started
 
-TBC
+This project has multiple strands that work together.
+
+### Top-N models
+Top-N models are as follows, stored in the linked subfolders:
+- [NMF](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/tree/dev/models/matrix_factorisation)
+- [Bert4Rec](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/tree/dev/models/Bert4Rec-DiffRec%20-%20RecBole) *
+- [DiffRec](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/tree/dev/models/Bert4Rec-DiffRec%20-%20RecBole) *
+- [Alternating Least Squares (ALS)](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/tree/dev/models/als_movielens) **
+- [BiVAE](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/tree/dev/models/bivae_movielens) **
+- [Embedding Dot Bias](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/tree/dev/models/embdotbias_movielens) **
+- [Neural Collaborative Filtering (NCF)](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/tree/dev/models/ncf_movielens) **
+- [RLRMC](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/tree/dev/models/rlrmc_movielens) **
+- [SAR](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/tree/dev/models/sar_movielens) **
+- [SASRec](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/tree/dev/models/sasrec_movielens) **
+
+Where * indates a model was adapted from the [RecBole](https://github.com/RUCAIBox/RecBole2.0) library, and ** indicates a model adapted from the [Microsoft Recommenders](https://github.com/recommenders-team/recommenders) library.
+
+### Prompt-based models
+The prompt-based models are as follows and are stored in the linked subfolders:
+- [Enterprise LLM prompt-to-slate](TBC)
+- [Prompt guided diffusion model](TBC)
 
 ### Prerequisites
 
-Please install the following to run the project:
-* tbc
-  ```tbc
-  ```
+Please see the README files in each model repository (linked above) for specific prerequisites and instructions.
+
 
 ### Installation
 
@@ -79,37 +98,40 @@ Please install the following to run the project:
    ```sh
    git clone https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025.git
    ```
-2. TBC
+2. See individual model repos for additional configuration
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
 <!-- USAGE EXAMPLES -->
 ## Usage
+### Top-N models
+Specific usage varies between each model, and has been outlined in the README in each model's subdirectory. 
 
+For example, in order to train and evaluate the NMF model the `MF_recommender_ml1m.ipynb` can be run in full and results can then be viewed in the `evals\eval_results` folder.
+
+Once the results from all models have been compiled in the `evals\eval_results` folder; the `evals\offline_metrics_plotter.ipynb` notebook can be used to generate comparison plots such as the one shown below:
+
+![offline_metrics](evals/eval_results/f1_recall_precision_benchmark.png)
+
+### Prompt-based models
 TBC
-
-_For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- LICENSE -->
-## License
+<!-- ## License
 
 Distributed under the project_license. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 
 <!-- CONTACT -->
 ## Contact
 
-Project Link: [https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025)
-
-### Team Members (alphabetical order):
+### Team Members (alphabetical by surname):
 
 - Ed Daniels: ed.daniels@bristol.ac.uk
 - Guoda Laurinaviciute: guoda.laurinaviciute@bristol.ac.uk
@@ -130,9 +152,7 @@ Project Link: [https://github.com/PracticeOrientedAICDT/Recommendations---Autumn
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
-* []()
+Thanks is given to Niall Twomey for mentoring this project and acting as our industry stakeholder. Thank you also to Kenton and Telmo for their support in class.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
