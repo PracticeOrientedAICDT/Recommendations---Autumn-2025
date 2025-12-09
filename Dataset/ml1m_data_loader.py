@@ -24,7 +24,7 @@ def load_ml1m_ratings(path: str = "Dataset/ml-1m/ratings.dat") -> pd.DataFrame:
 
 def ml_test_train_split(df: pd.DataFrame, test_proportion: float = 0.2, random_seed: int = 42) -> pd.DataFrame:
     """Test-train split of MovieLens datasets
-    Because of how matrix factorisation works - ever user and movie MUST be present in the training set
+    Because of how matrix factorisation works - every user and movie MUST be present in the training set
     else the model won't be able to predict from this [1][2]. In the MovieLens dataset (1M), there are mutliple movies
     which only have one review. Need to handle this when doing test-train split.
 
@@ -45,11 +45,11 @@ def ml_test_train_split(df: pd.DataFrame, test_proportion: float = 0.2, random_s
     df_unique_users_data = df.groupby("user_id").sample(n=1, random_state=42)
     df_unique_movies_data = df.groupby("movie_id").sample(n=1, random_state=42)
 
-    # Concat and drop duplicates
+    # Concat and drop duplicates to find unique users; remove these
     df_unique_user_x_movie_data = pd.concat([df_unique_users_data, df_unique_movies_data]).drop_duplicates()
+    df_remaining_data = df.drop(df_unique_user_x_movie_data.index)
 
     # Prepare remaining data for sampling train & test set
-    df_remaining_data = df.drop(df_unique_user_x_movie_data.index)
     df_train, df_test = train_test_split(df_remaining_data, test_size=test_proportion, random_state=random_seed)
 
     # Inject uniques into training set and remove duplicate pairs
