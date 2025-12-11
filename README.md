@@ -84,15 +84,15 @@ Where * indates a model was adapted from the [RecBole](https://github.com/RUCAIB
 
 ### Prompt-based models
 The prompt-based models are as follows and are stored in the linked subfolders:
-- [Enterprise LLM prompt-to-slate](TBC)
-- [Prompt guided diffusion model](TBC)
+- [Enterprise LLM prompt-to-slate](TBC) <-- add link when merged into dev
+- [Prompt guided diffusion model](https://uob.sharepoint.com/teams/grp-Recommender/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2Fgrp%2DRecommender%2FShared%20Documents%2FGeneral%2Fmovielens%5Fprompt%5Fdiffusion&p=true&ga=1)
 
-### Prerequisites
+## Prerequisites
 
 Please see the README files in each model repository (linked above) for specific prerequisites and instructions.
 
 
-### Installation
+## Installation
 
 1. Clone the repo
    ```sh
@@ -109,7 +109,7 @@ Please see the README files in each model repository (linked above) for specific
 ### Exploratory Data Analysis (EDA)
 EDA on the MovieLens 1M dataset can be found in the following locations:
 - Overall data analysis: [`ML1M_EDA.ipynb`](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/blob/feature/readme/ML1M_EDA.ipynb)
-- User profile analysis[`script name`](TBC)
+- User profile analysis[`script name`](TBC) <--- add here
 
 ### Top-N models
 Specific usage varies between each model, and has been outlined in the README in each model's subdirectory. 
