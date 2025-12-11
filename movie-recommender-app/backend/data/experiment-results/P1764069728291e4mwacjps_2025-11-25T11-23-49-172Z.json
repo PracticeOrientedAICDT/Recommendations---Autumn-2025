@@ -1,0 +1,351 @@
+{
+  "sessionData": {
+    "participantId": "P1764069728291e4mwacjps",
+    "startTime": "2025-11-25T11:22:08.292Z",
+    "promptOrder": [
+      6,
+      3,
+      5,
+      1,
+      2,
+      8,
+      0,
+      7,
+      4,
+      9
+    ],
+    "modelMappings": {
+      "0": {
+        "A": "diffusion",
+        "B": "claude",
+        "C": "gpt"
+      },
+      "1": {
+        "A": "gpt",
+        "B": "diffusion",
+        "C": "claude"
+      },
+      "2": {
+        "A": "claude",
+        "B": "gpt",
+        "C": "diffusion"
+      },
+      "3": {
+        "A": "diffusion",
+        "B": "claude",
+        "C": "gpt"
+      },
+      "4": {
+        "A": "claude",
+        "B": "diffusion",
+        "C": "gpt"
+      },
+      "5": {
+        "A": "claude",
+        "B": "diffusion",
+        "C": "gpt"
+      },
+      "6": {
+        "A": "diffusion",
+        "B": "claude",
+        "C": "gpt"
+      },
+      "7": {
+        "A": "gpt",
+        "B": "diffusion",
+        "C": "claude"
+      },
+      "8": {
+        "A": "diffusion",
+        "B": "claude",
+        "C": "gpt"
+      },
+      "9": {
+        "A": "claude",
+        "B": "gpt",
+        "C": "diffusion"
+      }
+    },
+    "deviceInfo": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0.1 Safari/605.1.15",
+      "platform": "MacIntel",
+      "language": "en-GB",
+      "screenWidth": 1800,
+      "screenHeight": 1169
+    }
+  },
+  "responses": [
+    {
+      "participantId": "P1764069728291e4mwacjps",
+      "sequencePosition": 1,
+      "promptId": 7,
+      "promptText": "Films like Interstellar",
+      "promptCategory": "Similarity",
+      "modelMapping": {
+        "A": "diffusion",
+        "B": "claude",
+        "C": "gpt"
+      },
+      "rankings": {
+        "A": 2,
+        "B": 1,
+        "C": 3
+      },
+      "rankedModels": {
+        "first": "claude",
+        "second": "diffusion",
+        "third": "gpt"
+      },
+      "promptDisplayTime": 1764069728321,
+      "slateViewTime": 1764069729469,
+      "selectionTime": 1764069741667,
+      "timeOnPrompt": 1.148,
+      "timeOnSlates": 12.198
+    },
+    {
+      "participantId": "P1764069728291e4mwacjps",
+      "sequencePosition": 2,
+      "promptId": 4,
+      "promptText": "Feel-good movies after a long day",
+      "promptCategory": "Mood",
+      "modelMapping": {
+        "A": "diffusion",
+        "B": "claude",
+        "C": "gpt"
+      },
+      "rankings": {
+        "A": 2,
+        "B": 3,
+        "C": 1
+      },
+      "rankedModels": {
+        "first": "gpt",
+        "second": "diffusion",
+        "third": "claude"
+      },
+      "promptDisplayTime": 1764069741673,
+      "slateViewTime": 1764069744365,
+      "selectionTime": 1764069749499,
+      "timeOnPrompt": 2.692,
+      "timeOnSlates": 5.134
+    },
+    {
+      "participantId": "P1764069728291e4mwacjps",
+      "sequencePosition": 3,
+      "promptId": 6,
+      "promptText": "I liked Pulp Fiction and Kill Bill",
+      "promptCategory": "Similarity",
+      "modelMapping": {
+        "A": "claude",
+        "B": "diffusion",
+        "C": "gpt"
+      },
+      "rankings": {
+        "A": 1,
+        "B": 2,
+        "C": 3
+      },
+      "rankedModels": {
+        "first": "claude",
+        "second": "diffusion",
+        "third": "gpt"
+      },
+      "promptDisplayTime": 1764069749503,
+      "slateViewTime": 1764069750632,
+      "selectionTime": 1764069761727,
+      "timeOnPrompt": 1.129,
+      "timeOnSlates": 11.095
+    },
+    {
+      "participantId": "P1764069728291e4mwacjps",
+      "sequencePosition": 4,
+      "promptId": 2,
+      "promptText": "Movies for a boys' night in",
+      "promptCategory": "Situational",
+      "modelMapping": {
+        "A": "gpt",
+        "B": "diffusion",
+        "C": "claude"
+      },
+      "rankings": {
+        "A": 1,
+        "B": 2,
+        "C": 3
+      },
+      "rankedModels": {
+        "first": "gpt",
+        "second": "diffusion",
+        "third": "claude"
+      },
+      "promptDisplayTime": 1764069761731,
+      "slateViewTime": 1764069762771,
+      "selectionTime": 1764069769568,
+      "timeOnPrompt": 1.04,
+      "timeOnSlates": 6.797
+    },
+    {
+      "participantId": "P1764069728291e4mwacjps",
+      "sequencePosition": 5,
+      "promptId": 3,
+      "promptText": "Movies with Julia Roberts",
+      "promptCategory": "Categorical",
+      "modelMapping": {
+        "A": "claude",
+        "B": "gpt",
+        "C": "diffusion"
+      },
+      "rankings": {
+        "A": 2,
+        "B": 3,
+        "C": 1
+      },
+      "rankedModels": {
+        "first": "diffusion",
+        "second": "claude",
+        "third": "gpt"
+      },
+      "promptDisplayTime": 1764069769573,
+      "slateViewTime": 1764069770605,
+      "selectionTime": 1764069774277,
+      "timeOnPrompt": 1.032,
+      "timeOnSlates": 3.672
+    },
+    {
+      "participantId": "P1764069728291e4mwacjps",
+      "sequencePosition": 6,
+      "promptId": 9,
+      "promptText": "Popular movies that most people enjoy",
+      "promptCategory": "Cold-start",
+      "modelMapping": {
+        "A": "diffusion",
+        "B": "claude",
+        "C": "gpt"
+      },
+      "rankings": {
+        "A": 2,
+        "B": 3,
+        "C": 1
+      },
+      "rankedModels": {
+        "first": "gpt",
+        "second": "diffusion",
+        "third": "claude"
+      },
+      "promptDisplayTime": 1764069774281,
+      "slateViewTime": 1764069775304,
+      "selectionTime": 1764069779960,
+      "timeOnPrompt": 1.023,
+      "timeOnSlates": 4.656
+    },
+    {
+      "participantId": "P1764069728291e4mwacjps",
+      "sequencePosition": 7,
+      "promptId": 1,
+      "promptText": "Animated movies for kids",
+      "promptCategory": "Categorical",
+      "modelMapping": {
+        "A": "diffusion",
+        "B": "claude",
+        "C": "gpt"
+      },
+      "rankings": {
+        "A": 3,
+        "B": 1,
+        "C": 2
+      },
+      "rankedModels": {
+        "first": "claude",
+        "second": "gpt",
+        "third": "diffusion"
+      },
+      "promptDisplayTime": 1764069779964,
+      "slateViewTime": 1764069780915,
+      "selectionTime": 1764069784784,
+      "timeOnPrompt": 0.951,
+      "timeOnSlates": 3.869
+    },
+    {
+      "participantId": "P1764069728291e4mwacjps",
+      "sequencePosition": 8,
+      "promptId": 8,
+      "promptText": "Movies for a weekend movie marathon",
+      "promptCategory": "Situational",
+      "modelMapping": {
+        "A": "gpt",
+        "B": "diffusion",
+        "C": "claude"
+      },
+      "rankings": {
+        "A": 1,
+        "B": 2,
+        "C": 3
+      },
+      "rankedModels": {
+        "first": "gpt",
+        "second": "diffusion",
+        "third": "claude"
+      },
+      "promptDisplayTime": 1764069784787,
+      "slateViewTime": 1764069785855,
+      "selectionTime": 1764069791466,
+      "timeOnPrompt": 1.068,
+      "timeOnSlates": 5.611
+    },
+    {
+      "participantId": "P1764069728291e4mwacjps",
+      "sequencePosition": 9,
+      "promptId": 5,
+      "promptText": "Dark psychological films",
+      "promptCategory": "Mood",
+      "modelMapping": {
+        "A": "claude",
+        "B": "diffusion",
+        "C": "gpt"
+      },
+      "rankings": {
+        "A": 1,
+        "B": 2,
+        "C": 3
+      },
+      "rankedModels": {
+        "first": "claude",
+        "second": "diffusion",
+        "third": "gpt"
+      },
+      "promptDisplayTime": 1764069791468,
+      "slateViewTime": 1764069792568,
+      "selectionTime": 1764069800121,
+      "timeOnPrompt": 1.1,
+      "timeOnSlates": 7.553
+    },
+    {
+      "participantId": "P1764069728291e4mwacjps",
+      "sequencePosition": 10,
+      "promptId": 10,
+      "promptText": "Movies for PhD students",
+      "promptCategory": "Identity",
+      "modelMapping": {
+        "A": "claude",
+        "B": "gpt",
+        "C": "diffusion"
+      },
+      "rankings": {
+        "A": 2,
+        "B": 3,
+        "C": 1
+      },
+      "rankedModels": {
+        "first": "diffusion",
+        "second": "claude",
+        "third": "gpt"
+      },
+      "promptDisplayTime": 1764069800124,
+      "slateViewTime": 1764069801786,
+      "selectionTime": 1764069806069,
+      "timeOnPrompt": 1.662,
+      "timeOnSlates": 4.283
+    }
+  ],
+  "endTime": "2025-11-25T11:23:49.172Z",
+  "totalDuration": 100.88
+}

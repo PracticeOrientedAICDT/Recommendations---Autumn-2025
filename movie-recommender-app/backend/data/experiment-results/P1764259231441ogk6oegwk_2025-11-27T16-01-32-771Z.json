@@ -1,0 +1,366 @@
+{
+  "sessionData": {
+    "participantId": "P1764259231441ogk6oegwk",
+    "startTime": "2025-11-27T16:00:31.441Z",
+    "promptOrder": [
+      5,
+      2,
+      3,
+      9,
+      6,
+      0,
+      1,
+      4,
+      8,
+      7
+    ],
+    "modelMappings": {
+      "0": {
+        "A": "diffusion",
+        "B": "claude",
+        "C": "gpt"
+      },
+      "1": {
+        "A": "gpt",
+        "B": "claude",
+        "C": "diffusion"
+      },
+      "2": {
+        "A": "claude",
+        "B": "diffusion",
+        "C": "gpt"
+      },
+      "3": {
+        "A": "claude",
+        "B": "gpt",
+        "C": "diffusion"
+      },
+      "4": {
+        "A": "diffusion",
+        "B": "claude",
+        "C": "gpt"
+      },
+      "5": {
+        "A": "gpt",
+        "B": "claude",
+        "C": "diffusion"
+      },
+      "6": {
+        "A": "diffusion",
+        "B": "gpt",
+        "C": "claude"
+      },
+      "7": {
+        "A": "diffusion",
+        "B": "gpt",
+        "C": "claude"
+      },
+      "8": {
+        "A": "gpt",
+        "B": "claude",
+        "C": "diffusion"
+      },
+      "9": {
+        "A": "diffusion",
+        "B": "gpt",
+        "C": "claude"
+      }
+    },
+    "deviceInfo": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0.1 Safari/605.1.15",
+      "platform": "MacIntel",
+      "language": "en-GB",
+      "screenWidth": 1800,
+      "screenHeight": 1169
+    }
+  },
+  "responses": [
+    {
+      "participantId": "P1764259231441ogk6oegwk",
+      "sequencePosition": 1,
+      "promptId": 5,
+      "promptText": "I liked Goodfellas and The Departed",
+      "promptCategory": "Similarity",
+      "modelMapping": {
+        "A": "gpt",
+        "B": "claude",
+        "C": "diffusion"
+      },
+      "rankings": {
+        "A": 1,
+        "B": 2,
+        "C": 3
+      },
+      "rankedModels": {
+        "first": "diffusion",
+        "second": "claude",
+        "third": "gpt"
+      },
+      "promptDisplayTime": 1764259231463,
+      "slateViewTime": 1764259232621,
+      "selectionTime": 1764259235312,
+      "timeOnPrompt": 1.158,
+      "timeOnSlates": 2.691
+    },
+    {
+      "participantId": "P1764259231441ogk6oegwk",
+      "sequencePosition": 2,
+      "promptId": 2,
+      "promptText": "Movies for a boys' night in",
+      "promptCategory": "Situational",
+      "modelMapping": {
+        "A": "claude",
+        "B": "diffusion",
+        "C": "gpt"
+      },
+      "rankings": {
+        "A": 1,
+        "B": 3,
+        "C": 2
+      },
+      "rankedModels": {
+        "first": "diffusion",
+        "second": "gpt",
+        "third": "claude"
+      },
+      "promptDisplayTime": 1764259235317,
+      "slateViewTime": 1764259236309,
+      "selectionTime": 1764259239803,
+      "timeOnPrompt": 0.992,
+      "timeOnSlates": 3.494
+    },
+    {
+      "participantId": "P1764259231441ogk6oegwk",
+      "sequencePosition": 3,
+      "promptId": 3,
+      "promptText": "Movies that engineers and PhD students would enjoy",
+      "promptCategory": "Identity",
+      "modelMapping": {
+        "A": "claude",
+        "B": "gpt",
+        "C": "diffusion"
+      },
+      "rankings": {
+        "A": 1,
+        "B": 2,
+        "C": 3
+      },
+      "rankedModels": {
+        "first": "diffusion",
+        "second": "gpt",
+        "third": "claude"
+      },
+      "promptDisplayTime": 1764259239813,
+      "slateViewTime": 1764259241043,
+      "selectionTime": 1764259244046,
+      "timeOnPrompt": 1.23,
+      "timeOnSlates": 3.003
+    },
+    {
+      "participantId": "P1764259231441ogk6oegwk",
+      "sequencePosition": 4,
+      "promptId": 9,
+      "promptText": "Movies with unexpected plot twists",
+      "promptCategory": "Categorical",
+      "modelMapping": {
+        "A": "diffusion",
+        "B": "gpt",
+        "C": "claude"
+      },
+      "rankings": {
+        "A": 3,
+        "B": 2,
+        "C": 1
+      },
+      "rankedModels": {
+        "first": "diffusion",
+        "second": "gpt",
+        "third": "claude"
+      },
+      "promptDisplayTime": 1764259244052,
+      "slateViewTime": 1764259245050,
+      "selectionTime": 1764259248572,
+      "timeOnPrompt": 0.998,
+      "timeOnSlates": 3.522
+    },
+    {
+      "participantId": "P1764259231441ogk6oegwk",
+      "sequencePosition": 5,
+      "promptId": 6,
+      "promptText": "Romantic comedies with female leads",
+      "promptCategory": "Categorical",
+      "modelMapping": {
+        "A": "diffusion",
+        "B": "gpt",
+        "C": "claude"
+      },
+      "rankings": {
+        "A": 3,
+        "B": 1,
+        "C": 2
+      },
+      "rankedModels": {
+        "first": "diffusion",
+        "second": "claude",
+        "third": "gpt"
+      },
+      "promptDisplayTime": 1764259248577,
+      "slateViewTime": 1764259249497,
+      "selectionTime": 1764259253612,
+      "timeOnPrompt": 0.92,
+      "timeOnSlates": 4.115
+    },
+    {
+      "participantId": "P1764259231441ogk6oegwk",
+      "sequencePosition": 6,
+      "promptId": 0,
+      "promptText": "Animated movies for kids",
+      "promptCategory": "Categorical",
+      "modelMapping": {
+        "A": "diffusion",
+        "B": "claude",
+        "C": "gpt"
+      },
+      "rankings": {
+        "A": 3,
+        "B": 2,
+        "C": 1
+      },
+      "rankedModels": {
+        "first": "diffusion",
+        "second": "claude",
+        "third": "gpt"
+      },
+      "promptDisplayTime": 1764259253617,
+      "slateViewTime": 1764259254590,
+      "selectionTime": 1764259257702,
+      "timeOnPrompt": 0.973,
+      "timeOnSlates": 3.112
+    },
+    {
+      "participantId": "P1764259231441ogk6oegwk",
+      "sequencePosition": 7,
+      "promptId": 1,
+      "promptText": "Dark psychological films",
+      "promptCategory": "Mood",
+      "modelMapping": {
+        "A": "gpt",
+        "B": "claude",
+        "C": "diffusion"
+      },
+      "rankings": {
+        "B": 2,
+        "A": 1,
+        "C": 3
+      },
+      "rankedModels": {
+        "first": "diffusion",
+        "second": "claude",
+        "third": "gpt"
+      },
+      "promptDisplayTime": 1764259257710,
+      "slateViewTime": 1764259258528,
+      "selectionTime": 1764259264477,
+      "timeOnPrompt": 0.818,
+      "timeOnSlates": 5.949
+    },
+    {
+      "participantId": "P1764259231441ogk6oegwk",
+      "sequencePosition": 8,
+      "promptId": 4,
+      "promptText": "Movies with Tom Hanks",
+      "promptCategory": "Categorical",
+      "modelMapping": {
+        "A": "diffusion",
+        "B": "claude",
+        "C": "gpt"
+      },
+      "rankings": {
+        "A": 3,
+        "B": 2,
+        "C": 1
+      },
+      "rankedModels": {
+        "first": "diffusion",
+        "second": "claude",
+        "third": "gpt"
+      },
+      "promptDisplayTime": 1764259264484,
+      "slateViewTime": 1764259265345,
+      "selectionTime": 1764259268794,
+      "timeOnPrompt": 0.861,
+      "timeOnSlates": 3.449
+    },
+    {
+      "participantId": "P1764259231441ogk6oegwk",
+      "sequencePosition": 9,
+      "promptId": 8,
+      "promptText": "Scary movies that aren't too gory",
+      "promptCategory": "Mood",
+      "modelMapping": {
+        "A": "gpt",
+        "B": "claude",
+        "C": "diffusion"
+      },
+      "rankings": {
+        "A": 2,
+        "B": 1,
+        "C": 3
+      },
+      "rankedModels": {
+        "first": "diffusion",
+        "second": "gpt",
+        "third": "claude"
+      },
+      "promptDisplayTime": 1764259268801,
+      "slateViewTime": 1764259269714,
+      "selectionTime": 1764259273411,
+      "timeOnPrompt": 0.913,
+      "timeOnSlates": 3.697
+    },
+    {
+      "participantId": "P1764259231441ogk6oegwk",
+      "sequencePosition": 10,
+      "promptId": 7,
+      "promptText": "Feel-good movies after a long day",
+      "promptCategory": "Mood",
+      "modelMapping": {
+        "A": "diffusion",
+        "B": "gpt",
+        "C": "claude"
+      },
+      "rankings": {
+        "A": 3,
+        "B": 2,
+        "C": 1
+      },
+      "rankedModels": {
+        "first": "diffusion",
+        "second": "gpt",
+        "third": "claude"
+      },
+      "promptDisplayTime": 1764259273422,
+      "slateViewTime": 1764259274288,
+      "selectionTime": 1764259278078,
+      "timeOnPrompt": 0.866,
+      "timeOnSlates": 3.79
+    }
+  ],
+  "questionnaire": {
+    "age": "25-34",
+    "gender": "female",
+    "movieFrequency": "daily",
+    "genresPreferred": [
+      "Crime"
+    ],
+    "classicVsRecent": "3",
+    "overallRelevance": "3",
+    "overallDiversity": "3",
+    "overallNovelty": "3",
+    "decisionDifficulty": "3",
+    "familiarityBalance": "3",
+    "comments": "hello"
+  },
+  "endTime": "2025-11-27T16:01:32.771Z",
+  "totalDuration": 61.33
+}
