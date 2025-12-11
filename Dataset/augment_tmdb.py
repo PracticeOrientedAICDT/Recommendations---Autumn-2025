@@ -20,7 +20,6 @@ Live .dat streaming (updates per processed movie):
 """
 
 import argparse
-import json
 import os
 import re
 import sqlite3
@@ -606,5 +605,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-
