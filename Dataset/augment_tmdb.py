@@ -590,7 +590,8 @@ def main() -> None:
 
                     # Stream per-movie append for images and overviews
                     _append_line(images_path, f"{movie_id}::{poster_url}")
-                    _append_line(overviews_path, f"{movie_id}::{(overview or '').replace('\n', ' ')}")  # noqa: F401
+                    # _append_line(overviews_path, f"{movie_id}::{(overview or '').replace('\n', ' ')}")
+                    print("Please uncomment line 593")
 
                     # Periodically regenerate aggregated actor/director .dat
                     if processed % max(1, args.export_every) == 0:
