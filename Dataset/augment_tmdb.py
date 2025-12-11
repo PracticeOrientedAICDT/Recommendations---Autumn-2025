@@ -54,7 +54,8 @@ def _normalize_title(raw_title: str) -> Tuple[str, Optional[int]]:
     return title, year
 
 
-def _requests_with_retries(url: str, params: Dict[str, object], *, max_retries: int = 5, timeout: int = 15) -> Optional[dict]:
+def _requests_with_retries(url: str, params: Dict[str, object], *,
+                           max_retries: int = 5, timeout: int = 15) -> Optional[dict]:
     backoff = 1.0
     for attempt in range(max_retries):
         try:
@@ -317,7 +318,8 @@ def augment(db_path: str, limit: int = 0, start_from: int = 0, resume: bool = Tr
             if not tmdb_id:
                 # Insert minimal row to mark as attempted
                 cur.execute(
-                    "INSERT OR REPLACE INTO movies(movie_id, tmdb_id, title, year, overview, poster_url) VALUES(?,?,?,?,?,?)",
+                    "INSERT OR REPLACE INTO movies(movie_id, tmdb_id, \
+                    title, year, overview, poster_url) VALUES(?,?,?,?,?,?)",
                     (movie_id, None, raw_title, year, "", ""),
                 )
                 _set_meta(conn, "last_movie_id", str(movie_id))
@@ -331,7 +333,8 @@ def augment(db_path: str, limit: int = 0, start_from: int = 0, resume: bool = Tr
             poster_url = details.poster_url if details else ""
 
             cur.execute(
-                "INSERT OR REPLACE INTO movies(movie_id, tmdb_id, title, year, overview, poster_url) VALUES(?,?,?,?,?,?)",
+                "INSERT OR REPLACE INTO movies(movie_id, tmdb_id, \
+                title, year, overview, poster_url) VALUES(?,?,?,?,?,?)",
                 (movie_id, tmdb_id, raw_title, year, overview, poster_url),
             )
             if poster_url:
@@ -455,11 +458,15 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Augment MovieLens with TMDB metadata into SQLite DB")
     parser.add_argument("--db", type=str, default="tmdb_augmented.sqlite", help="Output SQLite database path")
     parser.add_argument("--limit", type=int, default=0, help="Limit number of movies to process (0 = all)")
-    parser.add_argument("--start-from", type=int, default=0, help="Start from given MovieLens movie_id (for resume)")
-    parser.add_argument("--no-resume", action="store_true", help="Do not resume from last saved position")
-    parser.add_argument("--out-dat-dir", type=str, default="ml-1m-augmented", help="Directory to write .dat export files")
+    parser.add_argument("--start-from", type=int, default=0,
+                        help="Start from given MovieLens movie_id (for resume)")
+    parser.add_argument("--no-resume", action="store_true",
+                        help="Do not resume from last saved position")
+    parser.add_argument("--out-dat-dir", type=str, default="ml-1m-augmented",
+                        help="Directory to write .dat export files")
     parser.add_argument("--stream-dat", action="store_true", help="Stream .dat updates for each processed movie")
-    parser.add_argument("--export-every", type=int, default=50, help="Regenerate actor/director .dat every N movies when streaming")
+    parser.add_argument("--export-every", type=int, default=50,
+                        help="Regenerate actor/director .dat every N movies when streaming")
     args = parser.parse_args()
 
     # Run augmentation and optionally stream exports during processing
@@ -530,7 +537,8 @@ def main() -> None:
                     tmdb_id = tmdb_search_movie(api_key, title_norm, year)
                     if not tmdb_id:
                         cur.execute(
-                            "INSERT OR REPLACE INTO movies(movie_id, tmdb_id, title, year, overview, poster_url) VALUES(?,?,?,?,?,?)",
+                            "INSERT OR REPLACE INTO movies(movie_id, tmdb_id, \
+                            title, year, overview, poster_url) VALUES(?,?,?,?,?,?)",
                             (movie_id, None, raw_title, year, "", ""),
                         )
                         conn.commit()
@@ -551,7 +559,8 @@ def main() -> None:
                     poster_url = details.poster_url if details else ""
 
                     cur.execute(
-                        "INSERT OR REPLACE INTO movies(movie_id, tmdb_id, title, year, overview, poster_url) VALUES(?,?,?,?,?,?)",
+                        "INSERT OR REPLACE INTO movies(movie_id, tmdb_id, \
+                        title, year, overview, poster_url) VALUES(?,?,?,?,?,?)",
                         (movie_id, tmdb_id, raw_title, year, overview, poster_url),
                     )
                     if poster_url:
@@ -575,7 +584,7 @@ def main() -> None:
                         )
 
                     conn.commit()
-                    _set_meta(conn, "last_movie_id", str(movie_id))
+                    _set_meta(conn, "last_movie_id", str(movie_id))  # noqa: F401
                     existing_ids.add(movie_id)
                     processed += 1
 
