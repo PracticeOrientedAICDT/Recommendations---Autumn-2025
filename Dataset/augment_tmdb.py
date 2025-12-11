@@ -584,13 +584,13 @@ def main() -> None:
                         )
 
                     conn.commit()
-                    _set_meta(conn, "last_movie_id", str(movie_id))  # noqa: F401
+                    _set_meta(conn, "last_movie_id", str(movie_id))
                     existing_ids.add(movie_id)
                     processed += 1
 
                     # Stream per-movie append for images and overviews
                     _append_line(images_path, f"{movie_id}::{poster_url}")
-                    _append_line(overviews_path, f"{movie_id}::{(overview or '').replace('\n', ' ')}")
+                    _append_line(overviews_path, f"{movie_id}::{(overview or '').replace('\n', ' ')}")  # noqa: F401
 
                     # Periodically regenerate aggregated actor/director .dat
                     if processed % max(1, args.export_every) == 0:
