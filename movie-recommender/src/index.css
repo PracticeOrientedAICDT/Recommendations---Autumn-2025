@@ -1,0 +1,273 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container */
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  background-color: #000000;
+  color: #ffffff;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  padding: 64px 48px;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 24px;
+  background: linear-gradient(to bottom right, #27272a, #18181b);
+  margin-bottom: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  color: #ffffff;
+}
+
+.title {
+  font-size: 3.75rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: #9ca3af;
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+
+/* Form */
+.form-container {
+  margin-bottom: 32px;
+}
+
+.input-group {
+  margin-bottom: 24px;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #9ca3af;
+  margin-bottom: 12px;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 16px;
+  background-color: #18181b;
+  border: 1px solid #27272a;
+  color: #ffffff;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #6b7280;
+}
+
+.textarea {
+  resize: none;
+}
+
+.help-text {
+  color: #6b7280;
+  font-size: 0.75rem;
+  margin-top: 12px;
+  font-weight: 300;
+}
+
+/* Error */
+.error-box {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 16px;
+  padding: 16px 20px;
+  color: #f87171;
+  font-size: 0.875rem;
+  margin-bottom: 24px;
+}
+
+/* Button */
+.button {
+  width: 100%;
+  background-color: #ffffff;
+  color: #000000;
+  font-weight: 500;
+  padding: 16px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 1.125rem;
+  font-family: inherit;
+}
+
+.button:hover:not(.button-disabled) {
+  background-color: #f3f4f6;
+}
+
+.button-hover {
+  background-color: #f3f4f6;
+}
+
+.button-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.button-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Results */
+.results-container {
+  margin-top: 64px;
+}
+
+.results-title {
+  font-size: 1.875rem;
+  font-weight: 600;
+  margin-bottom: 32px;
+}
+
+.movie-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.movie-card {
+  background-color: rgba(24, 24, 27, 0.5);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.2s;
+  border: 1px solid #18181b;
+}
+
+.movie-card-hover {
+  background-color: #18181b;
+  border-color: #27272a;
+}
+
+.movie-content {
+  display: flex;
+  gap: 20px;
+}
+
+.number-badge {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #27272a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.movie-info {
+  flex: 1;
+}
+
+.movie-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.movie-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.movie-year {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.movie-reason {
+  color: #9ca3af;
+  line-height: 1.625;
+  font-weight: 300;
+}
+
+/* Animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding: 32px 24px;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+}
