@@ -7,6 +7,7 @@ from recbole.utils.case_study import full_sort_topk
 from sklearn.feature_extraction.text import TfidfVectorizer
 import matplotlib.pyplot  as plt
 
+
 # === Load trained DiffRec model ===
 CHECKPOINT_PATH = './models/DiffRec-Oct-29-2025_19-33-34.pth'
 CHECKPOINT_PATH_Bert = './models/BERT4Rec-Oct-27-2025_19-02-35.pth'
@@ -313,18 +314,32 @@ def compute_past_centroid(session_history, movie_id_to_embedding):
     all_embs = np.array(all_embs)
     return np.mean(all_embs, axis=0).reshape(1, -1)
 
-def plot_session_overlap(session_history):
-    overlaps = []
-    for i in range(1, len(session_history)):
-        overlap = len(set(session_history[i]).intersection(set(session_history[i-1])))
-        overlaps.append(overlap)
+def plot_session_ndcg_and_overlap(sessions, ndcg_values, overlaps, top_k, user_id):
+    fig, ax1 = plt.subplots(figsize=(6, 4))
 
-    plt.figure(figsize=(6,4))
-    plt.plot(range(1, len(overlaps)+1), overlaps, marker='o')
-    plt.xlabel("Session Number")
-    plt.ylabel("Overlap with Previous Session")
-    plt.title("Between-Session MMR: Reduction in Repetition")
-    plt.grid(True, linestyle="--", alpha=0.6)
+    # --- Left y-axis: NDCG@K ---
+    ax1.plot(
+        sessions,
+        ndcg_values,
+        marker='o',
+        linewidth=2
+    )
+    ax1.set_xlabel("Session")
+    ax1.set_ylabel(f"NDCG@{top_k}")
+    ax1.set_xticks(sessions)
+
+    # --- Right y-axis: overlap ---
+    ax2 = ax1.twinx()
+    ax2.plot(
+        sessions,
+        overlaps,
+        marker='s',
+        linestyle='--',
+        linewidth=2
+    )
+    ax2.set_ylabel("Overlap with Previous Session (# movies)")
+
+    plt.title(f"Between-Session MMR for User {user_id}: NDCG@{top_k} and Overlap")
     plt.tight_layout()
     plt.show()
 # =========================================================
@@ -406,7 +421,10 @@ if __name__ == "__main__":
         int(mid): global_genre_embs[i]
         for i, mid in enumerate(movies['movie_id'])
 }
-
+    # === Track per-session metrics ===
+    sessions = []
+    session_overlaps = []   # overlap with previous session
+    session_ndcgs = []      # NDCG@K per session
     for session_idx in range(3):   # simulate 3 sessions
         print(f"\n===== SESSION {session_idx + 1} =====")
 
@@ -432,39 +450,31 @@ if __name__ == "__main__":
         movie_ids_mmr = [movie_ids[idx] for idx in mmr_order]
         session_history.append(movie_ids_mmr)
 
-        # 5. Overlap with previous session
+            # Session index (1-based)
+        session_num = session_idx + 1
+        sessions.append(session_num)
+
+        # Overlap with previous session
         if len(session_history) > 1:
             prev_session = session_history[-2]
             overlap = len(set(prev_session).intersection(set(movie_ids_mmr)))
-            print(f" Overlap with Previous Session: {overlap} items (out of {top_k})")
         else:
-            print(" First session — no previous session to compare.")
+            overlap = 0   # Session 1 has no previous session
 
-        # 6. NDCG for this session (optional)
+        session_overlaps.append(overlap)
+
+        print(f" Overlap with Previous Session: {overlap} items (out of {top_k})")
+
+        # NDCG for this session
         ndcg_sess = ndcg_at_k(movie_ids_mmr, user_true_items, k=top_k)
+        session_ndcgs.append(ndcg_sess)
+
         print(f" NDCG@{top_k} AFTER Between-Session MMR: {ndcg_sess:.4f}")
-
-
-    '''# compute centroid from ALL past sessions
-    past_centroid = compute_past_centroid(session_history, movie_id_to_embedding_dict)
-
-    # apply between-session mmr
-    mmr_order, mmr_values = compute_between_session_mmr(
-        scores,
-        emb_subset,
-        past_centroid=past_centroid,
-        lambda_within=0.7,
-        lambda_between=0.3,
-        top_k=top_k
-    )
-
-        # store this session output
-    movie_ids_mmr = [movie_ids[idx] for idx in mmr_order]
-    session_history.append(movie_ids_mmr)'''
 
     print("\n Between-Session MMR Re-Ranked Movies:")
     print(movie_ids_mmr)
-    '''ndcg_after_between = ndcg_at_k(movie_ids_mmr, user_true_items, k=50)
+
+    ndcg_after_between = ndcg_at_k(movie_ids_mmr, user_true_items, k=50)
     print(f"\n NDCG@50 AFTER Between-Session MMR: {ndcg_after_between:.4f}")
 
     if len(session_history) > 1:
@@ -472,11 +482,9 @@ if __name__ == "__main__":
         overlap = set(prev_session).intersection(set(movie_ids_mmr))
         print(f"\n Overlap with Previous Session: {len(overlap)} items")
     else:
-        print("\n This is the first session — no previous session to compare.")'''
+        print("\n This is the first session — no previous session to compare.")
 
-    plot_session_overlap(session_history)
-
-    # ----------------------------
+    plot_session_ndcg_and_overlap(sessions,session_ndcgs, session_overlaps,top_k,user_id)
     # Show/Save summary table
     # ----------------------------
     mmr_summary = pd.DataFrame(mmr_results_rows)
@@ -490,7 +498,6 @@ if __name__ == "__main__":
     out_file_ndcg = f"user{user_id}_diffrec_top{top_k}_MMR_ndcg_summary.csv"
     mmr_summary.to_csv(out_file_ndcg, index=False)
     print(f" Saved NDCG summary to {out_file_ndcg}\n")
-
 
     # Plot NDCG vs λ
     plot_ndcg_vs_lambda(mmr_summary, top_k, user_id)
