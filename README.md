@@ -109,7 +109,7 @@ Please see the README files in each model repository (linked above) for specific
 ### Exploratory Data Analysis (EDA)
 EDA on the MovieLens 1M dataset can be found in the following locations:
 - Overall data analysis: [`ML1M_EDA.ipynb`](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/blob/feature/readme/ML1M_EDA.ipynb)
-- User profile analysis: <--- add here
+<!-- - User profile analysis: <--- add here -->
 
 ### Top-N models
 Specific usage varies between each model, and has been outlined in the README in each model's subdirectory. 
