@@ -1,0 +1,17 @@
+{
+  "data_size": "1m",
+  "train_rows": 750121,
+  "test_rows": 250025,
+  "n_users": 6040,
+  "n_items": 3659,
+  "epochs": 50,
+  "batch_size": 256,
+  "factors": 4,
+  "layer_sizes": [
+    16,
+    8,
+    4
+  ],
+  "learning_rate": 0.001,
+  "train_ratio": 0.75
+}

@@ -1,0 +1,18 @@
+{
+  "data_size": "1m",
+  "train_rows": 800167,
+  "test_rows": 200042,
+  "rank": 10,
+  "regularization": 0.001,
+  "init_flag": "svd",
+  "max_iter": 200,
+  "max_time": 600,
+  "train_time": 76.88627409934998,
+  "train_ratio": 0.8,
+  "rmse": 0.8706967360137663,
+  "mae": 0.6776364798246864,
+  "map": 0.04292080981117668,
+  "ndcg": 0.08919004935109158,
+  "precision": 0.0814520139234212,
+  "recall": 0.025218794055052028
+}

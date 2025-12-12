@@ -1,0 +1,28 @@
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+env/
+venv/
+.venvTorchtext/
+
+# Dataset files (optional, too large for GitHub)
+data/
+!data/ml-1m/*.dat  # optionally keep small files or metadata
+
+# Model checkpoints
+models/*.pt
+
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# VSCode settings
+.vscode/
