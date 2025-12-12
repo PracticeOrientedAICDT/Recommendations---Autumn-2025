@@ -1,0 +1,35 @@
+n_layers: 2                     # (int) The number of transformer layers in transformer encoder.
+n_heads: 2                      # (int) The number of attention heads for multi-head attention layer.
+hidden_size: 64                 # (int) The number of features in the hidden state.
+inner_size: 256                 # (int) The inner hidden size in feed-forward layer.
+hidden_dropout_prob: 0.2        # (float) The probability of an element to be zeroed.
+attn_dropout_prob: 0.2          # (float) The probability of an attention score to be zeroed.
+hidden_act: 'gelu'              # (str) The activation function in feed-forward layer.
+layer_norm_eps: 1e-12           # (float) A value added to the denominator for numerical stability.
+initializer_range: 0.02         # (float) The standard deviation for normal initialization.
+mask_ratio: 0.2                 # (float) The probability for a item replaced by MASK token.
+loss_type: 'CE'                 # (str) The type of loss function.
+transform: mask_itemseq         # (str) The transform operation for batch data process.
+ft_ratio: 0.5                   # (float) The probability of generating fine-tuning samples
+
+# Basic Information
+#USER_ID_FIELD: user_id          # (str) Field name of user ID feature.
+#ITEM_ID_FIELD: item_id          # (str) Field name of item ID feature.
+#RATING_FIELD: rating            # (str) Field name of rating feature.
+#TIME_FIELD: timestamp           # (str) Field name of timestamp feature.
+#seq_len: ~                      # (dict) Field name of sequence feature: maximum length of each sequence
+#LABEL_FIELD: label              # (str) Expected field name of the generated labels for point-wise dataLoaders. 
+#threshold: ~                    # (dict) 0/1 labels will be generated according to the pairs.
+#NEG_PREFIX: neg_                # (str) Negative sampling prefix for pair-wise dataLoaders.
+#numerical_features: []          # (list) Float feature fields to be embedded
+
+# Sequential Model Needed
+#ITEM_LIST_LENGTH_FIELD: item_length   # (str) Field name of the feature representing item sequences' length. 
+#LIST_SUFFIX: _list              # (str) Suffix of field names which are generated as sequences.
+#MAX_ITEM_LIST_LENGTH: 50        # (int) Maximum length of each generated sequence.
+#POSITION_FIELD: position_id     # (str) Field name of the generated position sequence.
+#"POS_ITEMS": "pos_items"
+#"NEG_ITEMS": "neg_items"
+#"MASK_ITEM_SEQ": "mask_itemseq" # (str) Field name of the generated masked item sequence.
+#"MASK_INDEX": 0,      
+#max_seq_length: 50  # or whatever sequence length you want
