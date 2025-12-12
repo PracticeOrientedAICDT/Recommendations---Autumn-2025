@@ -123,6 +123,9 @@ Once the results from all models have been compiled in the `evals\eval_results` 
 ### Prompt-based models
 TBC
 
+<img width="580" height="373" alt="image" src="https://github.com/user-attachments/assets/aa87d89a-004e-420f-bf99-4939b2fd80d6" />
+
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
