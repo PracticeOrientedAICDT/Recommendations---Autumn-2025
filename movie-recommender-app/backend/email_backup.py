@@ -3,14 +3,22 @@ Email backup helper using SendGrid API (works on Render - doesn't use SMTP).
 Sends CSV + JSON attachments immediately after participant completion.
 """
 
-import os
-import json
 import base64
-from io import StringIO
+import json
+import os
 from datetime import datetime
+from io import StringIO
+
 from dotenv import load_dotenv
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, Attachment, FileContent, FileName, FileType, Disposition
+from sendgrid.helpers.mail import (
+    Attachment,
+    Disposition,
+    FileContent,
+    FileName,
+    FileType,
+    Mail,
+)
 
 load_dotenv()
 
@@ -32,37 +40,48 @@ def format_experiment_data_to_csv(participant_id, data_dict):
     output.write("=== PARTICIPANT INFO ===\n")
     output.write(f"Participant ID,{participant_id}\n")
 
-    session_data = data_dict.get('sessionData', {})
+    session_data = data_dict.get("sessionData", {})
     output.write(f"Start Time,{session_data.get('startTime', '')}\n")
     output.write(f"End Time,{data_dict.get('endTime', '')}\n")
     output.write(f"Total Duration (seconds),{data_dict.get('totalDuration', '')}\n")
 
     # Device info
-    device_info = session_data.get('deviceInfo', {})
+    device_info = session_data.get("deviceInfo", {})
     output.write(f"Device Type,{device_info.get('platform', '')}\n")
-    output.write(f"Screen Size,{device_info.get('screenWidth')}x{device_info.get('screenHeight')}\n")
+    output.write(
+        f"Screen Size,{device_info.get('screenWidth')}x{device_info.get('screenHeight')}\n"
+    )
     output.write("\n")
 
     # Questionnaire responses
     output.write("=== QUESTIONNAIRE RESPONSES ===\n")
-    questionnaire = data_dict.get('questionnaire', {})
+    questionnaire = data_dict.get("questionnaire", {})
+
+    genres_list = questionnaire.get("genresPreferred", [])
+    genres_preferred = ", ".join(genres_list)
+
+    comments_raw = questionnaire.get("comments", "")
+    comments_escaped = comments_raw.replace('"', '""')
+
     output.write(f"Age,{questionnaire.get('age', '')}\n")
     output.write(f"Gender,{questionnaire.get('gender', '')}\n")
     output.write(f"Movie Frequency,{questionnaire.get('movieFrequency', '')}\n")
-    output.write(f"Genres Preferred,\"{', '.join(questionnaire.get('genresPreferred', []))}\"\n")
+    output.write(f'Genres Preferred,"{genres_preferred}"\n')
     output.write(f"Classic vs Recent,{questionnaire.get('classicVsRecent', '')}\n")
     output.write(f"Overall Relevance,{questionnaire.get('overallRelevance', '')}\n")
     output.write(f"Overall Diversity,{questionnaire.get('overallDiversity', '')}\n")
     output.write(f"Overall Novelty,{questionnaire.get('overallNovelty', '')}\n")
     output.write(f"Decision Difficulty,{questionnaire.get('decisionDifficulty', '')}\n")
     output.write(f"Familiarity Balance,{questionnaire.get('familiarityBalance', '')}\n")
-    output.write(f"Prompt Based Search Interest,{questionnaire.get('promptBasedSearch', '')}\n")
-    output.write(f"Comments,\"{questionnaire.get('comments', '').replace('"', '""')}\"\n")
+    output.write(
+        f"Prompt Based Search Interest,{questionnaire.get('promptBasedSearch', '')}\n"
+    )
+    output.write(f'Comments,"{comments_escaped}"\n')
     output.write("\n")
 
     # Prompt responses
     output.write("=== PROMPT RESPONSES ===\n")
-    responses = data_dict.get('responses', [])
+    responses = data_dict.get("responses", [])
 
     if responses:
         # CSV header
@@ -74,13 +93,16 @@ def format_experiment_data_to_csv(participant_id, data_dict):
 
         # Write each response
         for resp in responses:
-            model_mapping = resp.get('modelMapping', {})
-            rankings = resp.get('rankings', {})
-            ranked_models = resp.get('rankedModels', {})
+            model_mapping = resp.get("modelMapping", {})
+            rankings = resp.get("rankings", {})
+            ranked_models = resp.get("rankedModels", {})
+
+            prompt_text = resp.get("promptText", "")
+            prompt_text_escaped = prompt_text.replace('"', '""')
 
             output.write(f"{resp.get('sequencePosition', '')},")
             output.write(f"{resp.get('promptId', '')},")
-            output.write(f"\"{resp.get('promptText', '').replace('"', '""')}\",")
+            output.write(f"\"{prompt_text_escaped}\",")
             output.write(f"{resp.get('promptCategory', '')},")
             output.write(f"{model_mapping.get('A', '')},")
             output.write(f"{model_mapping.get('B', '')},")
@@ -110,27 +132,25 @@ def send_experiment_email(participant_id, data_dict):
     Returns:
         bool: True if successful, False otherwise
     """
-    # Get SendGrid API key and email config
-    sendgrid_api_key = os.getenv('SENDGRID_API_KEY')
-    sender_email = os.getenv('SENDER_EMAIL', 'noreply@movie-experiment.com')
-    recipient_email = os.getenv('BACKUP_EMAIL_RECIPIENT', 'guodala@gmail.com')
+    sendgrid_api_key = os.getenv("SENDGRID_API_KEY")
+    sender_email = os.getenv("SENDER_EMAIL", "noreply@movie-experiment.com")
+    recipient_email = os.getenv("BACKUP_EMAIL_RECIPIENT", "guodala@gmail.com")
 
     if not sendgrid_api_key:
         print("Warning: SENDGRID_API_KEY not configured")
         return False
 
     try:
-        # Create email body
-        end_time = data_dict.get('endTime', 'Unknown')
-        total_duration = data_dict.get('totalDuration', 0)
-        responses_count = len(data_dict.get('responses', []))
+        end_time = data_dict.get("endTime", "Unknown")
+        total_duration = data_dict.get("totalDuration", 0)
+        responses_count = len(data_dict.get("responses", []))
 
         email_body = f"""
 New participant completed the movie recommendation experiment!
 
 Participant ID: {participant_id}
 Completion Time: {end_time}
-Duration: {total_duration:.1f} seconds ({total_duration/60:.1f} minutes)
+Duration: {total_duration:.1f} seconds ({total_duration / 60:.1f} minutes)
 Prompts Completed: {responses_count}
 
 The complete data is attached as CSV and JSON files.
@@ -139,45 +159,47 @@ The complete data is attached as CSV and JSON files.
 Automated email from Movie Experiment Backend
 """
 
-        # Create SendGrid email
         message = Mail(
             from_email=sender_email,
             to_emails=recipient_email,
             subject=f"Movie Experiment Data - Participant {participant_id}",
-            plain_text_content=email_body
+            plain_text_content=email_body,
         )
 
-        # Create CSV attachment
+        # CSV attachment
         csv_content = format_experiment_data_to_csv(participant_id, data_dict)
-        csv_filename = f"{participant_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        csv_filename = f"{participant_id}_{timestamp}.csv"
 
-        csv_encoded = base64.b64encode(csv_content.encode('utf-8')).decode()
+        csv_encoded = base64.b64encode(csv_content.encode("utf-8")).decode("utf-8")
         csv_attachment = Attachment(
             FileContent(csv_encoded),
             FileName(csv_filename),
-            FileType('text/csv'),
-            Disposition('attachment')
+            FileType("text/csv"),
+            Disposition("attachment"),
         )
         message.attachment = csv_attachment
 
-        # Create JSON attachment
+        # JSON attachment
         json_content = json.dumps(data_dict, indent=2)
-        json_filename = f"{participant_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        json_filename = f"{participant_id}_{timestamp}.json"
 
-        json_encoded = base64.b64encode(json_content.encode('utf-8')).decode()
+        json_encoded = base64.b64encode(json_content.encode("utf-8")).decode("utf-8")
         json_attachment = Attachment(
             FileContent(json_encoded),
             FileName(json_filename),
-            FileType('application/json'),
-            Disposition('attachment')
+            FileType("application/json"),
+            Disposition("attachment"),
         )
         message.add_attachment(json_attachment)
 
-        # Send via SendGrid API
         sg = SendGridAPIClient(sendgrid_api_key)
         response = sg.send(message)
 
-        print(f"✓ Successfully emailed experiment data for {participant_id} to {recipient_email}")
+        print(
+            f"✓ Successfully emailed experiment data for {participant_id} "
+            f"to {recipient_email}"
+        )
         print(f"  SendGrid response: {response.status_code}")
         return True
 
