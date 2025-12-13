@@ -146,12 +146,6 @@ Distributed under the project_license. See `LICENSE.txt` for more information.
 - Abby Morris: abby.morris@bristol.ac.uk
 - Ikechukwu Ofodile: ic.ofodile@bristol.ac.uk
 
-### Top Contributors:
-
-<a href="https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=PracticeOrientedAICDT/Recommendations---Autumn-2025" alt="contrib.rocks image" />
-</a>
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
