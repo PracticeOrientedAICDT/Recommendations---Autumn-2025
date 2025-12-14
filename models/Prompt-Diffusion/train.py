@@ -498,8 +498,10 @@ def train(args):
 
     sample_slate = full_data_dict["slates"][0]
     slate_norm = torch.norm(sample_slate)
+    expected_norm = math.sqrt(args.item_dim)
     print(
-        f"Sample slate norm per item: {slate_norm / sample_slate.size(0):.4f} (expected ~{math.sqrt(args.item_dim):.4f} for normalized)"
+        f"Sample slate norm per item: {slate_norm / sample_slate.size(0):.4f} "
+        f"(expected ~{expected_norm:.4f} for normalized)"
     )
 
     # Load Item Catalog for NN search
