@@ -85,7 +85,7 @@ Where * indates a model was adapted from the [RecBole](https://github.com/RUCAIB
 ### Prompt-based models
 The prompt-based models are as follows and are stored in the linked subfolders:
 - [Enterprise LLM prompt-to-slate](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/tree/dev/models/LLM_model)
-- [Prompt guided diffusion model](https://uob.sharepoint.com/teams/grp-Recommender/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2Fgrp%2DRecommender%2FShared%20Documents%2FGeneral%2Fmovielens%5Fprompt%5Fdiffusion&p=true&ga=1)
+- [Prompt guided diffusion model](https://github.com/PracticeOrientedAICDT/Recommendations---Autumn-2025/tree/dev/models/Prompt-Diffusion)
 
 ## Prerequisites
 
