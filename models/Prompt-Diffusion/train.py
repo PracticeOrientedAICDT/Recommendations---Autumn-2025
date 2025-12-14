@@ -1,8 +1,12 @@
-import os, math, argparse, copy, time, json
+import os
+import math
+import argparse
+import time
+import json
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.utils.data import Dataset, DataLoader, Subset
+from torch.utils.data import Dataset, DataLoader
 from torch.amp import GradScaler
 from torch.nn.utils import clip_grad_norm_
 
@@ -119,9 +123,10 @@ class DiffusionSlateModel(nn.Module):
         t: (B,) - time steps
         ctx: (B, D) - prompt embedding where D is item_dim (384 for MiniLM)
         """
-        B, K = x_t.shape[0], x_t.shape[1]
+        # Note: B, K extracted from x_t.shape for documentation purposes
+        _ = x_t.shape[0], x_t.shape[1]  # noqa: F841
         
-        # --- MODIFIED: Time embedding added ONCE at the beginning ---
+        #  Time embedding added ONCE at the beginning 
         
         # 1. Project noisy slate to hidden dim
         h = self.in_proj(x_t)
@@ -148,11 +153,11 @@ class DiffusionSlateModel(nn.Module):
                 h = layer(tgt=h, memory=c_emb)
         
         return self.out_proj(h)
-        # --- END MODIFICATION ---
+
 
 # === Dataset (with CFG) ===
 class SlateDataset(Dataset):
-    # --- MODIFIED: Added 'data' param to avoid re-loading
+    #  Added 'data' param to avoid re-loading
     def __init__(self, path, slate_len, item_dim, cfg_drop_prob=0.1, data=None):
         if data is None:
             print("Loading data from path...")
@@ -202,7 +207,7 @@ def get_diffusion_vars(timesteps, device):
     alphas_cumprod = torch.cumprod(alphas, dim=0)
     sqrt_alphas_cumprod = torch.sqrt(alphas_cumprod)
     sqrt_one_minus_alphas_cumprod = torch.sqrt(1.0 - alphas_cumprod)
-    # --- MODIFIED: Pad with 1.0 at the end for t_prev=-1 indexing
+    #  Pad with 1.0 at the end for t_prev=-1 indexing
     alphas_cumprod_prev = F.pad(alphas_cumprod[:-1], (1, 0), value=1.0)
     
     return {
@@ -213,7 +218,7 @@ def get_diffusion_vars(timesteps, device):
         "alphas_cumprod_prev": alphas_cumprod_prev
     }
 
-# === NEW: Generation Function (DDIM Sampler + NN Decoder) ===
+#  Generation Function (DDIM Sampler + NN Decoder) 
 @torch.no_grad()
 def generate(model, prompt_emb, item_catalog_embs, diff_vars, args, device, num_inference_steps=50):
     """
@@ -227,7 +232,7 @@ def generate(model, prompt_emb, item_catalog_embs, diff_vars, args, device, num_
     K, D = args.slate_len, args.item_dim
     T = args.t_steps
     
-    # --- DDIM Timestep Schedule ---
+    #  DDIM Timestep Schedule 
     # Create a strided schedule from T-1 down to 0
     timesteps = torch.linspace(T - 1, 0, num_inference_steps, dtype=torch.long, device=device)
 
@@ -282,7 +287,7 @@ def generate(model, prompt_emb, item_catalog_embs, diff_vars, args, device, num_
         # Classifier-Free Guidance
         v_pred = v_uncond + args.cfg_scale * (v_cond - v_uncond)
         
-        # --- DDIM Step ---
+        #  DDIM Step 
         # 1. Predict x0 from v_pred
         pred_x0 = _sqrt_a_t * x_t - _sqrt_1m_a_t * v_pred
         # 2. Predict noise (epsilon) from v_pred
@@ -294,7 +299,7 @@ def generate(model, prompt_emb, item_catalog_embs, diff_vars, args, device, num_
     # Final x_t is the predicted x_0
     x_0_pred = x_t
     
-    # --- Nearest Neighbor Search with Temperature ---
+    #  Nearest Neighbor Search with Temperature 
     # As per paper, map continuous latents back to discrete items
     # Clip to prevent extreme values before normalization
     x_0_pred = torch.clamp(x_0_pred, min=-10.0, max=10.0)
@@ -345,7 +350,6 @@ def validate(model, val_loader, diff_vars, args, device, item_catalog_embs=None)
     running_loss_mse = 0.0
     running_loss_cos = 0.0
     running_loss_l1 = 0.0
-    running_recon_accuracy = 0.0  # Can we recover x0 from v_pred?
     running_x0_cosine = 0.0  # Cosine similarity between predicted and true x0
     
     sqrt_a_t = diff_vars["sqrt_alphas_cumprod"].to(device)
@@ -376,7 +380,7 @@ def validate(model, val_loader, diff_vars, args, device, item_catalog_embs=None)
             loss_cos = (1.0 - F.cosine_similarity(v_pred_norm, v_target_norm, dim=-1)).mean()
             loss_l1 = F.l1_loss(v_pred, v_target)
             
-            # --- NEW: Reconstruction quality metrics ---
+            #  NEW: Reconstruction quality metrics 
             # Reconstruct x0 from v_pred to check if we can recover the original slate
             pred_x0 = _sqrt_a_t * x_t - _sqrt_1m_a_t * v_pred
             pred_x0_norm = F.normalize(pred_x0, dim=-1)
@@ -427,7 +431,7 @@ def train(args):
     print(f"Weights & Biases run name: {run.name}")
     print(f"Checkpoint will be saved to: {ckpt_path}")
     
-    # --- NEW: Load full data dict once ---
+    #  NEW: Load full data dict once 
     print(f"Loading data from {args.data_path}...")
     full_data_dict = torch.load(args.data_path, map_location="cpu")
     
@@ -446,14 +450,14 @@ def train(args):
     slate_norm = torch.norm(sample_slate)
     print(f"Sample slate norm per item: {slate_norm / sample_slate.size(0):.4f} (expected ~{math.sqrt(args.item_dim):.4f} for normalized)")
     
-    # --- NEW: Load Item Catalog for NN search ---
+    #  NEW: Load Item Catalog for NN search 
     # This tensor (N_items, D_item) is the output of the "Item Encoder"
     if "item_catalog" in full_data_dict:
         item_catalog_embs = full_data_dict["item_catalog"].float().to(device)
         print(f"Loaded item catalog with {item_catalog_embs.size(0)} items.")
     else:
         print("Warning: 'item_catalog' tensor not found in data file.")
-        print(f"Using a dummy catalog of 1000 items.")
+        print("Using a dummy catalog of 1000 items.")
         item_catalog_embs = torch.randn(1000, args.item_dim).to(device)
     
     # Load catalog index to film_id mapping
@@ -495,7 +499,7 @@ def train(args):
     if prompt_texts is None:
         print("Warning: 'prompt_texts' not found in data file.")
         prompt_texts = None
-    # --- END NEW ---
+    #  END NEW 
     
     full_dataset = SlateDataset(
         args.data_path, 
@@ -578,7 +582,7 @@ def train(args):
             v_target = _sqrt_a_t * noise - _sqrt_1m_a_t * x0
 
             with torch.amp.autocast(device_type=device.type, enabled=(device.type=='cuda')):
-                # --- MODIFIED: Pass context 'c' which is (B, item_dim) ---
+                #  Pass context 'c' which is (B, item_dim) 
                 # The model's forward pass expects the original item_dim dim context
                 v_pred = model(x_t, t, c)
                 
@@ -590,7 +594,7 @@ def train(args):
                 loss_cos = (1.0 - F.cosine_similarity(v_pred_norm, v_target_norm, dim=-1)).mean()
                 loss_l1 = F.l1_loss(v_pred, v_target)
                 
-                # --- NEW: Add reconstruction loss to encourage better x0 prediction ---
+                #  NEW: Add reconstruction loss to encourage better x0 prediction 
                 # Reconstruct x0 from v_pred
                 pred_x0 = _sqrt_a_t * x_t - _sqrt_1m_a_t * v_pred
                 pred_x0_norm = F.normalize(pred_x0, dim=-1)
@@ -600,7 +604,7 @@ def train(args):
                 loss_recon_cos = (1.0 - F.cosine_similarity(pred_x0_norm, x0_norm, dim=-1)).mean()
                 loss_recon_mse = F.mse_loss(pred_x0, x0)
                 
-                # --- CRITICAL FIX: Catalog Retrieval Loss ---
+                #  CRITICAL FIX: Catalog Retrieval Loss 
                 # Key insight: The model must generate embeddings that are:
                 # 1. Close to the ground truth items (covered by recon loss)
                 # 2. In regions of embedding space that map to real catalog items (not dead zones)
@@ -710,7 +714,7 @@ def train(args):
                     print(f"Sample Generation (Epoch {epoch}):")
                     print(f"{'='*70}")
                     print(f"Prompt: \"{prompt_text}\"")
-                    print(f"\nGenerated Slate:")
+                    print("\nGenerated Slate:")
                     movie_list = []
                     for i, idx in enumerate(generated_slate_indices[0], 1):
                         if idx < len(catalog_index_to_film_id):
@@ -736,8 +740,8 @@ def train(args):
     wandb.finish()
     print("Training finished.")
     
-    # --- MODIFIED: Generation Example ---
-    print("\n--- Running Generation Example ---")
+    #  Generation Example 
+    print("\n Running Generation Example ")
     print("Loading best model for final generation...")
     model.load_state_dict(torch.load(ckpt_path, map_location=device))
     
@@ -767,7 +771,6 @@ def train(args):
         for indices in generated_slate_indices:
             f.write(','.join(map(str, indices)) + '\n')
     print(f"Saved generated indices to {output_txt_path}")
-    # --- END MODIFIED ---
 
 
 # === ARGS updated to match DMSG paper ===
@@ -801,7 +804,7 @@ def get_args():
     parser.add_argument('--batch_size', type=int, default=64)
     parser.add_argument('--lr', type=float, default=5e-4)
     parser.add_argument('--lr_warmup_steps', type=int, default=500)
-    # --- FIXED: Removed typo '.S' ---
+    #  FIXED: Removed typo '.S' 
     parser.add_argument('--weight_decay', type=float, default=1e-5)
     parser.add_argument('--device', type=str, 
                         default="cuda" if torch.cuda.is_available() else "cpu")
@@ -816,14 +819,13 @@ def get_args():
                         help="Temperature for nearest neighbor search (1.0 = no temperature)")
     
     # Loss
-    # --- MODIFIED: Balanced loss weights ---
+    #  Balanced loss weights 
     parser.add_argument('--loss_cosine_weight', type=float, default=0.5,
                         help="Weight for cosine loss (reduced from 1.0)")
     parser.add_argument('--catalog_loss_weight', type=float, default=1.0,
                         help="Weight for catalog retrieval loss (ensures generated embeddings are close to catalog items)")
 
     # Logging
-    # --- MODIFIED: New project name for this run ---
     parser.add_argument('--project_name', type=str, default="movie-diffusion-v11-arch-fix")
     parser.add_argument('--log_interval', type=int, default=50)
     parser.add_argument('--ckpt_dir', type=str, default="checkpoints")
@@ -832,20 +834,11 @@ def get_args():
 
 
 if __name__ == "__main__":
-    # --- HACK for parsing args in environments like notebooks ---
     import sys
     if 'ipykernel' in sys.modules:
         print("Running in notebook-like env, using default args.")
-        sys.argv = [sys.argv[0]] # Clear out notebook args
-    # --- END HACK ---
-    
+        sys.argv = [sys.argv[0]] # Clear out notebook args    
     args = get_args()
-    
-    # --- Manually set args for testing if needed ---
-    # args.epochs = 2
-    # args.batch_size = 4
-    # args.project_name = "test-run"
-    # ---
     
     print("Using args:")
     print(args)
