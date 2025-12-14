@@ -4,7 +4,6 @@ Inference script for MovieLens prompt diffusion model.
 Generates a slate of movies from a text prompt.
 """
 
-import os
 import json
 import argparse
 import torch
@@ -50,7 +49,6 @@ def generate(model, prompt_emb, item_catalog_embs, diff_vars, args, device, num_
     timesteps = torch.linspace(T - 1, 0, num_inference_steps, dtype=torch.long, device=device)
     
     # Get diffusion variables
-    a_t_all = diff_vars["alphas_cumprod"]
     sqrt_a_t = diff_vars["sqrt_alphas_cumprod"]
     sqrt_1m_a_t = diff_vars["sqrt_one_minus_alphas_cumprod"]
     
@@ -64,7 +62,6 @@ def generate(model, prompt_emb, item_catalog_embs, diff_vars, args, device, num_
         t = timesteps[i].expand(B)
         
         # Get alphas for current timestep
-        a_t = a_t_all[t].view(B, 1, 1)
         sqrt_a_t_curr = sqrt_a_t[t].view(B, 1, 1)
         sqrt_1m_a_t_curr = sqrt_1m_a_t[t].view(B, 1, 1)
         
@@ -82,7 +79,6 @@ def generate(model, prompt_emb, item_catalog_embs, diff_vars, args, device, num_
         # DDIM step
         if i < len(timesteps) - 1:
             t_next = timesteps[i + 1]
-            a_t_next = a_t_all[t_next].view(B, 1, 1)
             sqrt_a_t_next = sqrt_a_t[t_next].view(B, 1, 1)
             sqrt_1m_a_t_next = sqrt_1m_a_t[t_next].view(B, 1, 1)
             
