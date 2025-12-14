@@ -1,0 +1,6 @@
+torch
+sentence-transformers
+tqdm
+wandb
+numpy
+
